@@ -16,7 +16,7 @@ source:
     - libgcc_macosx_min_version.patch
 
 build:
-  number: 3
+  number: 4
   skip: True  # [not osx]
 
 requirements:
