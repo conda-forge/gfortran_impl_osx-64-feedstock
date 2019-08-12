@@ -34,3 +34,6 @@ cd build_conda
     tail -n 5000 make_install_logs.txt
     exit 1
 }
+
+rm $PREFIX/lib/libgomp.1.dylib
+ln -s $PREFIX/lib/libomp.dylib $PREFIX/lib/libgomp.1.dylib
