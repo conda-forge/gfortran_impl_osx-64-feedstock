@@ -31,6 +31,7 @@ requirements:
     - mpfr
     - isl
     - mpc
+    - llvm-openmp >=8.0.0
 
 outputs:
   - name: libgfortran
@@ -53,6 +54,11 @@ outputs:
       - lib/libgcc_s.{{ libgcc_s_version[0] }}.dylib
       - lib/libgcc_s_ppc64.{{ libgcc_s_version[0] }}.dylib
       - lib/libgcc_s_x86_64.{{ libgcc_s_version[0] }}.dylib
+    requirements:
+      host:
+        - llvm-openmp >=8.0.0
+      run:
+        - llvm-openmp >=8.0.0
 
     run_exports:
       - libgfortran >={{ libgfortran_version|join('.') }},<{{ max_libgfortran_version }}
