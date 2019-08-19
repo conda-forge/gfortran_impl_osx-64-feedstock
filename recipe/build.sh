@@ -39,3 +39,6 @@ rm $PREFIX/lib/libgomp.dylib
 rm $PREFIX/lib/libgomp.1.dylib
 ln -s $PREFIX/lib/libomp.dylib $PREFIX/lib/libgomp.dylib
 ln -s $PREFIX/lib/libomp.dylib $PREFIX/lib/libgomp.1.dylib
+
+sed -i.bak "s@^\*lib.*@& -rpath $PREFIX/lib@" lib/libgfortran.spec
+rm lib/libgfortran.spec.bak
