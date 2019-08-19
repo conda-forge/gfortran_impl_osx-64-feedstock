@@ -1,22 +1,22 @@
-{% set gfortran_version = [7, 3, 0] %}
-{% set libgfortran_version = [4, 0, 0] %}
-{% set max_libgfortran_version = "5.0.0.a0" %}
+{% set version = "4.8.5" %}
+{% set libgfortran_version = [3, 0, 0] %}
+{% set max_libgfortran_version = "4.0.0.a0" %}
 {% set libquadmath_version = [0, 0, 0] %}
 {% set libgcc_s_version = [1, 0, 0] %}
-{% set chost = "x86_64-apple-darwin13.4.0" %}
+{% set chost = macos_machine %}
 
 package:
   name: gfortran_impl_osx-64
-  version: {{ gfortran_version|join('.') }}
+  version: {{ version }}
 
 source:
-  url: https://ftp.gnu.org/gnu/gcc/gcc-{{ gfortran_version|join('.') }}/gcc-{{ gfortran_version|join('.') }}.tar.gz
+  url: https://ftp.gnu.org/gnu/gcc/gcc-{{ version }}/gcc-{{ version }}.tar.gz
   sha256: fa06e455ca198ddc11ea4ddf2a394cf7cfb66aa7e0ab98cc1184189f1d405870
   patches:
     - libgcc_macosx_min_version.patch
 
 build:
-  number: 2
+  number: 9
   skip: True  # [not osx]
 
 requirements:
@@ -31,11 +31,10 @@ requirements:
     - mpfr
     - isl
     - mpc
-    - llvm-openmp >=8.0.0
 
 outputs:
   - name: libgfortran
-    version: {{ libgfortran_version|join('.') }}
+    version: {{ libversion }}
     files:
       - lib/libgfortran.dylib
       - lib/libgfortran.{{ libgfortran_version[0] }}.dylib
@@ -54,14 +53,9 @@ outputs:
       - lib/libgcc_s.{{ libgcc_s_version[0] }}.dylib
       - lib/libgcc_s_ppc64.{{ libgcc_s_version[0] }}.dylib
       - lib/libgcc_s_x86_64.{{ libgcc_s_version[0] }}.dylib
-    requirements:
-      host:
-        - llvm-openmp >=8.0.0
-      run:
-        - llvm-openmp >=8.0.0
 
     run_exports:
-      - libgfortran >={{ libgfortran_version|join('.') }},<{{ max_libgfortran_version }}
+      - libgfortran >={{ libversion }},<{{ max_libgfortran_version }}
     test:
       commands:
         - test -f "${PREFIX}/lib/libgfortran.dylib"
@@ -78,7 +72,7 @@ outputs:
         - test -f "${PREFIX}/lib/libgcc_s_x86_64.{{ libgcc_s_version[0] }}.dylib"
 
   - name: gfortran_impl_osx-64
-    version: {{ gfortran_version|join('.') }}
+    version: {{ version }}
     requirements:
       build:
         - {{ compiler('c') }}
@@ -91,7 +85,7 @@ outputs:
         - isl
         - mpc
       run:
-        - libgfortran >={{ libgfortran_version|join('.') }},<{{ max_libgfortran_version }}
+        - libgfortran >={{ libversion }},<{{ max_libgfortran_version }}
         - isl
         - mpfr
         - mpc
@@ -102,9 +96,9 @@ outputs:
       - bin/gfortran
       - bin/{{ chost }}-gfortran
 
-      - libexec/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/collect2
-      - libexec/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/f951
-      - libexec/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/lto-wrapper
+      - libexec/gcc/{{ chost }}/{{ version }}/collect2
+      - libexec/gcc/{{ chost }}/{{ version }}/f951
+      - libexec/gcc/{{ chost }}/{{ version }}/lto-wrapper
 
       - lib/libgfortran.spec
 
@@ -112,20 +106,20 @@ outputs:
       - lib/libgomp.spec
 
       # For -ffast-math
-      - lib/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/crtfastmath.o
+      - lib/gcc/{{ chost }}/{{ version }}/crtfastmath.o
 
       # For -static
       - lib/libgfortran.a
       - lib/libgomp.a
 
-      - lib/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/libgcc.a
-      - lib/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/libgcc_eh.a
+      - lib/gcc/{{ chost }}/{{ version }}/libgcc.a
+      - lib/gcc/{{ chost }}/{{ version }}/libgcc_eh.a
 
-      - lib/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/finclude/**
+      - lib/gcc/{{ chost }}/{{ version }}/finclude/**
 
       # include{,-fixed} may not be needed unless -fopenmp is passed (not sure on that)
-      - lib/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/include-fixed/**
-      - lib/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/include/**
+      - lib/gcc/{{ chost }}/{{ version }}/include-fixed/**
+      - lib/gcc/{{ chost }}/{{ version }}/include/**
 
       # Stub libraries
       - lib/libgcc_ext.10.4.dylib
