@@ -16,7 +16,7 @@ source:
     - libgcc_macosx_min_version.patch
 
 build:
-  number: 1
+  number: 2
   skip: True  # [not osx]
 
 requirements:
@@ -144,3 +144,4 @@ about:
 extra:
   recipe-maintainers:
     - beckermr
+    - isuruf
