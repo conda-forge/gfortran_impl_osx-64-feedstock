@@ -13,7 +13,7 @@ cd build_conda
     --disable-multilib \
     --enable-checking=release \
     --disable-bootstrap \
-    --build=${macos_machine} \
+    --target=${macos_machine} \
     --with-gmp=${PREFIX} \
     --with-mpfr=${PREFIX} \
     --with-mpc=${PREFIX} \

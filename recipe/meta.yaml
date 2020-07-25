@@ -3,7 +3,7 @@
 {% set max_libgfortran_version = "5.0.0.a0" %}
 {% set libquadmath_version = [0, 0, 0] %}
 {% set libgcc_s_version = [1, 0, 0] %}
-{% set chost = "x86_64-apple-darwin13.4.0" %}
+{% set chost = macos_machine %}
 
 package:
   name: gfortran_impl_osx-64
@@ -35,6 +35,8 @@ requirements:
 
 outputs:
   - name: libgfortran
+    build:
+      skip: True  # [not osx]
     version: {{ libgfortran_version|join('.') }}
     files:
       - lib/libgfortran.dylib
@@ -91,7 +93,7 @@ outputs:
         - isl
         - mpc
       run:
-        - libgfortran >={{ libgfortran_version|join('.') }},<{{ max_libgfortran_version }}
+        - libgfortran >={{ libgfortran_version|join('.') }},<{{ max_libgfortran_version }}  # [osx]
         - isl
         - mpfr
         - mpc
