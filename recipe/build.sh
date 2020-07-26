@@ -49,6 +49,6 @@ else
   make all-gcc -j${CPU_COUNT}
   make install-gcc -j${CPU_COUNT}
   cp $RECIPE_DIR/libgomp.spec $PREFIX/lib
-  sed "s/@CONDA_PREFIX@/$CONDA_PREFIX/g" $RECIPE_DIR/libgfortran.spec > $PREFIX/lib/libgfortran.spec
+  sed "s#@CONDA_PREFIX@#$CONDA_PREFIX#g" $RECIPE_DIR/libgfortran.spec > $PREFIX/lib/libgfortran.spec
 fi
 
