@@ -95,7 +95,7 @@ outputs:
         - isl <0.20.a0
         - mpc
       run:
-        - libgfortran {{ libgfortran_version|join('.') }} *_{{ build_number }}  # [osx]
+        - libgfortran >={{ libgfortran_version|join('.') }},<{{ max_libgfortran_version }}  # [osx]
         - isl
         - mpfr
         - mpc
