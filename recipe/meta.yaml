@@ -30,7 +30,7 @@ requirements:
     - zlib
     - gmp
     - mpfr
-    - isl <0.22.a0
+    - isl
     - mpc
     - llvm-openmp >=8.0.0
 
@@ -87,12 +87,13 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
+        - make
       host:
         - libiconv
         - zlib
         - gmp
         - mpfr
-        - isl <0.22.a0
+        - isl
         - mpc
       run:
         - libgfortran >={{ libgfortran_version|join('.') }},<{{ max_libgfortran_version }}  # [osx]
