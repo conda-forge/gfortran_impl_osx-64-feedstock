@@ -58,11 +58,6 @@ outputs:
       - lib/libgcc_s_ppc64.{{ libgcc_s_version[0] }}.dylib
       - lib/libgcc_s_x86_64.{{ libgcc_s_version[0] }}.dylib
 
-      - lib/libgfortran.spec
-
-      # For -fopenmp
-      - lib/libgomp.spec
-
     requirements:
       host:
         - llvm-openmp >=8.0.0
@@ -114,6 +109,11 @@ outputs:
       - libexec/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/collect2
       - libexec/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/f951
       - libexec/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/lto-wrapper
+      - lib/libgfortran.spec
+
+      # For -fopenmp
+      - lib/libgomp.spec
+
 
       # For -ffast-math
       - lib/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/crtfastmath.o
