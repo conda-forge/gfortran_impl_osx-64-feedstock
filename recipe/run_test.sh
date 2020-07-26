@@ -2,15 +2,17 @@
 
 set -e
 
-gfortran --help
+${PREFIX}/bin/${macos_machine}-gfortran --help
 
 cp ${RECIPE_DIR}/hello.f90 .
 cp ${RECIPE_DIR}/maths.f90 .
 
-"${PREFIX}/bin/gfortran" -o hello hello.f90
-./hello
-rm -f hello
+if [[ "$target_platform" == osx* ]]; then
+  "${PREFIX}/bin/${macos_machine}-gfortran" -o hello hello.f90
+  ./hello
+  rm -f hello
 
-"${PREFIX}/bin/gfortran" -O3 -fopenmp -ffast-math -o maths maths.f90
-./maths
-rm -f maths
+  "${PREFIX}/bin/${macos_machine}-gfortran" -O3 -fopenmp -ffast-math -o maths maths.f90
+  ./maths
+  rm -f maths
+fi
