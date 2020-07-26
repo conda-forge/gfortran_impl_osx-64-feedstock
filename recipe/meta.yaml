@@ -30,7 +30,7 @@ requirements:
     - zlib
     - gmp
     - mpfr
-    - isl <0.20.a0
+    - isl <0.22.a0
     - mpc
     - llvm-openmp >=8.0.0
 
@@ -92,7 +92,7 @@ outputs:
         - zlib
         - gmp
         - mpfr
-        - isl <0.20.a0
+        - isl <0.22.a0
         - mpc
       run:
         - libgfortran >={{ libgfortran_version|join('.') }},<{{ max_libgfortran_version }}  # [osx]
