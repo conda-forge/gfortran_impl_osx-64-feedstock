@@ -77,8 +77,8 @@ if [[ "$target_platform" == "osx-64" ]]; then
 else
   make all-gcc -j${CPU_COUNT}
   make install-gcc -j${CPU_COUNT}
-  cp $RECIPE_DIR/libgomp.spec $PREFIX/lib
-  sed "s#@CONDA_PREFIX@#$CONDA_PREFIX#g" $RECIPE_DIR/libgfortran.spec > $PREFIX/lib/libgfortran.spec
+  cp $RECIPE_DIR/libgomp.spec $PREFIX/lib/gcc/${macos_machine}/${PKG_VERSION}/libgomp.spec
+  sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > $PREFIX/lib/gcc/${macos_machine}/${PKG_VERSION}/libgfortran.spec
 fi
 
 stop_spinner
