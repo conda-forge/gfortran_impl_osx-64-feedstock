@@ -3,3 +3,5 @@ provider:
   osx: travis
   linux_ppc64le: default
   linux_aarch64: default
+travis:
+  osx_image: xcode6.4
