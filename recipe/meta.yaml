@@ -12,7 +12,7 @@ package:
 
 source:
   url: https://ftp.gnu.org/gnu/gcc/gcc-{{ gfortran_version|join('.') }}/gcc-{{ gfortran_version|join('.') }}.tar.gz
-  sha256: 4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f
+  sha256: 5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6
   patches:
     - libgcc_macosx_min_version.patch
 
