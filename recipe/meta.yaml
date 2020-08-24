@@ -1,4 +1,4 @@
-{% set gfortran_version = [7, 5, 0] %}
+{% set gfortran_version = [9, 3, 0] %}
 {% set libgfortran_version = [4, 0, 0] %}
 {% set max_libgfortran_version = "5.0.0.a0" %}
 {% set libquadmath_version = [0, 0, 0] %}
