@@ -17,7 +17,7 @@ gmp:
 isl:
 - '0.22'
 libiconv:
-- '1.15'
+- '1.16'
 macos_machine:
 - x86_64-apple-darwin13.4.0
 macos_min_version:
@@ -35,5 +35,7 @@ pin_run_as_build:
     max_pin: x
   zlib:
     max_pin: x.x
+target_platform:
+- osx-64
 zlib:
 - '1.2'

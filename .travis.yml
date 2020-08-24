@@ -3,10 +3,7 @@
 
 language: generic
 
-env:
-  global:
-    # The BINSTAR_TOKEN secure variable. This is defined canonically in conda-forge.yml.
-    - secure: "PPWT2u/MyzHSzLKf4OVZ8DmXx5UAeA9W4DY2o2gz1JmN3fLMH0G+ZImgtMnPHeoeNOczGItJQuVWqbSGvjHMA8F7FXgF81Xx2BKQU0iszR3C5Hcotg5Vn+gH4QGOgMNNJ1gJ+xYh0XQKq9tbHHXelOP7zbl6VABG1oGkNF5GTV0c037BIEK0luP1BvogMXyqS0jlO233HRH5P1luiYulUhfnkNUwpg2rmUcT7u8cbODvSzhV78TyhIYxj3S6c+h42fY1V3QorU3ve01ZQ8dgkT0bnYX7WBS5wCJ1Jxe4Wp3U897nN29pXNkA4FGlk0NR9qZ0Iec9Tv8nX4PCtrm8wsgpao/r066UZz9Antk7GcwZLoD6Z2Y5QmntiGLOss1a5ogjPLj3dX1cxjxU89DEwM/uO+VSRYdH9kWr5rPqgA8iSJP+88K8dIWdMrGd2TDf+h1blJ+l12eoiEn9YA/NdxUaqPEhqWKeNwAc98d9KfQmKtQi+TCCeyUCGA76w5uDAOtk677uumJkCtCsWo5678z7jDHaTaSs5gGgH163SaacYIcgud/3Fy+xY2g5FpmuLyZ/nnOuxZpATsvOYdCVDz4rfM95YIO+xl9MeL9NJCCyUH5wcIQ6L/5Wp3J7nPlXArTubWO1A6DUjkfG5p2Aru5AQxsAHLUGXokDv38Cxhg="
+
 
 matrix:
   include:
@@ -14,9 +11,10 @@ matrix:
       os: linux
       arch: ppc64le
 
-    - env: CONFIG=osx_ UPLOAD_PACKAGES=True PLATFORM=osx-64
+    - env: CONFIG=osx_64_ UPLOAD_PACKAGES=True PLATFORM=osx-64
       os: osx
       osx_image: xcode6.4
+      arch: amd64
 
 script:
   - export CI=travis
