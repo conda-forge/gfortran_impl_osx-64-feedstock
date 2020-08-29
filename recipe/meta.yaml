@@ -17,7 +17,7 @@
 
 package:
   name: gfortran_impl_osx-64
-  version: {{ gfortran_version|join('.') }}
+  version: {{ gfortran_version }}
 
 source:
   url: https://ftp.gnu.org/gnu/gcc/gcc-{{ gfortran_version }}/gcc-{{ gfortran_version }}.tar.gz
