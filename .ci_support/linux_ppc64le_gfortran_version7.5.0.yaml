@@ -1,35 +1,29 @@
 MACOSX_DEPLOYMENT_TARGET:
 - '10.9'
 c_compiler:
-- clang
+- gcc
 c_compiler_version:
-- '10'
+- '8'
 channel_sources:
 - conda-forge,defaults
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- clangxx
+- gxx
 cxx_compiler_version:
-- '10'
+- '8'
+docker_image:
+- condaforge/linux-anvil-ppc64le
 gfortran_version:
 - 7.5.0
 gmp:
 - '6'
 isl:
 - '0.22'
-libgfortran_major_version:
-- '4'
-libgfortran_version:
-- 4.0.0
 libiconv:
 - '1.16'
 macos_machine:
 - x86_64-apple-darwin13.4.0
-macos_min_version:
-- '10.9'
-max_libgfortran_version:
-- 5.0.0.a0
 mpfr:
 - '4'
 pin_run_as_build:
@@ -43,15 +37,7 @@ pin_run_as_build:
     max_pin: x
   zlib:
     max_pin: x.x
-source_sha:
-- 4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f
 target_platform:
-- osx-64
-zip_keys:
-- - gfortran_version
-  - libgfortran_version
-  - max_libgfortran_version
-  - libgfortran_major_version
-  - source_sha
+- linux-ppc64le
 zlib:
 - '1.2'

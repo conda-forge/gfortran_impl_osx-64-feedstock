@@ -1,6 +1,6 @@
 ---
 kind: pipeline
-name: linux_aarch64_gfortran_version7.5.0_hb6982fe331
+name: linux_aarch64_gfortran_version7.5.0
 
 platform:
   os: linux
@@ -10,7 +10,7 @@ steps:
 - name: Install and build
   image: condaforge/linux-anvil-aarch64
   environment:
-    CONFIG: linux_aarch64_gfortran_version7.5.0source_sha4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f
+    CONFIG: linux_aarch64_gfortran_version7.5.0
     UPLOAD_PACKAGES: True
     PLATFORM: linux-aarch64
     BINSTAR_TOKEN:
@@ -31,7 +31,7 @@ steps:
 
 ---
 kind: pipeline
-name: linux_aarch64_gfortran_version9.3.0_h8e7f936916
+name: linux_aarch64_gfortran_version9.3.0
 
 platform:
   os: linux
@@ -41,7 +41,7 @@ steps:
 - name: Install and build
   image: condaforge/linux-anvil-aarch64
   environment:
-    CONFIG: linux_aarch64_gfortran_version9.3.0source_sha5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6
+    CONFIG: linux_aarch64_gfortran_version9.3.0
     UPLOAD_PACKAGES: True
     PLATFORM: linux-aarch64
     BINSTAR_TOKEN:

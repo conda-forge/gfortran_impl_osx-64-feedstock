@@ -2,26 +2,6 @@ macos_machine:
   - x86_64-apple-darwin13.4.0
 MACOSX_DEPLOYMENT_TARGET:
   - 10.9
-
 gfortran_version:
   - 7.5.0
   - 9.3.0
-libgfortran_version:
-  - 4.0.0
-  - 5.0.0
-max_libgfortran_version:
-  - 5.0.0.a0
-  - 6.0.0.a0
-libgfortran_major_version:
-  - '4'
-  - '5'
-source_sha:
-  - 4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f
-  - 5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6
-
-zip_keys:
-  - gfortran_version
-  - libgfortran_version
-  - max_libgfortran_version
-  - libgfortran_major_version
-  - source_sha

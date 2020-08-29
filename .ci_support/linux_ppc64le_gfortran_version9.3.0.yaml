@@ -15,7 +15,7 @@ cxx_compiler_version:
 docker_image:
 - condaforge/linux-anvil-ppc64le
 gfortran_version:
-- 7.5.0
+- 9.3.0
 gmp:
 - '6'
 isl:
@@ -37,12 +37,7 @@ pin_run_as_build:
     max_pin: x
   zlib:
     max_pin: x.x
-source_sha:
-- 4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f
 target_platform:
 - linux-ppc64le
-zip_keys:
-- - gfortran_version
-  - source_sha
 zlib:
 - '1.2'

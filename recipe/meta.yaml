@@ -3,6 +3,18 @@
 {% set chost = macos_machine %}
 {% set build_number = 2 %}
 
+{% if gfortran_version == "7.5.0" %}
+{% set libgfortran_version = "4.0.0" %}
+{% set max_libgfortran_version = "5.0.0.a0" %}
+{% set libgfortran_major_version = "4" %}
+{% set source_sha = "4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f" %}
+{% else %}
+{% set libgfortran_version = "5.0.0" %}
+{% set max_libgfortran_version = "6.0.0.a0" %}
+{% set libgfortran_major_version = "5" %}
+{% set source_sha = "5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6" %}
+{% endif %}
+
 package:
   name: gfortran_impl_osx-64
   version: {{ gfortran_version|join('.') }}
