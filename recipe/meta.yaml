@@ -1,18 +1,17 @@
-{% set gfortran_version = [9, 3, 0] %}
-{% set libgfortran_version = [5, 0, 0] %}
-{% set max_libgfortran_version = "6.0.0.a0" %}
 {% set libquadmath_version = [0, 0, 0] %}
 {% set libgcc_s_version = [1, 0, 0] %}
 {% set chost = macos_machine %}
 {% set build_number = 2 %}
+
+{% set libgfortran_major_version = libgfortran_major_version %}
 
 package:
   name: gfortran_impl_osx-64
   version: {{ gfortran_version|join('.') }}
 
 source:
-  url: https://ftp.gnu.org/gnu/gcc/gcc-{{ gfortran_version|join('.') }}/gcc-{{ gfortran_version|join('.') }}.tar.gz
-  sha256: 5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6
+  url: https://ftp.gnu.org/gnu/gcc/gcc-{{ gfortran_version }}/gcc-{{ gfortran_version }}.tar.gz
+  sha256: {{ source_sha }}
   patches:
     - libgcc_macosx_min_version.patch
 
@@ -36,12 +35,14 @@ requirements:
 
 outputs:
   - name: libgfortran
+    version: {{ libgfortran_version }}
     build:
       skip: True  # [not osx]
-    version: {{ libgfortran_version|join('.') }}
+      run_exports:
+        - libgfortran >={{ libgfortran_version }},<{{ max_libgfortran_version }}
     files:
       - lib/libgfortran.dylib
-      - lib/libgfortran.{{ libgfortran_version[0] }}.dylib
+      - lib/libgfortran.{{ libgfortran_major_version }}.dylib
       - lib/libgomp.dylib
       - lib/libgomp.{{ libgcc_s_version[0] }}.dylib
 
@@ -64,12 +65,10 @@ outputs:
       run:
         - llvm-openmp >=8.0.0
 
-    run_exports:
-      - libgfortran >={{ libgfortran_version|join('.') }},<{{ max_libgfortran_version }}
     test:
       commands:
         - test -f "${PREFIX}/lib/libgfortran.dylib"
-        - test -f "${PREFIX}/lib/libgfortran.{{ libgfortran_version[0] }}.dylib"
+        - test -f "${PREFIX}/lib/libgfortran.{{ libgfortran_major_version }}.dylib"
 
         - test -f "${PREFIX}/lib/libgomp.dylib"
         - test -f "${PREFIX}/lib/libgomp.{{ libgcc_s_version[0] }}.dylib"
@@ -82,7 +81,7 @@ outputs:
         - test -f "${PREFIX}/lib/libgcc_s_x86_64.{{ libgcc_s_version[0] }}.dylib"
 
   - name: gfortran_impl_osx-64
-    version: {{ gfortran_version|join('.') }}
+    version: {{ gfortran_version }}
     requirements:
       build:
         - {{ compiler('c') }}
@@ -96,7 +95,7 @@ outputs:
         - isl
         - mpc
       run:
-        - libgfortran >={{ libgfortran_version|join('.') }},<{{ max_libgfortran_version }}  # [osx]
+        - libgfortran >={{ libgfortran_version }},<{{ max_libgfortran_version }}  # [osx]
         - isl
         - mpfr
         - mpc
@@ -107,9 +106,9 @@ outputs:
       - bin/gfortran   # [osx]
       - bin/{{ chost }}-gfortran
 
-      - libexec/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/collect2
-      - libexec/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/f951
-      - libexec/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/lto-wrapper
+      - libexec/gcc/{{ chost }}/{{ gfortran_version }}/collect2
+      - libexec/gcc/{{ chost }}/{{ gfortran_version }}/f951
+      - libexec/gcc/{{ chost }}/{{ gfortran_version }}/lto-wrapper
       - lib/libgfortran.spec
 
       # For -fopenmp
@@ -117,20 +116,20 @@ outputs:
 
 
       # For -ffast-math
-      - lib/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/crtfastmath.o
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/crtfastmath.o
 
       # For -static
       - lib/libgfortran.a
       - lib/libgomp.a
 
-      - lib/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/libgcc.a
-      - lib/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/libgcc_eh.a
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgcc.a
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgcc_eh.a
 
-      - lib/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/finclude/**
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/finclude/**
 
       # include{,-fixed} may not be needed unless -fopenmp is passed (not sure on that)
-      - lib/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/include-fixed/**
-      - lib/gcc/{{ chost }}/{{ gfortran_version|join('.') }}/include/**
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/include-fixed/**
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/include/**
 
       # Stub libraries
       - lib/libgcc_ext.10.4.dylib

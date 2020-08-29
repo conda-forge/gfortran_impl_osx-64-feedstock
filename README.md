@@ -43,31 +43,59 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_64</td>
+              <td>linux_64_gfortran_version7.5.0source_sha4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6149&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gfortran_impl_osx-64-feedstock?branchName=master&jobName=linux&configuration=linux_64_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gfortran_impl_osx-64-feedstock?branchName=master&jobName=linux&configuration=linux_64_gfortran_version7.5.0source_sha4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_aarch64</td>
+              <td>linux_64_gfortran_version9.3.0source_sha5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6149&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gfortran_impl_osx-64-feedstock?branchName=master&jobName=linux&configuration=linux_aarch64_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gfortran_impl_osx-64-feedstock?branchName=master&jobName=linux&configuration=linux_64_gfortran_version9.3.0source_sha5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_ppc64le</td>
+              <td>linux_aarch64_gfortran_version7.5.0source_sha4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6149&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gfortran_impl_osx-64-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gfortran_impl_osx-64-feedstock?branchName=master&jobName=linux&configuration=linux_aarch64_gfortran_version7.5.0source_sha4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_64</td>
+              <td>linux_aarch64_gfortran_version9.3.0source_sha5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6149&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gfortran_impl_osx-64-feedstock?branchName=master&jobName=osx&configuration=osx_64_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gfortran_impl_osx-64-feedstock?branchName=master&jobName=linux&configuration=linux_aarch64_gfortran_version9.3.0source_sha5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_gfortran_version7.5.0source_sha4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6149&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gfortran_impl_osx-64-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_gfortran_version7.5.0source_sha4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_gfortran_version9.3.0source_sha5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6149&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gfortran_impl_osx-64-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_gfortran_version9.3.0source_sha5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_gfortran_version7.5.0libgfortran_version4.0.0max_libgfortran_version5.0.0.a0source_sha4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6149&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gfortran_impl_osx-64-feedstock?branchName=master&jobName=osx&configuration=osx_64_gfortran_version7.5.0libgfortran_version4.0.0max_libgfortran_version5.0.0.a0source_sha4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_gfortran_version9.3.0libgfortran_version5.0.0max_libgfortran_version6.0.0.a0source_sha5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6149&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gfortran_impl_osx-64-feedstock?branchName=master&jobName=osx&configuration=osx_64_gfortran_version9.3.0libgfortran_version5.0.0max_libgfortran_version6.0.0.a0source_sha5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6" alt="variant">
                 </a>
               </td>
             </tr>

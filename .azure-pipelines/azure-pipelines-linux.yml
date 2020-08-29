@@ -8,8 +8,12 @@ jobs:
     vmImage: ubuntu-16.04
   strategy:
     matrix:
-      linux_64_:
-        CONFIG: linux_64_
+      linux_64_gfortran_version7.5.0source_sha4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f:
+        CONFIG: linux_64_gfortran_version7.5.0source_sha4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
+      linux_64_gfortran_version9.3.0source_sha5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6:
+        CONFIG: linux_64_gfortran_version9.3.0source_sha5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
     maxParallel: 8

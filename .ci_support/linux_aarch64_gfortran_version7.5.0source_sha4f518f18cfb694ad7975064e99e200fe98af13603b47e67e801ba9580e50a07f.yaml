@@ -1,0 +1,54 @@
+BUILD:
+- aarch64-conda_cos7-linux-gnu
+MACOSX_DEPLOYMENT_TARGET:
+- '10.9'
+c_compiler:
+- gcc
+c_compiler_version:
+- '7'
+cdt_arch:
+- aarch64
+cdt_name:
+- cos7
+channel_sources:
+- conda-forge
+channel_targets:
+- conda-forge main
+cxx_compiler:
+- gxx
+cxx_compiler_version:
+- '7'
+docker_image:
+- condaforge/linux-anvil-aarch64
+gfortran_version:
+- 7.5.0
+gmp:
+- '6'
+isl:
+- '0.22'
+libiconv:
+- '1.16'
+macos_machine:
+- x86_64-apple-darwin13.4.0
+mpfr:
+- '4'
+pin_run_as_build:
+  gmp:
+    max_pin: x
+  isl:
+    max_pin: x.x
+  libiconv:
+    max_pin: x.x
+  mpfr:
+    max_pin: x
+  zlib:
+    max_pin: x.x
+source_sha:
+- 4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f
+target_platform:
+- linux-aarch64
+zip_keys:
+- - gfortran_version
+  - source_sha
+zlib:
+- '1.2'

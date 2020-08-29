@@ -7,11 +7,20 @@ language: generic
 
 matrix:
   include:
-    - env: CONFIG=linux_ppc64le_ UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
+    - env: CONFIG=linux_ppc64le_gfortran_version7.5.0source_sha4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
       os: linux
       arch: ppc64le
 
-    - env: CONFIG=osx_64_ UPLOAD_PACKAGES=True PLATFORM=osx-64
+    - env: CONFIG=linux_ppc64le_gfortran_version9.3.0source_sha5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
+      os: linux
+      arch: ppc64le
+
+    - env: CONFIG=osx_64_gfortran_version7.5.0libgfortran_version4.0.0max_libgfortran_version5.0.0.a0source_sha4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f UPLOAD_PACKAGES=True PLATFORM=osx-64
+      os: osx
+      osx_image: xcode6.4
+      arch: amd64
+
+    - env: CONFIG=osx_64_gfortran_version9.3.0libgfortran_version5.0.0max_libgfortran_version6.0.0.a0source_sha5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6 UPLOAD_PACKAGES=True PLATFORM=osx-64
       os: osx
       osx_image: xcode6.4
       arch: amd64
