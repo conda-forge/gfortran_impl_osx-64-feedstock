@@ -82,6 +82,8 @@ outputs:
         - llvm-openmp >=8.0.0
       run:
         - llvm-openmp >=8.0.0
+      run_constrained:
+        - {{ pin_subpackage("libgfortran", exact=True) }}
 
     test:
       commands:
