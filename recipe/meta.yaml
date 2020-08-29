@@ -48,8 +48,16 @@ outputs:
     version: {{ libgfortran_version }}
     build:
       skip: True  # [not osx]
+    requirements:
+      run:
+        - libgfortran{{ libgfortran_major_version }}
+
+  - name: libgfortran{{ libgfortran_major_version }}
+    version: {{ gfortran_version }}
+    build:
+      skip: True  # [not osx]
       run_exports:
-        - libgfortran >={{ libgfortran_version }},<{{ max_libgfortran_version }}
+        - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}
     files:
       - lib/libgfortran.dylib
       - lib/libgfortran.{{ libgfortran_major_version }}.dylib
@@ -105,7 +113,7 @@ outputs:
         - isl
         - mpc
       run:
-        - libgfortran >={{ libgfortran_version }},<{{ max_libgfortran_version }}  # [osx]
+        - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}  # [osx]
         - isl
         - mpfr
         - mpc
