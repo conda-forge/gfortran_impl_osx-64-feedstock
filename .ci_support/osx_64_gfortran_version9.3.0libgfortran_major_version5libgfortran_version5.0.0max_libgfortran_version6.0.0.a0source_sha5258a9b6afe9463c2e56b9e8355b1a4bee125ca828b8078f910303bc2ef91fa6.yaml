@@ -51,6 +51,7 @@ zip_keys:
 - - gfortran_version
   - libgfortran_version
   - max_libgfortran_version
+  - libgfortran_major_version
   - source_sha
 zlib:
 - '1.2'

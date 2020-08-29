@@ -20,16 +20,6 @@ matrix:
       osx_image: xcode6.4
       arch: amd64
 
-    - env: CONFIG=osx_64_gfortran_version7.5.0libgfortran_major_version5libgfortran_version4.0.0max_libgfortran_version5.0.0.a0source_sha4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f UPLOAD_PACKAGES=True PLATFORM=osx-64
-      os: osx
-      osx_image: xcode6.4
-      arch: amd64
-
-    - env: CONFIG=osx_64_gfortran_version9.3.0libgfortran_major_version4libgfortran_version5.0.0max_libgfortran_version6.0.0.a0source_sha5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6 UPLOAD_PACKAGES=True PLATFORM=osx-64
-      os: osx
-      osx_image: xcode6.4
-      arch: amd64
-
     - env: CONFIG=osx_64_gfortran_version9.3.0libgfortran_major_version5libgfortran_version5.0.0max_libgfortran_version6.0.0.a0source_sha5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6 UPLOAD_PACKAGES=True PLATFORM=osx-64
       os: osx
       osx_image: xcode6.4
