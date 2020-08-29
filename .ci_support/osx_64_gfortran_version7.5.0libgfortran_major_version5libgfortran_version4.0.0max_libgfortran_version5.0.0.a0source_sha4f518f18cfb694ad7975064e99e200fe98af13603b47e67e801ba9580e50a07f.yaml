@@ -18,6 +18,8 @@ gmp:
 - '6'
 isl:
 - '0.22'
+libgfortran_major_version:
+- '5'
 libgfortran_version:
 - 4.0.0
 libiconv:
