@@ -2,3 +2,6 @@ macos_machine:
   - x86_64-apple-darwin13.4.0
 MACOSX_DEPLOYMENT_TARGET:
   - 10.9
+gfortran_version:
+  - 7.5.0
+  - 9.3.0

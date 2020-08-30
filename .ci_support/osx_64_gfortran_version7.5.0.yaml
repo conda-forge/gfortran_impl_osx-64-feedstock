@@ -12,6 +12,8 @@ cxx_compiler:
 - clangxx
 cxx_compiler_version:
 - '10'
+gfortran_version:
+- 7.5.0
 gmp:
 - '6'
 isl:
