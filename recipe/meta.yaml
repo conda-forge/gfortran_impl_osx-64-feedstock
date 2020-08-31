@@ -1,5 +1,3 @@
-{% set libquadmath_version = [0, 0, 0] %}
-{% set libgcc_s_version = [1, 0, 0] %}
 {% set chost = macos_machine %}
 {% set build_number = 3 %}
 
@@ -62,20 +60,20 @@ outputs:
       - lib/libgfortran.dylib
       - lib/libgfortran.{{ libgfortran_major_version }}.dylib
       - lib/libgomp.dylib
-      - lib/libgomp.{{ libgcc_s_version[0] }}.dylib
+      - lib/libgomp.1.dylib
 
       # Including libquadmath for the time
       # being. This will need to be broken
       # out in the long term.
       - lib/libquadmath.dylib
-      - lib/libquadmath.{{ libquadmath_version[0] }}.dylib
+      - lib/libquadmath.0.dylib
 
       # Including libgcc_s for the time
       # being. This will need to be broken
       # out in the long term.
-      - lib/libgcc_s.{{ libgcc_s_version[0] }}.dylib
-      - lib/libgcc_s_ppc64.{{ libgcc_s_version[0] }}.dylib
-      - lib/libgcc_s_x86_64.{{ libgcc_s_version[0] }}.dylib
+      - lib/libgcc_s.1.dylib
+      - lib/libgcc_s_ppc64.1.dylib
+      - lib/libgcc_s_x86_64.1.dylib
 
     requirements:
       host:
@@ -91,14 +89,14 @@ outputs:
         - test -f "${PREFIX}/lib/libgfortran.{{ libgfortran_major_version }}.dylib"
 
         - test -f "${PREFIX}/lib/libgomp.dylib"
-        - test -f "${PREFIX}/lib/libgomp.{{ libgcc_s_version[0] }}.dylib"
+        - test -f "${PREFIX}/lib/libgomp.1.dylib"
 
         - test -f "${PREFIX}/lib/libquadmath.dylib"
-        - test -f "${PREFIX}/lib/libquadmath.{{ libquadmath_version[0] }}.dylib"
+        - test -f "${PREFIX}/lib/libquadmath.0.dylib"
 
-        - test -f "${PREFIX}/lib/libgcc_s.{{ libgcc_s_version[0] }}.dylib"
-        - test -f "${PREFIX}/lib/libgcc_s_ppc64.{{ libgcc_s_version[0] }}.dylib"
-        - test -f "${PREFIX}/lib/libgcc_s_x86_64.{{ libgcc_s_version[0] }}.dylib"
+        - test -f "${PREFIX}/lib/libgcc_s.1.dylib"
+        - test -f "${PREFIX}/lib/libgcc_s_ppc64.1.dylib"
+        - test -f "${PREFIX}/lib/libgcc_s_x86_64.1.dylib"
 
   - name: gfortran_impl_osx-64
     version: {{ gfortran_version }}
