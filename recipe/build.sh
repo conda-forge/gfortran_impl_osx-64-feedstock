@@ -73,8 +73,25 @@ if [[ "$target_platform" == "$cross_target_platform" && "$target_platform" == "o
     rm libgfortran.spec.bak
   popd
 else
-  make all-gcc -j${CPU_COUNT}
-  make install-gcc -j${CPU_COUNT}
+  if [[ "$CI" == travis ]]; then
+    # using || to quiet logs unless there is an issue
+    {
+      make all-gcc -j"${CPU_COUNT}" >& make_logs.txt
+    } || {
+      tail -n 5000 make_logs.txt
+      exit 1
+    }
+    # using || to quiet logs unless there is an issue
+    {
+      make install-gcc -j"${CPU_COUNT}" >& make_install_logs.txt
+    } || {
+      tail -n 5000 make_install_logs.txt
+      exit 1
+    }
+  else
+    make all-gcc -j${CPU_COUNT}
+    make install-gcc -j${CPU_COUNT}
+  fi
   cp $RECIPE_DIR/libgomp.spec $PREFIX/lib/gcc/${macos_machine}/${PKG_VERSION}/libgomp.spec
   sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > $PREFIX/lib/gcc/${macos_machine}/${PKG_VERSION}/libgfortran.spec
 fi
