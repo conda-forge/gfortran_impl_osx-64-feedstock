@@ -42,14 +42,13 @@ cd build_conda
     --disable-multilib \
     --enable-checking=release \
     --disable-bootstrap \
-    --build=${HOST} \
     --target=${macos_machine} \
     --with-gmp=${PREFIX} \
     --with-mpfr=${PREFIX} \
     --with-mpc=${PREFIX} \
     --with-isl=${PREFIX}
 
-if [[ "$target_platform" == "osx-64" ]]; then
+if [[ "$target_platform" == "osx-"* ]]; then
   # using || to quiet logs unless there is an issue
   {
       make -j"${CPU_COUNT}" >& make_logs.txt

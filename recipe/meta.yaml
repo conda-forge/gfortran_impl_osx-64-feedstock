@@ -6,11 +6,19 @@
 {% set max_libgfortran_version = "5.0.0.a0" %}
 {% set libgfortran_major_version = "4" %}
 {% set source_sha = "4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f" %}
-{% else %}
+{% set url = "https://ftp.gnu.org/gnu/gcc/gcc-" + gfortran_version" + "/gcc-" + gfortran_version + ".tar.gz" %}
+{% elif gfortran_version == "9.3.0" %}
 {% set libgfortran_version = "5.0.0" %}
 {% set max_libgfortran_version = "6.0.0.a0" %}
 {% set libgfortran_major_version = "5" %}
 {% set source_sha = "5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6" %}
+{% set url = "https://ftp.gnu.org/gnu/gcc/gcc-" + gfortran_version" + "/gcc-" + gfortran_version + ".tar.gz" %}
+{% elif gfortran_version == "10.2.0" %}
+{% set libgfortran_version = "5.0.0" %}
+{% set max_libgfortran_version = "6.0.0.a0" %}
+{% set libgfortran_major_version = "5" %}
+{% set source_sha = "faca1e0307ada9a8ddce47e3e1aace96d39f0e690ac7679a966aae56b577d30a" %}
+{% set url = "https://github.com/iains/gcc-darwin-arm64/archive/6cb69bd9bb7959d54584aeb776a13ea64d2c30f3.tar.gz" %}
 {% endif %}
 
 package:
@@ -18,8 +26,10 @@ package:
   version: {{ gfortran_version }}
 
 source:
-  url: https://ftp.gnu.org/gnu/gcc/gcc-{{ gfortran_version }}/gcc-{{ gfortran_version }}.tar.gz
+  url: {{ url }}
   sha256: {{ source_sha }}
+  skip: True  # [gfortran_version == "10.2.0" and cross_target_platform != "osx-arm64"]
+  skip: True  # [gfortran_version != "10.2.0" and cross_target_platform == "osx-arm64"]
   patches:
     - libgcc_macosx_min_version.patch
 
@@ -44,6 +54,7 @@ requirements:
 outputs:
   - name: libgfortran
     version: {{ libgfortran_version }}
+    target: {{ cross_target_platform }}
     build:
       skip: True  # [not osx]
     requirements:
@@ -52,6 +63,7 @@ outputs:
 
   - name: libgfortran{{ libgfortran_major_version }}
     version: {{ gfortran_version }}
+    target: {{ cross_target_platform }}
     build:
       skip: True  # [not osx]
       run_exports:
