@@ -7,86 +7,16 @@ language: generic
 
 matrix:
   include:
-    - env: CONFIG=linux_ppc64le_cross_target_platformosx-64gfortran_version10.2.0macos_machinex86_64-apple-darwin13.4.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
-      os: linux
-      arch: ppc64le
-
-    - env: CONFIG=linux_ppc64le_cross_target_platformosx-64gfortran_version7.5.0macos_machinex86_64-apple-darwin13.4.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
-      os: linux
-      arch: ppc64le
-
-    - env: CONFIG=linux_ppc64le_cross_target_platformosx-64gfortran_version9.3.0macos_machinex86_64-apple-darwin13.4.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
-      os: linux
-      arch: ppc64le
-
     - env: CONFIG=linux_ppc64le_cross_target_platformosx-arm64gfortran_version10.2.0macos_machinearm64-apple-darwin20.0.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
       os: linux
       arch: ppc64le
 
-    - env: CONFIG=linux_ppc64le_cross_target_platformosx-arm64gfortran_version7.5.0macos_machinearm64-apple-darwin20.0.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
-      os: linux
-      arch: ppc64le
-
-    - env: CONFIG=linux_ppc64le_cross_target_platformosx-arm64gfortran_version9.3.0macos_machinearm64-apple-darwin20.0.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
-      os: linux
-      arch: ppc64le
-
-    - env: CONFIG=osx_64_cross_target_platformosx-64gfortran_version10.2.0target_platformosx-64 UPLOAD_PACKAGES=True PLATFORM=osx-64
+    - env: CONFIG=osx_64_cross_target_platformosx-arm64gfortran_version10.2.0macos_machinearm64-apple-darwin20.0.0 UPLOAD_PACKAGES=True PLATFORM=osx-64
       os: osx
       osx_image: xcode6.4
       arch: amd64
 
-    - env: CONFIG=osx_64_cross_target_platformosx-64gfortran_version7.5.0target_platformosx-64 UPLOAD_PACKAGES=True PLATFORM=osx-64
-      os: osx
-      osx_image: xcode6.4
-      arch: amd64
-
-    - env: CONFIG=osx_64_cross_target_platformosx-64gfortran_version9.3.0target_platformosx-64 UPLOAD_PACKAGES=True PLATFORM=osx-64
-      os: osx
-      osx_image: xcode6.4
-      arch: amd64
-
-    - env: CONFIG=osx_64_cross_target_platformosx-arm64gfortran_version10.2.0target_platformosx-64 UPLOAD_PACKAGES=True PLATFORM=osx-64
-      os: osx
-      osx_image: xcode6.4
-      arch: amd64
-
-    - env: CONFIG=osx_64_cross_target_platformosx-arm64gfortran_version7.5.0target_platformosx-64 UPLOAD_PACKAGES=True PLATFORM=osx-64
-      os: osx
-      osx_image: xcode6.4
-      arch: amd64
-
-    - env: CONFIG=osx_64_cross_target_platformosx-arm64gfortran_version9.3.0target_platformosx-64 UPLOAD_PACKAGES=True PLATFORM=osx-64
-      os: osx
-      osx_image: xcode6.4
-      arch: amd64
-
-    - env: CONFIG=osx_arm64_cross_target_platformosx-64gfortran_version10.2.0macos_machinex86_64-apple-darwin13.4.0target_platformosx-arm64 UPLOAD_PACKAGES=True PLATFORM=osx-64
-      os: osx
-      osx_image: xcode6.4
-      arch: amd64
-
-    - env: CONFIG=osx_arm64_cross_target_platformosx-64gfortran_version7.5.0macos_machinex86_64-apple-darwin13.4.0target_platformosx-arm64 UPLOAD_PACKAGES=True PLATFORM=osx-64
-      os: osx
-      osx_image: xcode6.4
-      arch: amd64
-
-    - env: CONFIG=osx_arm64_cross_target_platformosx-64gfortran_version9.3.0macos_machinex86_64-apple-darwin13.4.0target_platformosx-arm64 UPLOAD_PACKAGES=True PLATFORM=osx-64
-      os: osx
-      osx_image: xcode6.4
-      arch: amd64
-
-    - env: CONFIG=osx_arm64_cross_target_platformosx-arm64gfortran_version10.2.0macos_machinearm64-apple-darwin20.0.0target_platformosx-arm64 UPLOAD_PACKAGES=True PLATFORM=osx-64
-      os: osx
-      osx_image: xcode6.4
-      arch: amd64
-
-    - env: CONFIG=osx_arm64_cross_target_platformosx-arm64gfortran_version7.5.0macos_machinearm64-apple-darwin20.0.0target_platformosx-arm64 UPLOAD_PACKAGES=True PLATFORM=osx-64
-      os: osx
-      osx_image: xcode6.4
-      arch: amd64
-
-    - env: CONFIG=osx_arm64_cross_target_platformosx-arm64gfortran_version9.3.0macos_machinearm64-apple-darwin20.0.0target_platformosx-arm64 UPLOAD_PACKAGES=True PLATFORM=osx-64
+    - env: CONFIG=osx_arm64_cross_target_platformosx-arm64gfortran_version10.2.0target_platformosx-arm64 UPLOAD_PACKAGES=True PLATFORM=osx-64
       os: osx
       osx_image: xcode6.4
       arch: amd64
