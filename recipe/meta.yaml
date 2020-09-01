@@ -6,14 +6,18 @@
 {% set max_libgfortran_version = "5.0.0.a0" %}
 {% set libgfortran_major_version = "4" %}
 {% set source_sha = "4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f" %}
-{% set url = "https://ftp.gnu.org/gnu/gcc/gcc-" + gfortran_version" + "/gcc-" + gfortran_version + ".tar.gz" %}
-{% elif gfortran_version == "9.3.0" %}
+{% set url = "https://ftp.gnu.org/gnu/gcc/gcc-7.5.0/gcc-7.5.0.tar.gz" %}
+{% endif %}
+
+{% if gfortran_version == "9.3.0" %}
 {% set libgfortran_version = "5.0.0" %}
 {% set max_libgfortran_version = "6.0.0.a0" %}
 {% set libgfortran_major_version = "5" %}
 {% set source_sha = "5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6" %}
-{% set url = "https://ftp.gnu.org/gnu/gcc/gcc-" + gfortran_version" + "/gcc-" + gfortran_version + ".tar.gz" %}
-{% elif gfortran_version == "10.2.0" %}
+{% set url = "https://ftp.gnu.org/gnu/gcc/gcc-9.3.0/gcc-9.3.0.tar.gz" %}
+{% endif %}
+
+{% if gfortran_version == "10.2.0" %}
 {% set libgfortran_version = "5.0.0" %}
 {% set max_libgfortran_version = "6.0.0.a0" %}
 {% set libgfortran_major_version = "5" %}
