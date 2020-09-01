@@ -3,17 +3,19 @@ MACOSX_DEPLOYMENT_TARGET:
 c_compiler:
 - gcc
 c_compiler_version:
-- '8'
+- '7'
 channel_sources:
 - conda-forge,defaults
 channel_targets:
 - conda-forge main
+cross_target_platform:
+- osx-64
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '8'
+- '7'
 docker_image:
-- condaforge/linux-anvil-ppc64le
+- condaforge/linux-anvil-comp7
 gfortran_version:
 - 7.5.0
 gmp:
@@ -38,6 +40,10 @@ pin_run_as_build:
   zlib:
     max_pin: x.x
 target_platform:
-- linux-ppc64le
+- linux-64
+zip_keys:
+- - cross_target_platform
+  - MACOSX_DEPLOYMENT_TARGET
+  - macos_machine
 zlib:
 - '1.2'
