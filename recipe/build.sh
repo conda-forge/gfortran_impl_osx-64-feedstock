@@ -47,7 +47,7 @@ cd build_conda
     --with-mpc=${PREFIX} \
     --with-isl=${PREFIX}
 
-if [[ "$target_platform" == "osx-"* ]]; then
+if [[ "$target_platform" == "$cross_target_platform" && "$target_platform" == "osx-"* ]]; then
   # using || to quiet logs unless there is an issue
   {
       make -j"${CPU_COUNT}" >& make_logs.txt
