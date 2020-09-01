@@ -33,14 +33,14 @@ package:
 source:
   url: {{ url }}
   sha256: {{ source_sha }}
-  skip: True  # [gfortran_version == "10.2.0" and cross_target_platform != "osx-arm64"]
-  skip: True  # [gfortran_version != "10.2.0" and cross_target_platform == "osx-arm64"]
   patches:
     - libgcc_macosx_min_version.patch
 
 build:
   number: {{ build_number }}
   skip: True  # [win]
+  skip: True  # [gfortran_version == "10.2.0" and cross_target_platform != "osx-arm64"]
+  skip: True  # [gfortran_version != "10.2.0" and cross_target_platform == "osx-arm64"]
 
 requirements:
   build:
