@@ -1,5 +1,3 @@
-MACOSX_DEPLOYMENT_TARGET:
-- '11.0'
 c_compiler:
 - gcc
 c_compiler_version:
@@ -43,7 +41,6 @@ target_platform:
 - linux-ppc64le
 zip_keys:
 - - cross_target_platform
-  - MACOSX_DEPLOYMENT_TARGET
   - macos_machine
 zlib:
 - '1.2'

@@ -43,7 +43,6 @@ target_platform:
 - osx-64
 zip_keys:
 - - cross_target_platform
-  - MACOSX_DEPLOYMENT_TARGET
   - macos_machine
 zlib:
 - '1.2'

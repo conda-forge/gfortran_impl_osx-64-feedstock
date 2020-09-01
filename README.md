@@ -3,7 +3,7 @@ About gfortran_impl_osx-64
 
 Home: http://gcc.gnu.org/
 
-Package license: GPL 3 (with GCC Runtime Library Exception 3.1)
+Package license: GPL-3.0-only WITH GCC-exception-3.1
 
 Feedstock license: BSD-3-Clause
 

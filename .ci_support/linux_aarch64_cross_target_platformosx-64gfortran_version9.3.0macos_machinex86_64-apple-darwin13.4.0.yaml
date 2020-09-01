@@ -1,7 +1,5 @@
 BUILD:
 - aarch64-conda_cos7-linux-gnu
-MACOSX_DEPLOYMENT_TARGET:
-- '10.9'
 c_compiler:
 - gcc
 c_compiler_version:
@@ -49,7 +47,6 @@ target_platform:
 - linux-aarch64
 zip_keys:
 - - cross_target_platform
-  - MACOSX_DEPLOYMENT_TARGET
   - macos_machine
 zlib:
 - '1.2'
