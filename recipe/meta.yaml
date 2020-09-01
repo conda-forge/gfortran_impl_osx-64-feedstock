@@ -61,7 +61,7 @@ outputs:
     version: {{ libgfortran_version }}{{ version_suffix }}
     target: {{ cross_target_platform }}
     build:
-      skip: True  # [not osx]
+      skip: True  # [target_platform != cross_target_platform]
     requirements:
       run:
         - libgfortran{{ libgfortran_major_version }}
@@ -70,7 +70,7 @@ outputs:
     version: {{ gfortran_version }}{{ version_suffix }}
     target: {{ cross_target_platform }}
     build:
-      skip: True  # [not osx]
+      skip: True  # [target_platform != cross_target_platform]
       run_exports:
         - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}
     files:
