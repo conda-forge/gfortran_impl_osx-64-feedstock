@@ -31,32 +31,32 @@ matrix:
       os: linux
       arch: ppc64le
 
-    - env: CONFIG=osx_64_cross_target_platformosx-64gfortran_version10.2.0 UPLOAD_PACKAGES=True PLATFORM=osx-64
+    - env: CONFIG=osx_64_cross_target_platformosx-64gfortran_version10.2.0target_platformosx-64 UPLOAD_PACKAGES=True PLATFORM=osx-64
       os: osx
       osx_image: xcode6.4
       arch: amd64
 
-    - env: CONFIG=osx_64_cross_target_platformosx-64gfortran_version7.5.0 UPLOAD_PACKAGES=True PLATFORM=osx-64
+    - env: CONFIG=osx_64_cross_target_platformosx-64gfortran_version7.5.0target_platformosx-64 UPLOAD_PACKAGES=True PLATFORM=osx-64
       os: osx
       osx_image: xcode6.4
       arch: amd64
 
-    - env: CONFIG=osx_64_cross_target_platformosx-64gfortran_version9.3.0 UPLOAD_PACKAGES=True PLATFORM=osx-64
+    - env: CONFIG=osx_64_cross_target_platformosx-64gfortran_version9.3.0target_platformosx-64 UPLOAD_PACKAGES=True PLATFORM=osx-64
       os: osx
       osx_image: xcode6.4
       arch: amd64
 
-    - env: CONFIG=osx_64_cross_target_platformosx-arm64gfortran_version10.2.0 UPLOAD_PACKAGES=True PLATFORM=osx-64
+    - env: CONFIG=osx_64_cross_target_platformosx-arm64gfortran_version10.2.0target_platformosx-64 UPLOAD_PACKAGES=True PLATFORM=osx-64
       os: osx
       osx_image: xcode6.4
       arch: amd64
 
-    - env: CONFIG=osx_64_cross_target_platformosx-arm64gfortran_version7.5.0 UPLOAD_PACKAGES=True PLATFORM=osx-64
+    - env: CONFIG=osx_64_cross_target_platformosx-arm64gfortran_version7.5.0target_platformosx-64 UPLOAD_PACKAGES=True PLATFORM=osx-64
       os: osx
       osx_image: xcode6.4
       arch: amd64
 
-    - env: CONFIG=osx_64_cross_target_platformosx-arm64gfortran_version9.3.0 UPLOAD_PACKAGES=True PLATFORM=osx-64
+    - env: CONFIG=osx_64_cross_target_platformosx-arm64gfortran_version9.3.0target_platformosx-64 UPLOAD_PACKAGES=True PLATFORM=osx-64
       os: osx
       osx_image: xcode6.4
       arch: amd64
