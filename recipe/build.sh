@@ -38,7 +38,6 @@ cd build_conda
     --prefix=${PREFIX} \
     --with-libiconv-prefix=${PREFIX} \
     --enable-languages=c,fortran \
-    --with-tune=generic \
     --disable-multilib \
     --enable-checking=release \
     --disable-bootstrap \
