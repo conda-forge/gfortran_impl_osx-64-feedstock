@@ -19,6 +19,7 @@
 
 {% if gfortran_version == "10.2.0" %}
 {% set libgfortran_version = "5.0.0" %}
+{% set version_suffix = ".dev0" %}
 {% set max_libgfortran_version = "6.0.0.a0" %}
 {% set libgfortran_major_version = "5" %}
 {% set source_sha = "faca1e0307ada9a8ddce47e3e1aace96d39f0e690ac7679a966aae56b577d30a" %}
@@ -27,7 +28,7 @@
 
 package:
   name: gfortran_impl_osx-64
-  version: {{ gfortran_version }}
+  version: {{ gfortran_version }}{{ version_suffix }}
 
 source:
   url: {{ url }}
@@ -57,7 +58,7 @@ requirements:
 
 outputs:
   - name: libgfortran
-    version: {{ libgfortran_version }}
+    version: {{ libgfortran_version }}{{ version_suffix }}
     target: {{ cross_target_platform }}
     build:
       skip: True  # [not osx]
@@ -66,7 +67,7 @@ outputs:
         - libgfortran{{ libgfortran_major_version }}
 
   - name: libgfortran{{ libgfortran_major_version }}
-    version: {{ gfortran_version }}
+    version: {{ gfortran_version }}{{ version_suffix }}
     target: {{ cross_target_platform }}
     build:
       skip: True  # [not osx]
@@ -115,7 +116,7 @@ outputs:
         - test -f "${PREFIX}/lib/libgcc_s_x86_64.1.dylib"
 
   - name: gfortran_impl_osx-64
-    version: {{ gfortran_version }}
+    version: {{ gfortran_version }}{{ version_suffix }}
     requirements:
       build:
         - {{ compiler('c') }}
