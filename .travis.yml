@@ -61,6 +61,36 @@ matrix:
       osx_image: xcode6.4
       arch: amd64
 
+    - env: CONFIG=osx_arm64_cross_target_platformosx-64gfortran_version10.2.0macos_machinex86_64-apple-darwin13.4.0target_platformosx-arm64 UPLOAD_PACKAGES=True PLATFORM=osx-64
+      os: osx
+      osx_image: xcode6.4
+      arch: amd64
+
+    - env: CONFIG=osx_arm64_cross_target_platformosx-64gfortran_version7.5.0macos_machinex86_64-apple-darwin13.4.0target_platformosx-arm64 UPLOAD_PACKAGES=True PLATFORM=osx-64
+      os: osx
+      osx_image: xcode6.4
+      arch: amd64
+
+    - env: CONFIG=osx_arm64_cross_target_platformosx-64gfortran_version9.3.0macos_machinex86_64-apple-darwin13.4.0target_platformosx-arm64 UPLOAD_PACKAGES=True PLATFORM=osx-64
+      os: osx
+      osx_image: xcode6.4
+      arch: amd64
+
+    - env: CONFIG=osx_arm64_cross_target_platformosx-arm64gfortran_version10.2.0macos_machinearm64-apple-darwin20.0.0target_platformosx-arm64 UPLOAD_PACKAGES=True PLATFORM=osx-64
+      os: osx
+      osx_image: xcode6.4
+      arch: amd64
+
+    - env: CONFIG=osx_arm64_cross_target_platformosx-arm64gfortran_version7.5.0macos_machinearm64-apple-darwin20.0.0target_platformosx-arm64 UPLOAD_PACKAGES=True PLATFORM=osx-64
+      os: osx
+      osx_image: xcode6.4
+      arch: amd64
+
+    - env: CONFIG=osx_arm64_cross_target_platformosx-arm64gfortran_version9.3.0macos_machinearm64-apple-darwin20.0.0target_platformosx-arm64 UPLOAD_PACKAGES=True PLATFORM=osx-64
+      os: osx
+      osx_image: xcode6.4
+      arch: amd64
+
 script:
   - export CI=travis
   - export GIT_BRANCH="$TRAVIS_BRANCH"
