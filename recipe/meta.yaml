@@ -18,7 +18,7 @@
 {% set url = "https://ftp.gnu.org/gnu/gcc/gcc-9.3.0/gcc-9.3.0.tar.gz" %}
 {% endif %}
 
-{% if gfortran_version == "10.2.0" %}
+{% if gfortran_version == "11.0.0" %}
 {% set libgfortran_version = "5.0.0" %}
 {% set version_suffix = ".dev0" %}
 {% set max_libgfortran_version = "6.0.0.a0" %}
@@ -40,10 +40,10 @@ source:
 build:
   number: {{ build_number }}
   skip: True  # [win]
-  skip: True  # [gfortran_version == "10.2.0" and cross_target_platform != "osx-arm64"]
-  skip: True  # [gfortran_version != "10.2.0" and cross_target_platform == "osx-arm64"]
+  skip: True  # [gfortran_version == "11.0.0" and cross_target_platform != "osx-arm64"]
+  skip: True  # [gfortran_version != "11.0.0" and cross_target_platform == "osx-arm64"]
   # TODO: remove this
-  skip: True  # [gfortran_version != "10.2.0" or cross_target_platform != "osx-arm64"]
+  skip: True  # [gfortran_version != "11.0.0" or cross_target_platform != "osx-arm64"]
 
 requirements:
   build:
