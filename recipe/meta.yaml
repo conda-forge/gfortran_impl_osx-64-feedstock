@@ -126,6 +126,8 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - make
+        - flex
+        - bison
       host:
         - libiconv
         - zlib
