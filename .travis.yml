@@ -18,7 +18,7 @@ matrix:
 
     - env: CONFIG=osx_arm64_cross_target_platformosx-arm64gfortran_version11.0.0target_platformosx-arm64 UPLOAD_PACKAGES=True PLATFORM=osx-64
       os: osx
-      osx_image: xcode12u
+      osx_image: xcode6.4
       arch: amd64
 
 script:
