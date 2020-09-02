@@ -99,3 +99,5 @@ else
 fi
 
 stop_spinner
+
+ls -al $PREFIX/lib

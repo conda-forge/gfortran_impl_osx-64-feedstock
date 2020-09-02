@@ -28,7 +28,7 @@
 {% endif %}
 
 package:
-  name: gfortran_impl_osx-64
+  name: gfortran_impl_{{ cross_target_platform }}
   version: {{ gfortran_version }}{{ version_suffix }}
 
 source:
@@ -98,9 +98,9 @@ outputs:
 
     requirements:
       host:
-        - llvm-openmp >=8.0.0
+        #- llvm-openmp >=8.0.0
       run:
-        - llvm-openmp >=8.0.0
+        #- llvm-openmp >=8.0.0
       run_constrained:
         - {{ pin_subpackage("libgfortran", exact=True) }}
 
@@ -119,7 +119,7 @@ outputs:
         - test -f "${PREFIX}/lib/libgcc_s_ppc64.1.dylib"
         - test -f "${PREFIX}/lib/libgcc_s_x86_64.1.dylib"
 
-  - name: gfortran_impl_osx-64
+  - name: gfortran_impl_{{ cross_target_platform }}
     version: {{ gfortran_version }}{{ version_suffix }}
     requirements:
       build:
@@ -136,7 +136,7 @@ outputs:
         - isl
         - mpc
       run:
-        - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}  # [osx]
+        - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}  # [target_platform == cross_target_platform]
         - isl
         - mpfr
         - mpc
@@ -144,7 +144,7 @@ outputs:
         - zlib
         - libiconv
     files:
-      - bin/gfortran   # [osx]
+      - bin/gfortran   # [target_platform == cross_target_platform]
       - bin/{{ chost }}-gfortran
 
       - libexec/gcc/{{ chost }}/{{ gfortran_version }}/collect2
