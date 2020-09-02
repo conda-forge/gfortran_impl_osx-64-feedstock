@@ -36,6 +36,7 @@ cd build_conda
 
 ../configure \
     --prefix=${PREFIX} \
+    --build=${BUILD} \
     --with-libiconv-prefix=${PREFIX} \
     --enable-languages=c,fortran \
     --disable-multilib \
