@@ -50,6 +50,12 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - make
+    - libiconv  # [build_platform != target_platform]
+    - zlib      # [build_platform != target_platform]
+    - gmp       # [build_platform != target_platform]
+    - mpfr      # [build_platform != target_platform]
+    - isl       # [build_platform != target_platform]
+    - mpc       # [build_platform != target_platform]
   host:
     - libiconv
     - zlib
