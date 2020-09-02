@@ -1,6 +1,6 @@
 ---
 kind: pipeline
-name: linux_aarch64_cross_target_platform_heca718e064
+name: linux_aarch64_cross_target_platform_h72b6c8165c
 
 platform:
   os: linux
@@ -10,7 +10,7 @@ steps:
 - name: Install and build
   image: condaforge/linux-anvil-aarch64
   environment:
-    CONFIG: linux_aarch64_cross_target_platformosx-arm64gfortran_version10.2.0macos_machinearm64-apple-darwin20.0.0
+    CONFIG: linux_aarch64_cross_target_platformosx-arm64gfortran_version11.0.0macos_machinearm64-apple-darwin20.0.0
     UPLOAD_PACKAGES: True
     PLATFORM: linux-aarch64
     BINSTAR_TOKEN:
