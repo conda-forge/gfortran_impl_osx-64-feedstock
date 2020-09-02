@@ -93,8 +93,8 @@ else
     make all-gcc -j${CPU_COUNT}
     make install-gcc -j${CPU_COUNT}
   fi
-  cp $RECIPE_DIR/libgomp.spec $PREFIX/lib/gcc/${macos_machine}/${PKG_VERSION}/libgomp.spec
-  sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > $PREFIX/lib/gcc/${macos_machine}/${PKG_VERSION}/libgfortran.spec
+  cp $RECIPE_DIR/libgomp.spec $PREFIX/lib/gcc/${macos_machine}/${gfortran_version}/libgomp.spec
+  sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > $PREFIX/lib/gcc/${macos_machine}/${gfortran_version}/libgfortran.spec
 fi
 
 stop_spinner
