@@ -31,21 +31,22 @@ function stop_spinner {
 
 function quiet_run {
     rm -f logs.txt
-    if [[ "$CI" == "travis" ]]; then
+    if [[ -z "$CI" ]] || [[ "$target_platform" != osx*  ]]; then
+        $@
+    else
         {
             $@ >& logs.txt
         } || {
             tail -n 5000 logs.txt
             exit 1
         }
-    else
-        $@
     fi
 }
 
 start_spinner
 
 export host_platform=$target_platform
+export TARGET=${macos_machine}
 
 if [[ "$host_platform" != "$build_platform" ]]; then
     # If the compiler is a cross-native/canadian-cross compiler
@@ -57,7 +58,7 @@ if [[ "$host_platform" != "$build_platform" ]]; then
        --prefix=${BUILD_PREFIX} \
        --build=${BUILD} \
        --host=${BUILD} \
-       --target=${macos_machine} \
+       --target=${TARGET} \
        --with-libiconv-prefix=${BUILD_PREFIX} \
        --enable-languages=c \
        --disable-multilib \
@@ -79,7 +80,7 @@ cd build_conda
     --prefix=${PREFIX} \
     --build=${BUILD} \
     --host=${HOST} \
-    --target=${macos_machine} \
+    --target=${TARGET} \
     --with-libiconv-prefix=${PREFIX} \
     --enable-languages=c,fortran \
     --disable-multilib \
@@ -107,8 +108,8 @@ else
   # The compiler is a cross compiler
   quiet_run make all-gcc -j${CPU_COUNT}  || (cat $HOST/libgcc/config.log && false)
   quiet_run make install-gcc -j${CPU_COUNT}
-  cp $RECIPE_DIR/libgomp.spec $PREFIX/lib/gcc/${macos_machine}/${gfortran_version}/libgomp.spec
-  sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > $PREFIX/lib/gcc/${macos_machine}/${gfortran_version}/libgfortran.spec
+  cp $RECIPE_DIR/libgomp.spec $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/libgomp.spec
+  sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/libgfortran.spec
 fi
 
 stop_spinner
