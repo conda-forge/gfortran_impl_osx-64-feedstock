@@ -1,6 +1,5 @@
 conda_forge_output_validation: true
 provider:
-  osx_64: travis
   linux_ppc64le: default
   linux_aarch64: default
 travis:
