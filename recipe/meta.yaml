@@ -42,8 +42,6 @@ build:
   skip: True  # [win]
   skip: True  # [gfortran_version == "11.0.0" and cross_target_platform != "osx-arm64"]
   skip: True  # [gfortran_version != "11.0.0" and cross_target_platform == "osx-arm64"]
-  # TODO: remove this
-  skip: True  # [gfortran_version != "11.0.0" or cross_target_platform != "osx-arm64"]
 
 requirements:
   build:
