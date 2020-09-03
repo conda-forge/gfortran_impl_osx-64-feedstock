@@ -45,6 +45,27 @@ build:
   # TODO: remove this
   skip: True  # [gfortran_version != "11.0.0" or cross_target_platform != "osx-arm64"]
 
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - make
+    - flex
+    - bison
+    - libiconv  # [build_platform != target_platform]
+    - zlib      # [build_platform != target_platform]
+    - gmp       # [build_platform != target_platform]
+    - mpfr      # [build_platform != target_platform]
+    - isl       # [build_platform != target_platform]
+    - mpc       # [build_platform != target_platform]
+  host:
+    - libiconv
+    - zlib
+    - gmp
+    - mpfr
+    - isl
+    - mpc
+
 outputs:
   - name: gfortran_impl_{{ cross_target_platform }}
     version: {{ gfortran_version }}{{ version_suffix }}
