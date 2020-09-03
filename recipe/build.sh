@@ -29,10 +29,45 @@ function stop_spinner {
     >&2 echo "Building libraries finished."
 }
 
+function quiet_run {
+    rm -f logs.txt
+    if [[ "$CI" == "travis" ]]; then
+        {
+            $@ >& logs.txt
+        } || {
+            tail -n 5000 logs.txt
+            exit 1
+        }
+    else
+        $@
+    fi
+}
+
 start_spinner
 
-mkdir -p build_conda
-cd build_conda
+export host_platform=$target_platform
+
+if [[ "$host_platform" != "$build_platform" ]]; then
+    # If the compiler is a cross-native/canadian-cross compiler
+    mkdir -p build_host
+    pushd build_host
+    CC=$CC_FOR_BUILD CXX=$CXX_FOR_BUILD CFLAGS="" CXXFLAGS="" CPPFLAGS="" LDFLAGS="" ../configure \
+       --prefix=${BUILD_PREFIX} \
+       --with-libiconv-prefix=${BUILD_PREFIX} \
+       --enable-languages=c \
+       --disable-multilib \
+       --enable-checking=release \
+       --disable-bootstrap \
+       --target=${macos_machine} \
+       --host=${BUILD} \
+       --with-gmp=${BUILD_PREFIX} \
+       --with-mpfr=${BUILD_PREFIX} \
+       --with-mpc=${BUILD_PREFIX} \
+       --with-isl=${BUILD_PREFIX}
+    quiet_run make all-gcc -j${CPU_COUNT}
+    quiet_run make install-gcc -j${CPU_COUNT}
+    popd
+fi
 
 ../configure \
     --prefix=${PREFIX} \
@@ -48,22 +83,10 @@ cd build_conda
     --with-mpc=${PREFIX} \
     --with-isl=${PREFIX}
 
-if [[ "$target_platform" == "$cross_target_platform" && "$target_platform" == "osx-"* ]]; then
-  # using || to quiet logs unless there is an issue
-  {
-      make -j"${CPU_COUNT}" >& make_logs.txt
-  } || {
-      tail -n 5000 make_logs.txt
-      exit 1
-  }
-
-  # using || to quiet logs unless there is an issue
-  {
-      make install-strip >& make_install_logs.txt
-  } || {
-      tail -n 5000 make_install_logs.txt
-      exit 1
-  }
+if [[ "$host_platform" == "$cross_target_platform" ]]; then
+  # If the compiler is a cross-native/native compiler
+  quiet_run make -j"${CPU_COUNT}"
+  quiet_run make install-strip
   rm $PREFIX/lib/libgomp.dylib
   rm $PREFIX/lib/libgomp.1.dylib
   ln -s $PREFIX/lib/libomp.dylib $PREFIX/lib/libgomp.dylib
@@ -74,26 +97,9 @@ if [[ "$target_platform" == "$cross_target_platform" && "$target_platform" == "o
     rm libgfortran.spec.bak
   popd
 else
-  if [[ "$CI" == travis ]]; then
-    # using || to quiet logs unless there is an issue
-    {
-      make all-gcc -j"${CPU_COUNT}" >& make_logs.txt
-    } || {
-      tail -n 5000 make_logs.txt
-      exit 1
-    }
-    # using || to quiet logs unless there is an issue
-    {
-      make install-gcc -j"${CPU_COUNT}" >& make_install_logs.txt
-    } || {
-      tail -n 5000 make_install_logs.txt
-      exit 1
-    }
-  else
-    make all-gcc -j${CPU_COUNT}
-    make install-gcc -j${CPU_COUNT}
-  fi
-  ls $PREFIX/lib/gcc/${macos_machine}/
+  # The compiler is a cross compiler
+  quiet_run make all-gcc -j${CPU_COUNT}
+  quiet_run make install-gcc -j${CPU_COUNT}
   cp $RECIPE_DIR/libgomp.spec $PREFIX/lib/gcc/${macos_machine}/${gfortran_version}/libgomp.spec
   sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > $PREFIX/lib/gcc/${macos_machine}/${gfortran_version}/libgfortran.spec
 fi
