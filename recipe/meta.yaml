@@ -48,7 +48,8 @@ build:
 outputs:
   - name: gfortran_impl_{{ cross_target_platform }}
     version: {{ gfortran_version }}{{ version_suffix }}
-    activate_in_script: True
+    build:
+      activate_in_script: True
     requirements:
       build:
         - {{ compiler('c') }}
