@@ -53,13 +53,14 @@ if [[ "$host_platform" != "$build_platform" ]]; then
     pushd build_host
     CC=$CC_FOR_BUILD CXX=$CXX_FOR_BUILD CFLAGS="" CXXFLAGS="" CPPFLAGS="" LDFLAGS="" ../configure \
        --prefix=${BUILD_PREFIX} \
+       --build=${BUILD} \
+       --host=${BUILD} \
+       --target=${macos_machine} \
        --with-libiconv-prefix=${BUILD_PREFIX} \
        --enable-languages=c \
        --disable-multilib \
        --enable-checking=release \
        --disable-bootstrap \
-       --target=${macos_machine} \
-       --host=${BUILD} \
        --with-gmp=${BUILD_PREFIX} \
        --with-mpfr=${BUILD_PREFIX} \
        --with-mpc=${BUILD_PREFIX} \
@@ -75,12 +76,13 @@ cd build_conda
 ../configure \
     --prefix=${PREFIX} \
     --build=${BUILD} \
+    --host=${HOST} \
+    --target=${macos_machine} \
     --with-libiconv-prefix=${PREFIX} \
     --enable-languages=c,fortran \
     --disable-multilib \
     --enable-checking=release \
     --disable-bootstrap \
-    --target=${macos_machine} \
     --with-gmp=${PREFIX} \
     --with-mpfr=${PREFIX} \
     --with-mpc=${PREFIX} \
