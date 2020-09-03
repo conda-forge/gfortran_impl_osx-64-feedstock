@@ -69,6 +69,9 @@ if [[ "$host_platform" != "$build_platform" ]]; then
     popd
 fi
 
+mkdir build_conda
+cd build_conda
+
 ../configure \
     --prefix=${PREFIX} \
     --build=${BUILD} \
