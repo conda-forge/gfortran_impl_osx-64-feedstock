@@ -51,7 +51,7 @@ if [[ "$host_platform" != "$build_platform" ]]; then
     # If the compiler is a cross-native/canadian-cross compiler
     mkdir -p build_host
     pushd build_host
-    CC=$CC_FOR_BUILD CXX=$CXX_FOR_BUILD CFLAGS="" CXXFLAGS="" CPPFLAGS="" LDFLAGS="" ../configure \
+    CC=$CC_FOR_BUILD CXX=$CXX_FOR_BUILD CFLAGS="" CXXFLAGS="" CPPFLAGS="" LDFLAGS="-L$BUILD_PREFIX/lib -Wl,-rpath,$BUILD_PREFIX/lib" ../configure \
        --prefix=${BUILD_PREFIX} \
        --build=${BUILD} \
        --host=${BUILD} \
