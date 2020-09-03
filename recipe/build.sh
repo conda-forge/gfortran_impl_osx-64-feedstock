@@ -68,6 +68,7 @@ if [[ "$host_platform" != "$build_platform" ]]; then
        --with-mpfr=${BUILD_PREFIX} \
        --with-mpc=${BUILD_PREFIX} \
        --with-isl=${BUILD_PREFIX}
+    echo "Building a compiler that runs on ${BUILD} and targets ${TARGET}"
     quiet_run make all-gcc -j${CPU_COUNT}
     quiet_run make install-gcc -j${CPU_COUNT}
     popd
@@ -91,6 +92,7 @@ cd build_conda
     --with-mpc=${PREFIX} \
     --with-isl=${PREFIX}
 
+echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
 if [[ "$host_platform" == "$cross_target_platform" ]]; then
   # If the compiler is a cross-native/native compiler
   quiet_run make -j"${CPU_COUNT}"
