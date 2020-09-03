@@ -46,66 +46,9 @@ build:
   skip: True  # [gfortran_version != "11.0.0" or cross_target_platform != "osx-arm64"]
 
 outputs:
-  - name: libgfortran
-    version: {{ libgfortran_version }}{{ version_suffix }}
-    target: {{ cross_target_platform }}
-    build:
-      skip: True  # [target_platform != cross_target_platform]
-    requirements:
-      run:
-        - libgfortran{{ libgfortran_major_version }}
-
-  - name: libgfortran{{ libgfortran_major_version }}
-    version: {{ gfortran_version }}{{ version_suffix }}
-    target: {{ cross_target_platform }}
-    build:
-      skip: True  # [target_platform != cross_target_platform]
-      run_exports:
-        - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}
-    files:
-      - lib/libgfortran.dylib
-      - lib/libgfortran.{{ libgfortran_major_version }}.dylib
-      - lib/libgomp.dylib
-      - lib/libgomp.1.dylib
-
-      # Including libquadmath for the time
-      # being. This will need to be broken
-      # out in the long term.
-      - lib/libquadmath.dylib
-      - lib/libquadmath.0.dylib
-
-      # Including libgcc_s for the time
-      # being. This will need to be broken
-      # out in the long term.
-      - lib/libgcc_s.1.dylib
-      - lib/libgcc_s_ppc64.1.dylib
-      - lib/libgcc_s_x86_64.1.dylib
-
-    requirements:
-      host:
-        - llvm-openmp >=8.0.0
-      run:
-        - llvm-openmp >=8.0.0
-      run_constrained:
-        - {{ pin_subpackage("libgfortran", exact=True) }}
-
-    test:
-      commands:
-        - test -f "${PREFIX}/lib/libgfortran.dylib"
-        - test -f "${PREFIX}/lib/libgfortran.{{ libgfortran_major_version }}.dylib"
-
-        - test -f "${PREFIX}/lib/libgomp.dylib"
-        - test -f "${PREFIX}/lib/libgomp.1.dylib"
-
-        - test -f "${PREFIX}/lib/libquadmath.dylib"
-        - test -f "${PREFIX}/lib/libquadmath.0.dylib"
-
-        - test -f "${PREFIX}/lib/libgcc_s.1.dylib"
-        - test -f "${PREFIX}/lib/libgcc_s_ppc64.1.dylib"
-        - test -f "${PREFIX}/lib/libgcc_s_x86_64.1.dylib"
-
   - name: gfortran_impl_{{ cross_target_platform }}
     version: {{ gfortran_version }}{{ version_suffix }}
+    activate_in_script: True
     requirements:
       build:
         - {{ compiler('c') }}
@@ -169,6 +112,64 @@ outputs:
 
     test:
       script: run_test.sh
+
+  - name: libgfortran
+    version: {{ libgfortran_version }}{{ version_suffix }}
+    target: {{ cross_target_platform }}
+    build:
+      skip: True  # [target_platform != cross_target_platform]
+    requirements:
+      run:
+        - libgfortran{{ libgfortran_major_version }}
+
+  - name: libgfortran{{ libgfortran_major_version }}
+    version: {{ gfortran_version }}{{ version_suffix }}
+    target: {{ cross_target_platform }}
+    build:
+      skip: True  # [target_platform != cross_target_platform]
+      run_exports:
+        - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}
+    files:
+      - lib/libgfortran.dylib
+      - lib/libgfortran.{{ libgfortran_major_version }}.dylib
+      - lib/libgomp.dylib
+      - lib/libgomp.1.dylib
+
+      # Including libquadmath for the time
+      # being. This will need to be broken
+      # out in the long term.
+      - lib/libquadmath.dylib
+      - lib/libquadmath.0.dylib
+
+      # Including libgcc_s for the time
+      # being. This will need to be broken
+      # out in the long term.
+      - lib/libgcc_s.1.dylib
+      - lib/libgcc_s_ppc64.1.dylib
+      - lib/libgcc_s_x86_64.1.dylib
+
+    requirements:
+      host:
+        - llvm-openmp >=8.0.0
+      run:
+        - llvm-openmp >=8.0.0
+      run_constrained:
+        - {{ pin_subpackage("libgfortran", exact=True) }}
+
+    test:
+      commands:
+        - test -f "${PREFIX}/lib/libgfortran.dylib"
+        - test -f "${PREFIX}/lib/libgfortran.{{ libgfortran_major_version }}.dylib"
+
+        - test -f "${PREFIX}/lib/libgomp.dylib"
+        - test -f "${PREFIX}/lib/libgomp.1.dylib"
+
+        - test -f "${PREFIX}/lib/libquadmath.dylib"
+        - test -f "${PREFIX}/lib/libquadmath.0.dylib"
+
+        - test -f "${PREFIX}/lib/libgcc_s.1.dylib"
+        - test -f "${PREFIX}/lib/libgcc_s_ppc64.1.dylib"
+        - test -f "${PREFIX}/lib/libgcc_s_x86_64.1.dylib"
 
 about:
   home: http://gcc.gnu.org/
