@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -xe
 
 function start_spinner {
     if [ -n "$SPINNER_PID" ]; then
@@ -108,7 +108,7 @@ if [[ "$host_platform" == "$cross_target_platform" ]]; then
   popd
 else
   # The compiler is a cross compiler
-  quiet_run make all-gcc -j${CPU_COUNT}  || (cat $HOST/libgcc/config.log && false)
+  make all-gcc -j${CPU_COUNT}  || (cat $HOST/libgcc/config.log && false)
   quiet_run make install-gcc -j${CPU_COUNT}
   cp $RECIPE_DIR/libgomp.spec $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/libgomp.spec
   sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/libgfortran.spec
