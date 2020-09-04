@@ -69,6 +69,9 @@ outputs:
     version: {{ gfortran_version }}{{ version_suffix }}
     build:
       activate_in_script: True
+      skip: True  # [win]
+      skip: True  # [gfortran_version == "11.0.0" and cross_target_platform != "osx-arm64"]
+      skip: True  # [gfortran_version != "11.0.0" and cross_target_platform == "osx-arm64"]
     requirements:
       build:
         - {{ compiler('c') }}
