@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -xe
+set -e
 
 function start_spinner {
     if [ -n "$SPINNER_PID" ]; then
@@ -44,6 +44,8 @@ function quiet_run {
 }
 
 start_spinner
+
+set -x
 
 export host_platform=$target_platform
 export TARGET=${macos_machine}
