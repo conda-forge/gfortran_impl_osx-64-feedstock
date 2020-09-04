@@ -82,7 +82,7 @@ if [[ "$host_platform" != "$build_platform" ]]; then
     popd
     if [[ "$build_platform" == osx* ]]; then
         ln -s ${BUILD_PREFIX}/bin/${TARGET}-ar       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ar
-        ln -s ${BUILD_PREFIX}/bin/${TARGET}-as       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/as
+        ln -s ${BUILD_PREFIX}/bin/llvm-as            ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/as
         ln -s ${BUILD_PREFIX}/bin/clang              ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/clang
         ln -s ${BUILD_PREFIX}/bin/${TARGET}-nm       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/nm
         ln -s ${BUILD_PREFIX}/bin/${TARGET}-ranlib   ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ranlib
