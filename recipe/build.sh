@@ -80,6 +80,15 @@ if [[ "$host_platform" != "$build_platform" ]]; then
     quiet_run make all-gcc -j${CPU_COUNT}
     quiet_run make install-gcc -j${CPU_COUNT}
     popd
+    if [[ "$build_platform" == osx* ]]; then
+        ln -s ${BUILD_PREFIX}/bin/${TARGET}-ar       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ar
+        ln -s ${BUILD_PREFIX}/bin/${TARGET}-as       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/as
+        ln -s ${BUILD_PREFIX}/bin/clang              ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/clang
+        ln -s ${BUILD_PREFIX}/bin/${TARGET}-nm       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/nm
+        ln -s ${BUILD_PREFIX}/bin/${TARGET}-ranlib   ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ranlib
+        ln -s ${BUILD_PREFIX}/bin/${TARGET}-strip    ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/strip
+        ln -s ${BUILD_PREFIX}/bin/${TARGET}-ld       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ld
+    fi
 fi
 
 mkdir build_conda
