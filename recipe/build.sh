@@ -51,9 +51,12 @@ export host_platform=$target_platform
 export TARGET=${macos_machine}
 
 if [[ "$host_platform" == osx* ]]; then
-    export CFLAGS="$CFLAGS -isysroot $CONDA_BUILD_SYSROOT -isystem $CONDA_BUILD_SYSROOT/usr/include"
-    export CXXFLAGS="$CXXFLAGS -isysroot $CONDA_BUILD_SYSROOT -isystem $CONDA_BUILD_SYSROOT/usr/include"
-    export CPPFLAGS="$CPPFLAGS -isysroot $CONDA_BUILD_SYSROOT -isystem $CONDA_BUILD_SYSROOT/usr/include"
+    export C_INCLUDE_PATH="$CONDA_BUILD_SYSROOT/usr/include"
+    export CPLUS_INCLUDE_PATH="$CONDA_BUILD_SYSROOT/usr/include"
+    export LIBRARY_PATH="$CONDA_BUILD_SYSROOT/usr/lib"
+    export CFLAGS="$CFLAGS -isysroot $CONDA_BUILD_SYSROOT"
+    export CXXFLAGS="$CXXFLAGS -isysroot $CONDA_BUILD_SYSROOT"
+    export CPPFLAGS="$CPPFLAGS -isysroot $CONDA_BUILD_SYSROOT"
 fi
 
 if [[ "$host_platform" != "$build_platform" ]]; then
