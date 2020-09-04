@@ -95,7 +95,7 @@ cd build_conda
 echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
 if [[ "$host_platform" == "$cross_target_platform" ]]; then
   # If the compiler is a cross-native/native compiler
-  quiet_run make -j"${CPU_COUNT}"
+  make -j"${CPU_COUNT}" || (cat $TARGET/libgcc/config.log && false)
   quiet_run make install-strip
   rm $PREFIX/lib/libgomp.dylib
   rm $PREFIX/lib/libgomp.1.dylib
@@ -108,7 +108,7 @@ if [[ "$host_platform" == "$cross_target_platform" ]]; then
   popd
 else
   # The compiler is a cross compiler
-  make all-gcc -j${CPU_COUNT}  || (cat $HOST/libgcc/config.log && false)
+  quiet make all-gcc -j${CPU_COUNT}
   quiet_run make install-gcc -j${CPU_COUNT}
   cp $RECIPE_DIR/libgomp.spec $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/libgomp.spec
   sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/libgfortran.spec
