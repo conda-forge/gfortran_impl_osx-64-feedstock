@@ -75,6 +75,7 @@ if [[ "$host_platform" != "$build_platform" ]]; then
        --disable-multilib \
        --enable-checking=release \
        --disable-bootstrap \
+       --disable-libssp \
        --with-gmp=${BUILD_PREFIX} \
        --with-mpfr=${BUILD_PREFIX} \
        --with-mpc=${BUILD_PREFIX} \
@@ -107,6 +108,7 @@ cd build_conda
     --disable-multilib \
     --enable-checking=release \
     --disable-bootstrap \
+    --disable-libssp \
     --with-gmp=${PREFIX} \
     --with-mpfr=${PREFIX} \
     --with-mpc=${PREFIX} \
@@ -115,7 +117,7 @@ cd build_conda
 echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
 if [[ "$host_platform" == "$cross_target_platform" ]]; then
   # If the compiler is a cross-native/native compiler
-  make -j"${CPU_COUNT}" || (cat $TARGET/libgcc/config.log && false)
+  make -j"${CPU_COUNT}" || (cat $TARGET/libbacktrace/config.log && false)
   quiet_run make install-strip
   rm $PREFIX/lib/libgomp.dylib
   rm $PREFIX/lib/libgomp.1.dylib
