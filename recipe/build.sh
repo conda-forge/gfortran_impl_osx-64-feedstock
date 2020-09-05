@@ -104,7 +104,7 @@ cd build_conda
     --host=${HOST} \
     --target=${TARGET} \
     --with-libiconv-prefix=${PREFIX} \
-    --enable-languages=c,fortran \
+    --enable-languages=fortran \
     --disable-multilib \
     --enable-checking=release \
     --disable-bootstrap \
