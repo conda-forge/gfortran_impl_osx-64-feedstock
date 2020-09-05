@@ -122,7 +122,7 @@ fi
 echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
 if [[ "$host_platform" == "$cross_target_platform" ]]; then
   # If the compiler is a cross-native/native compiler
-  make -j"${CPU_COUNT}" || (cat $TARGET/libquadmath/config.log && false)
+  make -j"${CPU_COUNT}" || (cat $TARGET/libquadmath/config.log && ls gcc && find . -name "libemutls_w.a" && file gcc/libemutls_w.a && false)
   quiet_run make install-strip
   rm $PREFIX/lib/libgomp.dylib
   rm $PREFIX/lib/libgomp.1.dylib
