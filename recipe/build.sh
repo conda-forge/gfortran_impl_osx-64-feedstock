@@ -99,10 +99,10 @@ mkdir build_conda
 cd build_conda
 
 if [[ "$host_platform" == osx* ]]; then
-    export LIBRARY_PATH="$LIBRARY_PATH:$PWD/${TARGET}/gcc"
-    export LDFLAGS="$LDFLAGS -L$PWD/${TARGET}/gcc"
-    export CFLAGS="$CFLAGS -L$PWD/${TARGET}/gcc"
-    export CXXFLAGS="$CFLAGS -L$PWD/${TARGET}/gcc"
+    export LIBRARY_PATH="$LIBRARY_PATH:$PWD/${TARGET}/libgcc"
+    export LDFLAGS="$LDFLAGS -L$PWD/${TARGET}/libgcc"
+    export CFLAGS="$CFLAGS -L$PWD/${TARGET}/libgcc"
+    export CXXFLAGS="$CFLAGS -L$PWD/${TARGET}/libgcc"
     export LDFLAGS_FOR_TARGET="$LDFLAGS -L$PWD/a"
     export CFLAGS_FOR_TARGET="$CFLAGS -L$PWD/b"
     export CXXFLAGS_FOR_TARGET="$CFLAGS -L$PWD/c"
