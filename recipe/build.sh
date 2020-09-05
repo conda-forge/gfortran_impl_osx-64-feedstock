@@ -98,6 +98,11 @@ fi
 mkdir build_conda
 cd build_conda
 
+if [[ "$host_platform" == osx* ]]; then
+    export LIBRARY_PATH="$LIBRARY_PATH:$PWD/gcc"
+    export LDFLAGS="$LDFLAGS -L$PWD/gcc"
+fi
+
 ../configure \
     --prefix=${PREFIX} \
     --build=${BUILD} \
