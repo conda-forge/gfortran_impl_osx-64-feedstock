@@ -63,6 +63,11 @@ if [[ "$host_platform" != "$build_platform" ]]; then
     # If the compiler is a cross-native/canadian-cross compiler
     mkdir -p build_host
     pushd build_host
+    languages="c"
+    if [[ "$host_platform" == "$target_platform" ]]; then
+        # Need a fortran compiler to build libgfortran
+        languages="$languages,fortran"
+    fi
     CC=$CC_FOR_BUILD CXX=$CXX_FOR_BUILD AR="$($CC_FOR_BUILD -print-prog-name=ar)" LD="$($CC_FOR_BUILD -print-prog-name=ld)" \
          RANLIB="$($CC_FOR_BUILD -print-prog-name=ranlib)" NM="$($CC_FOR_BUILD -print-prog-name=nm)"  \
          CFLAGS="" CXXFLAGS="" CPPFLAGS="" LDFLAGS="-L$BUILD_PREFIX/lib -Wl,-rpath,$BUILD_PREFIX/lib" ../configure \
@@ -71,7 +76,7 @@ if [[ "$host_platform" != "$build_platform" ]]; then
        --host=${BUILD} \
        --target=${TARGET} \
        --with-libiconv-prefix=${BUILD_PREFIX} \
-       --enable-languages=c \
+       --enable-languages=$languages \
        --disable-multilib \
        --enable-checking=release \
        --disable-bootstrap \
@@ -84,14 +89,14 @@ if [[ "$host_platform" != "$build_platform" ]]; then
     quiet_run make all-gcc -j${CPU_COUNT}
     quiet_run make install-gcc -j${CPU_COUNT}
     popd
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ar       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ar
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-as       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/as
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-nm       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/nm
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ranlib   ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ranlib
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-strip    ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/strip
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ld       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ld
     if [[ "$build_platform" == osx* ]]; then
-        ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ar       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ar
-        ln -sf ${BUILD_PREFIX}/bin/${TARGET}-as       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/as
         ln -sf ${BUILD_PREFIX}/bin/clang              ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/clang
-        ln -sf ${BUILD_PREFIX}/bin/${TARGET}-nm       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/nm
-        ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ranlib   ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ranlib
-        ln -sf ${BUILD_PREFIX}/bin/${TARGET}-strip    ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/strip
-        ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ld       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ld
     fi
 fi
 
