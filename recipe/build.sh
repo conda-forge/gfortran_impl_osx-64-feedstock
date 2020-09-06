@@ -55,7 +55,7 @@ export TARGET=${macos_machine}
 # clang emits a ton of warnings
 export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprecated -Wno-mismatched-tags -Wunused-command-line-argument -Wno-ignored-attributes"
 
-if [[ "$host_platform" != "$build_platform" ]]; then
+if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_platform" ]]; then
     # If the compiler is a cross-native/canadian-cross compiler
     mkdir -p build_host
     pushd build_host
