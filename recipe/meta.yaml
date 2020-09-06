@@ -167,9 +167,10 @@ outputs:
       # Including libgcc_s for the time
       # being. This will need to be broken
       # out in the long term.
-      - lib/libgcc_s.1.dylib
-      - lib/libgcc_s_ppc64.1.dylib
-      - lib/libgcc_s_x86_64.1.dylib
+      - lib/libgcc_s.1.dylib            # [cross_target_platform == "osx-64"]
+      - lib/libgcc_s_ppc64.1.dylib      # [cross_target_platform == "osx-64"]
+      - lib/libgcc_s_x86_64.1.dylib     # [cross_target_platform == "osx-64"]
+      - lib/libgcc_s.2.dylib            # [cross_target_platform == "osx-arm64"]
 
     requirements:
       host:
