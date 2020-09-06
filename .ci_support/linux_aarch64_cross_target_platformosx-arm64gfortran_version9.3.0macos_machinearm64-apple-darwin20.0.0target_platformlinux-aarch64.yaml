@@ -21,7 +21,7 @@ cxx_compiler_version:
 docker_image:
 - condaforge/linux-anvil-aarch64
 gfortran_version:
-- 11.0.0
+- 9.3.0
 gmp:
 - '6'
 isl:
