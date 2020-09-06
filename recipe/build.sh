@@ -39,7 +39,7 @@ export target_platform=$cross_target_platform
 # set the TARGET variable. HOST and BUILD are already set by the compilers/conda-build
 export TARGET=${macos_machine}
 # clang emits a ton of warnings
-export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprecated -Wno-mismatched-tags -Wunused-command-line-argument -Wno-ignored-attributes"
+export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprecated -Wno-mismatched-tags -Wno-unused-command-line-argument -Wno-ignored-attributes"
 
 if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_platform" ]]; then
     # We need to compile the target libraries when host_platform == target_platform, but if
