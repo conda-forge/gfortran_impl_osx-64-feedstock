@@ -114,7 +114,7 @@ fi
 echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
 if [[ "$host_platform" == "$target_platform" ]]; then
   # If the compiler is a cross-native/native compiler
-  make -j"${CPU_COUNT}" || (cat $TARGET/libgcc/config.log && false)
+  make -j"${CPU_COUNT}" || (cat $TARGET/libquadmath/config.log && false)
   make install-strip -j${CPU_COUNT}
   rm $PREFIX/lib/libgomp.dylib
   rm $PREFIX/lib/libgomp.1.dylib
