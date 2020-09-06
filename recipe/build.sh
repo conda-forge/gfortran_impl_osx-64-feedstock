@@ -94,12 +94,9 @@ mkdir build_conda
 cd build_conda
 
 if [[ "$host_platform" == osx* ]]; then
-    export C_INCLUDE_PATH="$CONDA_BUILD_SYSROOT/usr/include"
-    export CPLUS_INCLUDE_PATH="$CONDA_BUILD_SYSROOT/usr/include"
     export LIBRARY_PATH="$CONDA_BUILD_SYSROOT/usr/lib"
-    export CFLAGS="$CFLAGS -isysroot $CONDA_BUILD_SYSROOT -isystem $CONDA_BUILD_SYSROOT/usr/include -I$SRC_DIR/b"
-    export CXXFLAGS="$CXXFLAGS -isysroot $CONDA_BUILD_SYSROOT -isystem $CONDA_BUILD_SYSROOT/usr/include -I$SRC_DIR/c"
-    export CPPFLAGS="$CPPFLAGS -isysroot $CONDA_BUILD_SYSROOT -isystem $CONDA_BUILD_SYSROOT/usr/include -I$SRC_DIR/a"
+    export CFLAGS="$CFLAGS -isysroot $CONDA_BUILD_SYSROOT"
+    export CXXFLAGS="$CXXFLAGS -isysroot $CONDA_BUILD_SYSROOT"
 fi
 
 if [[ "$target_platform" == osx* ]]; then
