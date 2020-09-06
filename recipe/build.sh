@@ -91,9 +91,9 @@ fi
 if [[ "$target_platform" == osx* ]]; then
     export LDFLAGS_FOR_TARGET="$LDFLAGS_FOR_TARGET -L$PWD/$TARGET/libgcc -L$CONDA_BUILD_SYSROOT/usr/lib"
     # -isysroot here doesn't work
-    export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET"
-    export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET"
-    export CPPFLAGS_FOR_TARGET="$CPPFLAGS_FOR_TARGET -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET"
+    export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET -O3 -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET"
+    export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET -O3 -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET"
+    export CPPFLAGS_FOR_TARGET="$CPPFLAGS_FOR_TARGET -O3 -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET"
 fi
 
 ../configure \
