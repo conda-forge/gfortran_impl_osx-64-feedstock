@@ -191,9 +191,11 @@ outputs:
         - test -f "${PREFIX}/lib/libquadmath.dylib"
         - test -f "${PREFIX}/lib/libquadmath.0.dylib"
 
-        - test -f "${PREFIX}/lib/libgcc_s.1.dylib"
-        - test -f "${PREFIX}/lib/libgcc_s_ppc64.1.dylib"
-        - test -f "${PREFIX}/lib/libgcc_s_x86_64.1.dylib"
+        - test -f "${PREFIX}/lib/libgcc_s.1.dylib"          # [cross_target_platform == "osx-64"]
+        - test -f "${PREFIX}/lib/libgcc_s_ppc64.1.dylib"    # [cross_target_platform == "osx-64"]
+        - test -f "${PREFIX}/lib/libgcc_s_x86_64.1.dylib"   # [cross_target_platform == "osx-64"]
+
+        - test -f "${PREFIX}/lib/libgcc_s.2.dylib"          # [cross_target_platform == "osx-arm64"]
 
 about:
   home: http://gcc.gnu.org/
