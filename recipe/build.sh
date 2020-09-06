@@ -47,17 +47,10 @@ start_spinner
 
 set -x
 
+# Undo conda-build madness
 export host_platform=$target_platform
+export target_platform=$cross_Target_platform
 export TARGET=${macos_machine}
-
-if [[ "$host_platform" == osx* ]]; then
-    export C_INCLUDE_PATH="$CONDA_BUILD_SYSROOT/usr/include"
-    export CPLUS_INCLUDE_PATH="$CONDA_BUILD_SYSROOT/usr/include"
-    export LIBRARY_PATH="$CONDA_BUILD_SYSROOT/usr/lib"
-    export CFLAGS="$CFLAGS -isysroot $CONDA_BUILD_SYSROOT"
-    export CXXFLAGS="$CXXFLAGS -isysroot $CONDA_BUILD_SYSROOT"
-    export CPPFLAGS="$CPPFLAGS -isysroot $CONDA_BUILD_SYSROOT"
-fi
 
 if [[ "$host_platform" != "$build_platform" ]]; then
     # If the compiler is a cross-native/canadian-cross compiler
@@ -95,22 +88,24 @@ if [[ "$host_platform" != "$build_platform" ]]; then
     ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ranlib   ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ranlib
     ln -sf ${BUILD_PREFIX}/bin/${TARGET}-strip    ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/strip
     ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ld       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ld
-    if [[ "$build_platform" == osx* ]]; then
-        ln -sf ${BUILD_PREFIX}/bin/clang              ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/clang
-    fi
 fi
 
 mkdir build_conda
 cd build_conda
 
 if [[ "$host_platform" == osx* ]]; then
-    export LIBRARY_PATH="$LIBRARY_PATH:$PWD/${TARGET}/libgcc"
-    export LDFLAGS="$LDFLAGS -L$PWD/${TARGET}/libgcc"
-    export CFLAGS="$CFLAGS -L$PWD/${TARGET}/libgcc"
-    export CXXFLAGS="$CFLAGS -L$PWD/${TARGET}/libgcc"
-    export LDFLAGS_FOR_TARGET="$LDFLAGS -L$PWD/a"
-    export CFLAGS_FOR_TARGET="$CFLAGS -L$PWD/b"
-    export CXXFLAGS_FOR_TARGET="$CFLAGS -L$PWD/c"
+    export C_INCLUDE_PATH="$CONDA_BUILD_SYSROOT/usr/include"
+    export CPLUS_INCLUDE_PATH="$CONDA_BUILD_SYSROOT/usr/include"
+    export LIBRARY_PATH="$CONDA_BUILD_SYSROOT/usr/lib"
+    export CFLAGS="$CFLAGS -isysroot $CONDA_BUILD_SYSROOT -isystem $CONDA_BUILD_SYSROOT/usr/include -I$SRC_DIR/b"
+    export CXXFLAGS="$CXXFLAGS -isysroot $CONDA_BUILD_SYSROOT -isystem $CONDA_BUILD_SYSROOT/usr/include -I$SRC_DIR/c"
+    export CPPFLAGS="$CPPFLAGS -isysroot $CONDA_BUILD_SYSROOT -isystem $CONDA_BUILD_SYSROOT/usr/include -I$SRC_DIR/a"
+fi
+
+if [[ "$target_platform" == osx* ]]; then
+    export LDFLAGS_FOR_TARGET="$LDFLAGS_FOR_TARGET -L$PWD/$target/libgcc -L$CONDA_BUILD_SYSROOT/usr/lib"
+    export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET"
+    export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET"
 fi
 
 ../configure \
@@ -130,7 +125,7 @@ fi
     --with-isl=${PREFIX}
 
 echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
-if [[ "$host_platform" == "$cross_target_platform" ]]; then
+if [[ "$host_platform" == "$target_platform" ]]; then
   # If the compiler is a cross-native/native compiler
   make -j"${CPU_COUNT}" || (cat $TARGET/libquadmath/config.log && ls gcc && find . -name "libemutls_w.a" && file gcc/libemutls_w.a && false)
   quiet_run make install-strip
