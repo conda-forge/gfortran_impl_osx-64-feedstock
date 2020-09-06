@@ -23,8 +23,8 @@
 {% set version_suffix = ".dev0" %}
 {% set max_libgfortran_version = "6.0.0.a0" %}
 {% set libgfortran_major_version = "5" %}
-{% set source_sha = "faca1e0307ada9a8ddce47e3e1aace96d39f0e690ac7679a966aae56b577d30a" %}
-{% set url = "https://github.com/iains/gcc-darwin-arm64/archive/6cb69bd9bb7959d54584aeb776a13ea64d2c30f3.tar.gz" %}
+{% set source_sha = "9bee8f9a3f451365a5088c95145b000b0602892633a913caf014df507ce63f9f" %}
+{% set url = "https://github.com/iains/gcc-darwin-arm64/archive/d4f449bc4b0b540d419ed98828fe18b50824f980.tar.gz" %}
 {% endif %}
 
 package:
