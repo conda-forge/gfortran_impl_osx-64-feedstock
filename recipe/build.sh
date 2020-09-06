@@ -53,7 +53,7 @@ export target_platform=$cross_Target_platform
 # set the TARGET variable. HOST and BUILD are already set by the compilers/conda-build
 export TARGET=${macos_machine}
 # clang emits a ton of warnings
-export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprecated -Wno-mismatched-tags -Wunused-command-line-argument"
+export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprecated -Wno-mismatched-tags -Wunused-command-line-argument -Wno-ignored-attributes"
 
 if [[ "$host_platform" != "$build_platform" ]]; then
     # If the compiler is a cross-native/canadian-cross compiler
@@ -67,7 +67,8 @@ if [[ "$host_platform" != "$build_platform" ]]; then
     fi
     CC=$CC_FOR_BUILD CXX=$CXX_FOR_BUILD AR="$($CC_FOR_BUILD -print-prog-name=ar)" LD="$($CC_FOR_BUILD -print-prog-name=ld)" \
          RANLIB="$($CC_FOR_BUILD -print-prog-name=ranlib)" NM="$($CC_FOR_BUILD -print-prog-name=nm)"  \
-         CFLAGS="$NO_WARN_CFLAGS" CXXFLAGS="$NO_WARN_CFLAGS" CPPFLAGS="" LDFLAGS="-L$BUILD_PREFIX/lib -Wl,-rpath,$BUILD_PREFIX/lib" ../configure \
+         CFLAGS="$NO_WARN_CFLAGS" CXXFLAGS="$NO_WARN_CFLAGS" CPPFLAGS="$NO_WARN_CFLAGS" \
+         LDFLAGS="-L$BUILD_PREFIX/lib -Wl,-rpath,$BUILD_PREFIX/lib" ../configure \
        --prefix=${BUILD_PREFIX} \
        --build=${BUILD} \
        --host=${BUILD} \
@@ -131,8 +132,8 @@ fi
 echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
 if [[ "$host_platform" == "$target_platform" ]]; then
   # If the compiler is a cross-native/native compiler
-  make -j"${CPU_COUNT}" || (cat $TARGET/libquadmath/config.log && ls gcc && find . -name "libemutls_w.a" && file gcc/libemutls_w.a && false)
-  quiet_run make install-strip
+  make -j"${CPU_COUNT}"
+  make install-strip -j${CPU_COUNT}
   rm $PREFIX/lib/libgomp.dylib
   rm $PREFIX/lib/libgomp.1.dylib
   ln -s $PREFIX/lib/libomp.dylib $PREFIX/lib/libgomp.dylib
@@ -143,9 +144,9 @@ if [[ "$host_platform" == "$target_platform" ]]; then
     rm libgfortran.spec.bak
   popd
 else
-  # The compiler is a cross compiler
-  quiet_run make all-gcc -j${CPU_COUNT}
-  quiet_run make install-gcc -j${CPU_COUNT}
+  # The compiler is a cross compiler. Only make the compiler. No target libraries
+  make all-gcc -j${CPU_COUNT}
+  make install-gcc -j${CPU_COUNT}
   cp $RECIPE_DIR/libgomp.spec $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/libgomp.spec
   sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/libgfortran.spec
 fi
