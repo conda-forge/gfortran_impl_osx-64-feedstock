@@ -103,11 +103,6 @@ if [[ "$host_platform" == osx* ]]; then
     export CPPFLAGS="$CPPFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
 fi
 
-if [[ "$BUILD" == "$HOST" && "$HOST" == "$TARGT" ]]; then
-    # Make sure gcc thinks we are doing a cross build
-    export BUILD=""
-fi
-
 ../configure \
     --prefix=${PREFIX} \
     --build=${BUILD} \
@@ -122,7 +117,8 @@ fi
     --with-gmp=${PREFIX} \
     --with-mpfr=${PREFIX} \
     --with-mpc=${PREFIX} \
-    --with-isl=${PREFIX}
+    --with-isl=${PREFIX} \
+    --with-native-system-header-dir=$CONDA_BUILD_SYSROOT/usr/include
 
 echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
 if [[ "$host_platform" == "$target_platform" ]]; then
