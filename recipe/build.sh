@@ -50,7 +50,9 @@ set -x
 # Undo conda-build madness
 export host_platform=$target_platform
 export target_platform=$cross_Target_platform
+# set the TARGET variable. HOST and BUILD are already set by the compilers/conda-build
 export TARGET=${macos_machine}
+# clang emits a ton of warnings
 export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprecated -Wno-mismatched-tags -Wunused-command-line-argument"
 
 if [[ "$host_platform" != "$build_platform" ]]; then
@@ -59,6 +61,7 @@ if [[ "$host_platform" != "$build_platform" ]]; then
     pushd build_host
     languages="c"
     if [[ "$host_platform" == "$target_platform" ]]; then
+        # We are building the target libraries in this case
         # Need a fortran compiler to build libgfortran
         languages="$languages,fortran"
     fi
@@ -83,6 +86,7 @@ if [[ "$host_platform" != "$build_platform" ]]; then
     quiet_run make all-gcc -j${CPU_COUNT}
     quiet_run make install-gcc -j${CPU_COUNT}
     popd
+    # For the target compiler to work, it need some tools
     ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ar       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ar
     ln -sf ${BUILD_PREFIX}/bin/${TARGET}-as       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/as
     ln -sf ${BUILD_PREFIX}/bin/${TARGET}-nm       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/nm
@@ -95,15 +99,17 @@ mkdir build_conda
 cd build_conda
 
 if [[ "$host_platform" == osx* ]]; then
-    export LIBRARY_PATH="$CONDA_BUILD_SYSROOT/usr/lib"
+    export LDFLAGS="$LDFLAGS -L$CONDA_BUILD_SYSROOT/usr/lib"
     export CFLAGS="$CFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
     export CXXFLAGS="$CXXFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
+    export CPPFLAGS="$CPPFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
 fi
 
 if [[ "$target_platform" == osx* ]]; then
     export LDFLAGS_FOR_TARGET="$LDFLAGS_FOR_TARGET -L$PWD/$target/libgcc -L$CONDA_BUILD_SYSROOT/usr/lib"
     export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET $NO_WARN_CFLAGS"
     export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET $NO_WARN_CFLAGS"
+    export CPPFLAGS_FOR_TARGET="$CPPFLAGS_FOR_TARGET -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET $NO_WARN_CFLAGS"
 fi
 
 ../configure \
