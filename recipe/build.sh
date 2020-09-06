@@ -51,6 +51,7 @@ set -x
 export host_platform=$target_platform
 export target_platform=$cross_Target_platform
 export TARGET=${macos_machine}
+export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprecated -Wno-mismatched-tags -Wunused-command-line-argument"
 
 if [[ "$host_platform" != "$build_platform" ]]; then
     # If the compiler is a cross-native/canadian-cross compiler
@@ -63,7 +64,7 @@ if [[ "$host_platform" != "$build_platform" ]]; then
     fi
     CC=$CC_FOR_BUILD CXX=$CXX_FOR_BUILD AR="$($CC_FOR_BUILD -print-prog-name=ar)" LD="$($CC_FOR_BUILD -print-prog-name=ld)" \
          RANLIB="$($CC_FOR_BUILD -print-prog-name=ranlib)" NM="$($CC_FOR_BUILD -print-prog-name=nm)"  \
-         CFLAGS="" CXXFLAGS="" CPPFLAGS="" LDFLAGS="-L$BUILD_PREFIX/lib -Wl,-rpath,$BUILD_PREFIX/lib" ../configure \
+         CFLAGS="$NO_WARN_CFLAGS" CXXFLAGS="$NO_WARN_CFLAGS" CPPFLAGS="" LDFLAGS="-L$BUILD_PREFIX/lib -Wl,-rpath,$BUILD_PREFIX/lib" ../configure \
        --prefix=${BUILD_PREFIX} \
        --build=${BUILD} \
        --host=${BUILD} \
@@ -95,14 +96,14 @@ cd build_conda
 
 if [[ "$host_platform" == osx* ]]; then
     export LIBRARY_PATH="$CONDA_BUILD_SYSROOT/usr/lib"
-    export CFLAGS="$CFLAGS -isysroot $CONDA_BUILD_SYSROOT"
-    export CXXFLAGS="$CXXFLAGS -isysroot $CONDA_BUILD_SYSROOT"
+    export CFLAGS="$CFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
+    export CXXFLAGS="$CXXFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
 fi
 
 if [[ "$target_platform" == osx* ]]; then
     export LDFLAGS_FOR_TARGET="$LDFLAGS_FOR_TARGET -L$PWD/$target/libgcc -L$CONDA_BUILD_SYSROOT/usr/lib"
-    export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET"
-    export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET"
+    export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET $NO_WARN_CFLAGS"
+    export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET $NO_WARN_CFLAGS"
 fi
 
 ../configure \
