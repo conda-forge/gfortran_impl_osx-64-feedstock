@@ -29,20 +29,6 @@ function stop_spinner {
     >&2 echo "Building libraries finished."
 }
 
-function quiet_run {
-    rm -f logs.txt
-    if [[ -z "$CI" ]] || [[ "$target_platform" != osx*  ]]; then
-        $@
-    else
-        {
-            $@ >& logs.txt
-        } || {
-            tail -n 5000 logs.txt
-            exit 1
-        }
-    fi
-}
-
 start_spinner
 
 set -x
@@ -80,8 +66,8 @@ if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_plat
        --with-mpc=${BUILD_PREFIX} \
        --with-isl=${BUILD_PREFIX}
     echo "Building a compiler that runs on ${BUILD} and targets ${TARGET}"
-    quiet_run make all-gcc -j${CPU_COUNT}
-    quiet_run make install-gcc -j${CPU_COUNT}
+    make all-gcc -j${CPU_COUNT}
+    make install-gcc -j${CPU_COUNT}
     popd
     # For the target compiler to work, it need some tools
     ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ar       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ar
