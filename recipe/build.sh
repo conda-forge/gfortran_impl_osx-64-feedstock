@@ -49,22 +49,18 @@ set -x
 
 # Undo conda-build madness
 export host_platform=$target_platform
-export target_platform=$cross_Target_platform
+export target_platform=$cross_target_platform
 # set the TARGET variable. HOST and BUILD are already set by the compilers/conda-build
 export TARGET=${macos_machine}
 # clang emits a ton of warnings
 export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprecated -Wno-mismatched-tags -Wunused-command-line-argument -Wno-ignored-attributes"
 
 if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_platform" ]]; then
-    # If the compiler is a cross-native/canadian-cross compiler
+    # We need to compile the target libraries when host_platform == target_platform, but if
+    # build_platform != host_platform, we need gfortran (to build libgfortran) and gcc (to build libgcc).
+    # So, we need a compiler that can target target_platform, but can run on build_platform.
     mkdir -p build_host
     pushd build_host
-    languages="c"
-    if [[ "$host_platform" == "$target_platform" ]]; then
-        # We are building the target libraries in this case
-        # Need a fortran compiler to build libgfortran
-        languages="$languages,fortran"
-    fi
     CC=$CC_FOR_BUILD CXX=$CXX_FOR_BUILD AR="$($CC_FOR_BUILD -print-prog-name=ar)" LD="$($CC_FOR_BUILD -print-prog-name=ld)" \
          RANLIB="$($CC_FOR_BUILD -print-prog-name=ranlib)" NM="$($CC_FOR_BUILD -print-prog-name=nm)"  \
          CFLAGS="$NO_WARN_CFLAGS" CXXFLAGS="$NO_WARN_CFLAGS" CPPFLAGS="$NO_WARN_CFLAGS" \
@@ -74,7 +70,7 @@ if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_plat
        --host=${BUILD} \
        --target=${TARGET} \
        --with-libiconv-prefix=${BUILD_PREFIX} \
-       --enable-languages=$languages \
+       --enable-languages="c,fortran" \
        --disable-multilib \
        --enable-checking=release \
        --disable-bootstrap \
