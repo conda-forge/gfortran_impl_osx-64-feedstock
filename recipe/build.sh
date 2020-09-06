@@ -89,7 +89,7 @@ if [[ "$host_platform" == osx* ]]; then
 fi
 
 if [[ "$target_platform" == osx* ]]; then
-    export LDFLAGS_FOR_TARGET="$LDFLAGS_FOR_TARGET -L$PWD/$target/libgcc -L$CONDA_BUILD_SYSROOT/usr/lib"
+    export LDFLAGS_FOR_TARGET="$LDFLAGS_FOR_TARGET -L$PWD/$TARGET/libgcc -L$CONDA_BUILD_SYSROOT/usr/lib"
     export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET $NO_WARN_CFLAGS"
     export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET $NO_WARN_CFLAGS"
     export CPPFLAGS_FOR_TARGET="$CPPFLAGS_FOR_TARGET -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET $NO_WARN_CFLAGS"
