@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 4 %}
+{% set build_number = 5 %}
 {% set version_suffix = "" %}
 
 {% if gfortran_version == "7.5.0" %}
@@ -93,7 +93,7 @@ outputs:
         - isl
         - mpc
       run:
-        - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}  # [target_platform == cross_target_platform]
+        - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}{{ version_suffix }}  # [target_platform == cross_target_platform]
         - isl
         - mpfr
         - mpc
@@ -155,7 +155,7 @@ outputs:
       skip: True  # [gfortran_version == "11.0.0" and cross_target_platform != "osx-arm64"]
       skip: True  # [gfortran_version != "11.0.0" and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
       run_exports:
-        - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}
+        - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}{{ version_suffix }}
     files:
       - lib/libgfortran.dylib
       - lib/libgfortran.{{ libgfortran_major_version }}.dylib
