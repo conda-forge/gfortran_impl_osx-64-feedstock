@@ -31,40 +31,100 @@ function stop_spinner {
 
 start_spinner
 
-mkdir -p build_conda
+set -x
+
+# Undo conda-build madness
+export host_platform=$target_platform
+export target_platform=$cross_target_platform
+# set the TARGET variable. HOST and BUILD are already set by the compilers/conda-build
+export TARGET=${macos_machine}
+# clang emits a ton of warnings
+export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprecated -Wno-mismatched-tags -Wno-unused-command-line-argument -Wno-ignored-attributes"
+
+if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_platform" ]]; then
+    # We need to compile the target libraries when host_platform == target_platform, but if
+    # build_platform != host_platform, we need gfortran (to build libgfortran) and gcc (to build libgcc).
+    # So, we need a compiler that can target target_platform, but can run on build_platform.
+    mkdir -p build_host
+    pushd build_host
+    CC=$CC_FOR_BUILD CXX=$CXX_FOR_BUILD AR="$($CC_FOR_BUILD -print-prog-name=ar)" LD="$($CC_FOR_BUILD -print-prog-name=ld)" \
+         RANLIB="$($CC_FOR_BUILD -print-prog-name=ranlib)" NM="$($CC_FOR_BUILD -print-prog-name=nm)"  \
+         CFLAGS="$NO_WARN_CFLAGS" CXXFLAGS="$NO_WARN_CFLAGS" CPPFLAGS="$NO_WARN_CFLAGS" \
+         LDFLAGS="-L$BUILD_PREFIX/lib -Wl,-rpath,$BUILD_PREFIX/lib" ../configure \
+       --prefix=${BUILD_PREFIX} \
+       --build=${BUILD} \
+       --host=${BUILD} \
+       --target=${TARGET} \
+       --with-libiconv-prefix=${BUILD_PREFIX} \
+       --enable-languages="c,fortran" \
+       --disable-multilib \
+       --enable-checking=release \
+       --disable-bootstrap \
+       --disable-libssp \
+       --with-gmp=${BUILD_PREFIX} \
+       --with-mpfr=${BUILD_PREFIX} \
+       --with-mpc=${BUILD_PREFIX} \
+       --with-isl=${BUILD_PREFIX}
+    echo "Building a compiler that runs on ${BUILD} and targets ${TARGET}"
+    make all-gcc -j${CPU_COUNT}
+    make install-gcc -j${CPU_COUNT}
+    popd
+    # For the target compiler to work, it need some tools
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ar       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ar
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-as       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/as
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-nm       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/nm
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ranlib   ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ranlib
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-strip    ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/strip
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ld       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ld
+fi
+
+mkdir build_conda
 cd build_conda
+
+if [[ "$target_platform" == osx* ]]; then
+    if [[ "$target_platform" == "$host_platform" ]]; then
+        export LDFLAGS_FOR_TARGET="$LDFLAGS_FOR_TARGET $LDFLAGS"
+        export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET $CFLAGS"
+        export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET $CXXFLAGS"
+        export CPPFLAGS_FOR_TARGET="$CPPFLAGS_FOR_TARGET $CPPFLAGS"
+    fi
+    # $PWD/$TARGET/libgcc is needed because the previous bootstrap compiler we built needs libemutls_w.a
+    export LDFLAGS_FOR_TARGET="$LDFLAGS_FOR_TARGET -L$PWD/$TARGET/libgcc -L$CONDA_BUILD_SYSROOT/usr/lib"
+    # -isysroot here doesn't work
+    export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET -O3 -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET"
+    export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET -O3 -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET"
+    export CPPFLAGS_FOR_TARGET="$CPPFLAGS_FOR_TARGET -O3 -isystem $CONDA_BUILD_SYSROOT/usr/include $LDFLAGS_FOR_TARGET"
+fi
+
+if [[ "$host_platform" == osx* ]]; then
+    export LDFLAGS="$LDFLAGS -L$CONDA_BUILD_SYSROOT/usr/lib"
+    export CFLAGS="$CFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
+    export CXXFLAGS="$CXXFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
+    export CPPFLAGS="$CPPFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
+fi
 
 ../configure \
     --prefix=${PREFIX} \
+    --build=${BUILD} \
+    --host=${HOST} \
+    --target=${TARGET} \
     --with-libiconv-prefix=${PREFIX} \
-    --enable-languages=c,fortran \
-    --with-tune=generic \
+    --enable-languages=fortran \
     --disable-multilib \
     --enable-checking=release \
     --disable-bootstrap \
-    --build=${HOST} \
-    --target=${macos_machine} \
+    --disable-libssp \
     --with-gmp=${PREFIX} \
     --with-mpfr=${PREFIX} \
     --with-mpc=${PREFIX} \
-    --with-isl=${PREFIX}
+    --with-isl=${PREFIX} \
+    --with-native-system-header-dir=$CONDA_BUILD_SYSROOT/usr/include
 
-if [[ "$target_platform" == "osx-64" ]]; then
-  # using || to quiet logs unless there is an issue
-  {
-      make -j"${CPU_COUNT}" >& make_logs.txt
-  } || {
-      tail -n 5000 make_logs.txt
-      exit 1
-  }
-
-  # using || to quiet logs unless there is an issue
-  {
-      make install-strip >& make_install_logs.txt
-  } || {
-      tail -n 5000 make_install_logs.txt
-      exit 1
-  }
+echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
+if [[ "$host_platform" == "$target_platform" ]]; then
+  # If the compiler is a cross-native/native compiler
+  make -j"${CPU_COUNT}" || (cat $TARGET/libquadmath/config.log && false)
+  make install-strip -j${CPU_COUNT}
   rm $PREFIX/lib/libgomp.dylib
   rm $PREFIX/lib/libgomp.1.dylib
   ln -s $PREFIX/lib/libomp.dylib $PREFIX/lib/libgomp.dylib
@@ -75,10 +135,13 @@ if [[ "$target_platform" == "osx-64" ]]; then
     rm libgfortran.spec.bak
   popd
 else
+  # The compiler is a cross compiler. Only make the compiler. No target libraries
   make all-gcc -j${CPU_COUNT}
   make install-gcc -j${CPU_COUNT}
-  cp $RECIPE_DIR/libgomp.spec $PREFIX/lib/gcc/${macos_machine}/${PKG_VERSION}/libgomp.spec
-  sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > $PREFIX/lib/gcc/${macos_machine}/${PKG_VERSION}/libgfortran.spec
+  cp $RECIPE_DIR/libgomp.spec $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/libgomp.spec
+  sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/libgfortran.spec
 fi
 
 stop_spinner
+
+ls -al $PREFIX/lib

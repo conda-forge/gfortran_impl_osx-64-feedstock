@@ -1,26 +1,38 @@
-{% set libquadmath_version = [0, 0, 0] %}
-{% set libgcc_s_version = [1, 0, 0] %}
 {% set chost = macos_machine %}
-{% set build_number = 3 %}
+{% set build_number = 4 %}
+{% set version_suffix = "" %}
 
 {% if gfortran_version == "7.5.0" %}
 {% set libgfortran_version = "4.0.0" %}
 {% set max_libgfortran_version = "5.0.0.a0" %}
 {% set libgfortran_major_version = "4" %}
 {% set source_sha = "4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f" %}
-{% else %}
+{% set url = "https://ftp.gnu.org/gnu/gcc/gcc-7.5.0/gcc-7.5.0.tar.gz" %}
+{% endif %}
+
+{% if gfortran_version == "9.3.0" %}
 {% set libgfortran_version = "5.0.0" %}
 {% set max_libgfortran_version = "6.0.0.a0" %}
 {% set libgfortran_major_version = "5" %}
 {% set source_sha = "5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6" %}
+{% set url = "https://ftp.gnu.org/gnu/gcc/gcc-9.3.0/gcc-9.3.0.tar.gz" %}
+{% endif %}
+
+{% if gfortran_version == "11.0.0" %}
+{% set libgfortran_version = "5.0.0" %}
+{% set version_suffix = ".dev0" %}
+{% set max_libgfortran_version = "6.0.0.a0" %}
+{% set libgfortran_major_version = "5" %}
+{% set source_sha = "9bee8f9a3f451365a5088c95145b000b0602892633a913caf014df507ce63f9f" %}
+{% set url = "https://github.com/iains/gcc-darwin-arm64/archive/d4f449bc4b0b540d419ed98828fe18b50824f980.tar.gz" %}
 {% endif %}
 
 package:
-  name: gfortran_impl_osx-64
-  version: {{ gfortran_version }}
+  name: gfortran_impl_{{ cross_target_platform }}
+  version: {{ gfortran_version }}{{ version_suffix }}
 
 source:
-  url: https://ftp.gnu.org/gnu/gcc/gcc-{{ gfortran_version }}/gcc-{{ gfortran_version }}.tar.gz
+  url: {{ url }}
   sha256: {{ source_sha }}
   patches:
     - libgcc_macosx_min_version.patch
@@ -28,12 +40,22 @@ source:
 build:
   number: {{ build_number }}
   skip: True  # [win]
+  skip: True  # [gfortran_version == "11.0.0" and cross_target_platform != "osx-arm64"]
+  skip: True  # [gfortran_version != "11.0.0" and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - make
+    - flex
+    - bison
+    - libiconv  # [build_platform != target_platform]
+    - zlib      # [build_platform != target_platform]
+    - gmp       # [build_platform != target_platform]
+    - mpfr      # [build_platform != target_platform]
+    - isl       # [build_platform != target_platform]
+    - mpc       # [build_platform != target_platform]
   host:
     - libiconv
     - zlib
@@ -41,72 +63,28 @@ requirements:
     - mpfr
     - isl
     - mpc
-    - llvm-openmp >=8.0.0
 
 outputs:
-  - name: libgfortran
-    version: {{ libgfortran_version }}
+  - name: gfortran_impl_{{ cross_target_platform }}
+    version: {{ gfortran_version }}{{ version_suffix }}
     build:
-      skip: True  # [not osx]
-    requirements:
-      run:
-        - libgfortran{{ libgfortran_major_version }}
-
-  - name: libgfortran{{ libgfortran_major_version }}
-    version: {{ gfortran_version }}
-    build:
-      skip: True  # [not osx]
-      run_exports:
-        - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}
-    files:
-      - lib/libgfortran.dylib
-      - lib/libgfortran.{{ libgfortran_major_version }}.dylib
-      - lib/libgomp.dylib
-      - lib/libgomp.{{ libgcc_s_version[0] }}.dylib
-
-      # Including libquadmath for the time
-      # being. This will need to be broken
-      # out in the long term.
-      - lib/libquadmath.dylib
-      - lib/libquadmath.{{ libquadmath_version[0] }}.dylib
-
-      # Including libgcc_s for the time
-      # being. This will need to be broken
-      # out in the long term.
-      - lib/libgcc_s.{{ libgcc_s_version[0] }}.dylib
-      - lib/libgcc_s_ppc64.{{ libgcc_s_version[0] }}.dylib
-      - lib/libgcc_s_x86_64.{{ libgcc_s_version[0] }}.dylib
-
-    requirements:
-      host:
-        - llvm-openmp >=8.0.0
-      run:
-        - llvm-openmp >=8.0.0
-      run_constrained:
-        - {{ pin_subpackage("libgfortran", exact=True) }}
-
-    test:
-      commands:
-        - test -f "${PREFIX}/lib/libgfortran.dylib"
-        - test -f "${PREFIX}/lib/libgfortran.{{ libgfortran_major_version }}.dylib"
-
-        - test -f "${PREFIX}/lib/libgomp.dylib"
-        - test -f "${PREFIX}/lib/libgomp.{{ libgcc_s_version[0] }}.dylib"
-
-        - test -f "${PREFIX}/lib/libquadmath.dylib"
-        - test -f "${PREFIX}/lib/libquadmath.{{ libquadmath_version[0] }}.dylib"
-
-        - test -f "${PREFIX}/lib/libgcc_s.{{ libgcc_s_version[0] }}.dylib"
-        - test -f "${PREFIX}/lib/libgcc_s_ppc64.{{ libgcc_s_version[0] }}.dylib"
-        - test -f "${PREFIX}/lib/libgcc_s_x86_64.{{ libgcc_s_version[0] }}.dylib"
-
-  - name: gfortran_impl_osx-64
-    version: {{ gfortran_version }}
+      activate_in_script: True
+      skip: True  # [win]
+      skip: True  # [gfortran_version == "11.0.0" and cross_target_platform != "osx-arm64"]
+      skip: True  # [gfortran_version != "11.0.0" and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
     requirements:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - make
+        - flex
+        - bison
+        - libiconv  # [build_platform != target_platform]
+        - zlib      # [build_platform != target_platform]
+        - gmp       # [build_platform != target_platform]
+        - mpfr      # [build_platform != target_platform]
+        - isl       # [build_platform != target_platform]
+        - mpc       # [build_platform != target_platform]
       host:
         - libiconv
         - zlib
@@ -115,7 +93,7 @@ outputs:
         - isl
         - mpc
       run:
-        - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}  # [osx]
+        - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}  # [target_platform == cross_target_platform]
         - isl
         - mpfr
         - mpc
@@ -123,7 +101,7 @@ outputs:
         - zlib
         - libiconv
     files:
-      - bin/gfortran   # [osx]
+      - bin/gfortran   # [target_platform == cross_target_platform]
       - bin/{{ chost }}-gfortran
 
       - libexec/gcc/{{ chost }}/{{ gfortran_version }}/collect2
@@ -158,9 +136,74 @@ outputs:
     test:
       script: run_test.sh
 
+  - name: libgfortran
+    version: {{ libgfortran_version }}{{ version_suffix }}
+    target: {{ cross_target_platform }}
+    build:
+      skip: True  # [target_platform != cross_target_platform]
+      skip: True  # [gfortran_version == "11.0.0" and cross_target_platform != "osx-arm64"]
+      skip: True  # [gfortran_version != "11.0.0" and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
+    requirements:
+      run:
+        - libgfortran{{ libgfortran_major_version }}
+
+  - name: libgfortran{{ libgfortran_major_version }}
+    version: {{ gfortran_version }}{{ version_suffix }}
+    target: {{ cross_target_platform }}
+    build:
+      skip: True  # [target_platform != cross_target_platform]
+      skip: True  # [gfortran_version == "11.0.0" and cross_target_platform != "osx-arm64"]
+      skip: True  # [gfortran_version != "11.0.0" and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
+      run_exports:
+        - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}
+    files:
+      - lib/libgfortran.dylib
+      - lib/libgfortran.{{ libgfortran_major_version }}.dylib
+      - lib/libgomp.dylib
+      - lib/libgomp.1.dylib
+
+      # Including libquadmath for the time
+      # being. This will need to be broken
+      # out in the long term.
+      - lib/libquadmath.dylib
+      - lib/libquadmath.0.dylib
+
+      # Including libgcc_s for the time
+      # being. This will need to be broken
+      # out in the long term.
+      - lib/libgcc_s.1.dylib            # [cross_target_platform == "osx-64"]
+      - lib/libgcc_s_ppc64.1.dylib      # [cross_target_platform == "osx-64"]
+      - lib/libgcc_s_x86_64.1.dylib     # [cross_target_platform == "osx-64"]
+      - lib/libgcc_s.2.dylib            # [cross_target_platform == "osx-arm64"]
+
+    requirements:
+      host:
+        - llvm-openmp >=8.0.0
+      run:
+        - llvm-openmp >=8.0.0
+      run_constrained:
+        - {{ pin_subpackage("libgfortran", exact=True) }}
+
+    test:
+      commands:
+        - test -f "${PREFIX}/lib/libgfortran.dylib"
+        - test -f "${PREFIX}/lib/libgfortran.{{ libgfortran_major_version }}.dylib"
+
+        - test -f "${PREFIX}/lib/libgomp.dylib"
+        - test -f "${PREFIX}/lib/libgomp.1.dylib"
+
+        - test -f "${PREFIX}/lib/libquadmath.dylib"
+        - test -f "${PREFIX}/lib/libquadmath.0.dylib"
+
+        - test -f "${PREFIX}/lib/libgcc_s.1.dylib"          # [cross_target_platform == "osx-64"]
+        - test -f "${PREFIX}/lib/libgcc_s_ppc64.1.dylib"    # [cross_target_platform == "osx-64"]
+        - test -f "${PREFIX}/lib/libgcc_s_x86_64.1.dylib"   # [cross_target_platform == "osx-64"]
+
+        - test -f "${PREFIX}/lib/libgcc_s.2.dylib"          # [cross_target_platform == "osx-arm64"]
+
 about:
   home: http://gcc.gnu.org/
-  license: GPL 3 (with GCC Runtime Library Exception 3.1)
+  license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   license_file: COPYING3
   summary: Fortran compiler and libraries from the GNU Compiler Collection
