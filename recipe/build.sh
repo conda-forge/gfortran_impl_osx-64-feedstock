@@ -103,6 +103,10 @@ if [[ "$host_platform" == osx* ]]; then
     export CPPFLAGS="$CPPFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
 fi
 
+if [[ "$build_platform" == "$host_platform" ]]; then
+    extra_configure_options="$extra_configure_options --with-native-system-header-dir=$CONDA_BUILD_SYSROOT/usr/include"
+fi
+
 ../configure \
     --prefix=${PREFIX} \
     --build=${BUILD} \
@@ -118,7 +122,7 @@ fi
     --with-mpfr=${PREFIX} \
     --with-mpc=${PREFIX} \
     --with-isl=${PREFIX} \
-    --with-native-system-header-dir=$CONDA_BUILD_SYSROOT/usr/include
+    ${extra_configure_options}
 
 echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
 if [[ "$host_platform" == "$target_platform" ]]; then
