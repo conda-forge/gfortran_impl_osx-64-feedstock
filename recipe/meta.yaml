@@ -119,7 +119,7 @@ outputs:
         - mpc
       run:
         - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}{{ version_suffix }}  # [target_platform == cross_target_platform]
-        - libgfortran-devel_{{ target_platform }} {{ gfortran_version }}{{ version_suffix }}
+        - libgfortran-devel_{{ target_platform }} {{ gfortran_version }}{{ version_suffix }}       # [target_platform == cross_target_platform]
         - isl
         - mpfr
         - mpc
