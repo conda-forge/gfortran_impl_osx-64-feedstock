@@ -87,8 +87,8 @@ outputs:
 
     test:
       commands:
-        - test -f "${PREFIX}/lib/{{ chost }}/{{ gfortran_version }}/libgomp.spec"
-        - test -f "${PREFIX}/lib/{{ chost }}/{{ gfortran_version }}/libgfortran.spec"
+        - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/libgomp.spec"
+        - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/libgfortran.spec"
 
   - name: gfortran_impl_{{ cross_target_platform }}
     version: {{ gfortran_version }}{{ version_suffix }}
