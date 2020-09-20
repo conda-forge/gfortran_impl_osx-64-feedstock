@@ -134,8 +134,10 @@ if [[ "$host_platform" == "$target_platform" ]]; then
   ln -s $PREFIX/lib/libomp.dylib $PREFIX/lib/libgomp.dylib
   ln -s $PREFIX/lib/libomp.dylib $PREFIX/lib/libgomp.1.dylib
 
+  rm ${PREFIX}/lib/libgfortran.spec
+  cp $RECIPE_DIR/libgfortran.spec ${PREFIX}/lib/libgfortran.spec
   pushd ${PREFIX}/lib
-    sed -i.bak "s@^\*lib.*@& -rpath $PREFIX/lib@" libgfortran.spec
+    sed -i.bak "s#@CONDA_PREFIX@#$PREFIX#g" libgfortran.spec
     rm libgfortran.spec.bak
   popd
 
