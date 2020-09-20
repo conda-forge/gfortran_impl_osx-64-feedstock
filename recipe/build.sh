@@ -135,11 +135,7 @@ if [[ "$host_platform" == "$target_platform" ]]; then
   ln -s $PREFIX/lib/libomp.dylib $PREFIX/lib/libgomp.1.dylib
 
   rm ${PREFIX}/lib/libgfortran.spec
-  cp $RECIPE_DIR/libgfortran.spec ${PREFIX}/lib/libgfortran.spec
-  pushd ${PREFIX}/lib
-    sed -i.bak "s#@CONDA_PREFIX@#$PREFIX#g" libgfortran.spec
-    rm libgfortran.spec.bak
-  popd
+  sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > ${PREFIX}/lib/libgfortran.spec
 
   for file in libgfortran.spec libgomp.spec libgfortran.a libgomp.a; do
     mv $PREFIX/lib/$file $PREFIX/lib/${TARGET}/${gfortran_version}/$file
