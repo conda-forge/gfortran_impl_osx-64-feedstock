@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 6 %}
+{% set build_number = 7 %}
 {% set version_suffix = "" %}
 
 {% if gfortran_version == "7.5.0" %}
@@ -182,7 +182,7 @@ outputs:
       run:
         - llvm-openmp >=8.0.0
       run_constrained:
-        - {{ pin_subpackage("libgfortran", exact=True) }}
+        - libgfortran {{ libgfortran_version }}{{ version_suffix }} *_{{ build_number }}
 
     test:
       commands:
