@@ -90,8 +90,8 @@ outputs:
       # fortran module files
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/finclude/**
       # Static libraries and object files
-      - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgomp.a
-      - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgfortran.a
+      #- lib/gcc/{{ chost }}/{{ gfortran_version }}/libgomp.a
+      #- lib/gcc/{{ chost }}/{{ gfortran_version }}/libgfortran.a
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgcc.a
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgcc_eh.a
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/crtfastmath.o
