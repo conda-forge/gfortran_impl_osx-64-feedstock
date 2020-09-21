@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 7 %}
+{% set build_number = 8 %}
 {% set version_suffix = "" %}
 
 {% if gfortran_version == "7.5.0" %}
@@ -65,6 +65,31 @@ requirements:
     - mpc
 
 outputs:
+  - name: libgfortran-devel_{{ target_platform }}
+    version: {{ gfortran_version }}{{ version_suffix }}
+    build:
+      skip: True  # [target_platform != cross_target_platform]
+      skip: True  # [gfortran_version == "11.0.0" and cross_target_platform != "osx-arm64"]
+      skip: True  # [gfortran_version != "11.0.0" and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
+      noarch: generic
+    files:
+      # these are not generated for the cross compiler
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgomp.spec
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgfortran.spec
+      # fortran module files
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/finclude/**
+      # Static libraries and object files
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgomp.a
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgfortran.a
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgcc.a
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgcc_eh.a
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/crtfastmath.o
+
+    test:
+      commands:
+        - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/libgomp.spec"
+        - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/libgfortran.spec"
+
   - name: gfortran_impl_{{ cross_target_platform }}
     version: {{ gfortran_version }}{{ version_suffix }}
     build:
@@ -94,6 +119,7 @@ outputs:
         - mpc
       run:
         - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}{{ version_suffix }}  # [target_platform == cross_target_platform]
+        - libgfortran-devel_{{ target_platform }} {{ gfortran_version }}{{ version_suffix }}       # [target_platform == cross_target_platform]
         - isl
         - mpfr
         - mpc
@@ -112,18 +138,9 @@ outputs:
       # For -fopenmp
       - lib/libgomp.spec
 
-
-      # For -ffast-math
-      - lib/gcc/{{ chost }}/{{ gfortran_version }}/crtfastmath.o
-
       # For -static
       - lib/libgfortran.a
       - lib/libgomp.a
-
-      - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgcc.a
-      - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgcc_eh.a
-
-      - lib/gcc/{{ chost }}/{{ gfortran_version }}/finclude/**
 
       # include{,-fixed} may not be needed unless -fopenmp is passed (not sure on that)
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/include-fixed/**
@@ -177,8 +194,6 @@ outputs:
       - lib/libgcc_s.2.dylib            # [cross_target_platform == "osx-arm64"]
 
     requirements:
-      host:
-        - llvm-openmp >=8.0.0
       run:
         - llvm-openmp >=8.0.0
       run_constrained:

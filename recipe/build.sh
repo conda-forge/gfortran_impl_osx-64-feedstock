@@ -134,16 +134,17 @@ if [[ "$host_platform" == "$target_platform" ]]; then
   ln -s $PREFIX/lib/libomp.dylib $PREFIX/lib/libgomp.dylib
   ln -s $PREFIX/lib/libomp.dylib $PREFIX/lib/libgomp.1.dylib
 
-  pushd ${PREFIX}/lib
-    sed -i.bak "s@^\*lib.*@& -rpath $PREFIX/lib@" libgfortran.spec
-    rm libgfortran.spec.bak
-  popd
+  rm ${PREFIX}/lib/libgfortran.spec
+  sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > ${PREFIX}/lib/libgfortran.spec
+
+  for file in libgfortran.spec libgomp.spec libgfortran.a libgomp.a; do
+    mv $PREFIX/lib/$file $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/$file
+    ln -s $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/$file $PREFIX/lib/$file
+  done
 else
   # The compiler is a cross compiler. Only make the compiler. No target libraries
   make all-gcc -j${CPU_COUNT}
   make install-gcc -j${CPU_COUNT}
-  cp $RECIPE_DIR/libgomp.spec $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/libgomp.spec
-  sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/libgfortran.spec
 fi
 
 stop_spinner
