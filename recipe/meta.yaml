@@ -173,9 +173,6 @@ outputs:
       skip: True  # [gfortran_version != "11.0.0" and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
       run_exports:
         - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}{{ version_suffix }}
-      ignore_run_exports:
-        - llvm-openmp
-        - _openmp_mutex
     files:
       - lib/libgfortran.dylib
       - lib/libgfortran.{{ libgfortran_major_version }}.dylib
@@ -197,8 +194,6 @@ outputs:
       - lib/libgcc_s.2.dylib            # [cross_target_platform == "osx-arm64"]
 
     requirements:
-      host:
-        - llvm-openmp >=8.0.0
       run:
         - llvm-openmp >=8.0.0
       run_constrained:
