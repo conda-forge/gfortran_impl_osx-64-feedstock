@@ -4,9 +4,6 @@ set -xe
 
 ${PREFIX}/bin/${macos_machine}-gfortran --help
 
-cp ${RECIPE_DIR}/hello.f90 .
-cp ${RECIPE_DIR}/maths.f90 .
-
 if [[ "$target_platform" == "$cross_target_platform" ]]; then
   "${PREFIX}/bin/${macos_machine}-gfortran" -o hello hello.f90
   ./hello
