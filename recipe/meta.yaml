@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 10 %}
+{% set build_number = 11 %}
 {% set version_suffix = "" %}
 
 {% if gfortran_version == "7.5.0" %}
@@ -100,6 +100,13 @@ outputs:
       commands:
         - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/libgomp.spec"
         - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/libgfortran.spec"
+        - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/finclude/openacc_lib.h"
+        - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/finclude/openacc.f90"
+        - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/finclude/openacc.mod"
+        - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/finclude/omp_lib.h"
+        - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/finclude/omp_lib.f90"
+        - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/finclude/omp_lib.mod"
+        - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/finclude/ieee_features.mod"
 
   - name: gfortran_impl_{{ cross_target_platform }}
     version: {{ gfortran_version }}{{ version_suffix }}

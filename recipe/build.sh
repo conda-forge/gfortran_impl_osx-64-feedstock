@@ -126,7 +126,13 @@ fi
 
 echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
 if [[ "$host_platform" == "$target_platform" ]]; then
-  # If the compiler is a cross-native/native compiler
+  # Build if the compiler is a cross-native/native compiler
+
+  # Make sure that the libgomp configure script knows that the fortran
+  # compiler used is GNU. Otherwise the standard fortran modules for
+  # libgomp are not installed. TODO: figure out why the configure script thinks it isn't.
+  export ac_cv_fc_compiler_gnu=yes
+
   make -j"${CPU_COUNT}" || (cat $TARGET/libquadmath/config.log && false)
   make install-strip -j${CPU_COUNT}
   rm $PREFIX/lib/libgomp.dylib
