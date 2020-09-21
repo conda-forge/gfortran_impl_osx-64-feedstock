@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 9 %}
+{% set build_number = 10 %}
 {% set version_suffix = "" %}
 
 {% if gfortran_version == "7.5.0" %}
@@ -70,6 +70,9 @@ test:
     - maths.f90
     - gfortran_test.sh
   commands:
+    - set -ex
+    - export target_platform={{ target_platform }}
+    - export cross_target_platform={{ cross_target_platform }}
     - bash gfortran_test.sh
 
 outputs:
