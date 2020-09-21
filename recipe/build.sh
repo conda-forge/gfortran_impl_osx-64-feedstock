@@ -137,7 +137,7 @@ if [[ "$host_platform" == "$target_platform" ]]; then
   rm ${PREFIX}/lib/libgfortran.spec
   sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > ${PREFIX}/lib/libgfortran.spec
 
-  for file in libgfortran.spec libgomp.spec libgfortran.a libgomp.a; do
+  for file in libgfortran.spec libgomp.spec; do
     mv $PREFIX/lib/$file $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/$file
     ln -s $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/$file $PREFIX/lib/$file
   done
