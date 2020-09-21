@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 8 %}
+{% set build_number = 9 %}
 {% set version_suffix = "" %}
 
 {% if gfortran_version == "7.5.0" %}
@@ -151,7 +151,12 @@ outputs:
       - lib/libgcc_ext.10.5.dylib
 
     test:
-      script: run_test.sh
+      files:
+        - hello.f90
+        - maths.f90
+        - gfortran_test.sh
+      commands:
+        - bash gfortran_test.sh
 
   - name: libgfortran
     version: {{ libgfortran_version }}{{ version_suffix }}

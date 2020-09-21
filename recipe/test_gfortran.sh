@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -xe
 
 ${PREFIX}/bin/${macos_machine}-gfortran --help
 
