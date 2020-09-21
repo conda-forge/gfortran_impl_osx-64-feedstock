@@ -64,6 +64,14 @@ requirements:
     - isl
     - mpc
 
+test:
+  files:
+    - hello.f90
+    - maths.f90
+    - gfortran_test.sh
+  commands:
+    - bash gfortran_test.sh
+
 outputs:
   - name: libgfortran-devel_{{ target_platform }}
     version: {{ gfortran_version }}{{ version_suffix }}
@@ -150,13 +158,6 @@ outputs:
       - lib/libgcc_ext.10.4.dylib
       - lib/libgcc_ext.10.5.dylib
 
-    test:
-      files:
-        - hello.f90
-        - maths.f90
-        - gfortran_test.sh
-      commands:
-        - bash gfortran_test.sh
 
   - name: libgfortran
     version: {{ libgfortran_version }}{{ version_suffix }}
