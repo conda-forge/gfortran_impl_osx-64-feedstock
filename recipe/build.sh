@@ -134,6 +134,8 @@ if [[ "$host_platform" == "$target_platform" ]]; then
   if [[ "$host_platform" != "$build_platform" ]]; then
     export ac_cv_fc_compiler_gnu=${TARGET}-gfortran
     export FC=${TARGET}-gfortran
+    export ac_cv_prog_FC=$FC
+    $FC --version
     sed -i.bak "s/USE_FORTRAN_FALSE=.*/USE_FORTRAN_FALSE='#'/g" $SRC_DIR/libgomp/configure
     sed -i.bak "s/USE_FORTRAN_TRUE=.*/USE_FORTRAN_TRUE=/g" $SRC_DIR/libgomp/configure
   fi
