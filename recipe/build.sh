@@ -133,7 +133,7 @@ if [[ "$host_platform" == "$target_platform" ]]; then
   # libgomp are not installed. TODO: figure out why the configure script thinks it isn't.
   export ac_cv_fc_compiler_gnu=yes
 
-  make -j"${CPU_COUNT}" || (cat $TARGET/libgfortran/*.log && false)
+  make -j"${CPU_COUNT}" || (cat $TARGET/libgomp/*.log && false)
   make install-strip -j${CPU_COUNT}
   rm $PREFIX/lib/libgomp.dylib
   rm $PREFIX/lib/libgomp.1.dylib
