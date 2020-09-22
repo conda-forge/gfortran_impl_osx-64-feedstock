@@ -133,6 +133,7 @@ if [[ "$host_platform" == "$target_platform" ]]; then
   # libgomp are not installed. TODO: figure out why the configure script thinks it isn't.
   if [[ "$host_platform" != "$build_platform" ]]; then
     export ac_cv_fc_compiler_gnu=${TARGET}-gfortran
+    export FC=${TARGET}-gfortran
     sed -i.bak "s/USE_FORTRAN_FALSE=.*/USE_FORTRAN_FALSE='#'/g" $SRC_DIR/libgomp/configure
     sed -i.bak "s/USE_FORTRAN_TRUE=.*/USE_FORTRAN_TRUE=/g" $SRC_DIR/libgomp/configure
   fi
