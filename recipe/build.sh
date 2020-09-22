@@ -131,7 +131,8 @@ if [[ "$host_platform" == "$target_platform" ]]; then
   # Make sure that the libgomp configure script knows that the fortran
   # compiler used is GNU. Otherwise the standard fortran modules for
   # libgomp are not installed. TODO: figure out why the configure script thinks it isn't.
-  export ac_cv_fc_compiler_gnu=yes
+  sed -i.bak "s/USE_FORTRAN_FALSE=.*/USE_FORTRAN_FALSE='#'/g" $SRC_DIR/libgomp/configure
+  sed -i.bak "s/USE_FORTRAN_TRUE=.*/USE_FORTRAN_TRUE=/g" $SRC_DIR/libgomp/configure
 
   make -j"${CPU_COUNT}" || (cat $TARGET/libgomp/*.log && false)
   make install-strip -j${CPU_COUNT}
