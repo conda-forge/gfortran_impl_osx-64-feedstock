@@ -107,6 +107,14 @@ if [[ "$build_platform" == "$host_platform" ]]; then
     extra_configure_options="$extra_configure_options --with-native-system-header-dir=$CONDA_BUILD_SYSROOT/usr/include"
 fi
 
+# libatomic is having trouble with pthreads and stack protector checks
+# for gcc 11 on osx-arm64
+if [[ "$host_platform" != "$build_platform" ]]; then
+  export CFLAGS=${CFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
+  export CXXFLAGS=${CXXFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
+  export CPPFLAGS=${CPPFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
+fi
+
 ../configure \
     --prefix=${PREFIX} \
     --build=${BUILD} \
@@ -140,14 +148,6 @@ if [[ "$host_platform" == "$target_platform" ]]; then
     sed -i.bak "s/USE_FORTRAN_TRUE=.*/USE_FORTRAN_TRUE=/g" $SRC_DIR/libgomp/configure
   fi
   
-  # libatomic is having trouble with pthreads and stack protector checks
-  # for gcc 11 on osx-arm64
-  if [[ "$host_platform" != "$build_platform" ]]; then
-    export CFLAGS=${CFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
-    export CXXFLAGS=${CXXFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
-    export CPPFLAGS=${CPPFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
-  fi
-
   make -j"${CPU_COUNT}" || (cat $TARGET/libatomic/*.log && false)
   make install-strip -j${CPU_COUNT}
   rm $PREFIX/lib/libgomp.dylib
