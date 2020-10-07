@@ -81,6 +81,14 @@ fi
 mkdir build_conda
 cd build_conda
 
+# libatomic is having trouble with pthreads and stack protector checks
+# for gcc 11 on osx-arm64
+if [[ "$host_platform" != "$build_platform" ]]; then
+  export CFLAGS=${CFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
+  export CXXFLAGS=${CXXFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
+  export CPPFLAGS=${CPPFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
+fi
+
 if [[ "$target_platform" == osx* ]]; then
     if [[ "$target_platform" == "$host_platform" ]]; then
         export LDFLAGS_FOR_TARGET="$LDFLAGS_FOR_TARGET $LDFLAGS"
@@ -105,14 +113,6 @@ fi
 
 if [[ "$build_platform" == "$host_platform" ]]; then
     extra_configure_options="$extra_configure_options --with-native-system-header-dir=$CONDA_BUILD_SYSROOT/usr/include"
-fi
-
-# libatomic is having trouble with pthreads and stack protector checks
-# for gcc 11 on osx-arm64
-if [[ "$host_platform" != "$build_platform" ]]; then
-  export CFLAGS=${CFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
-  export CXXFLAGS=${CXXFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
-  export CPPFLAGS=${CPPFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
 fi
 
 ../configure \
