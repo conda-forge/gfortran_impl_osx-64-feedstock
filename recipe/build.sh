@@ -81,6 +81,14 @@ fi
 mkdir build_conda
 cd build_conda
 
+# libatomic is having trouble with pthreads and stack protector checks
+# for gcc 11 on osx-arm64
+if [[ "$host_platform" != "$build_platform" ]]; then
+  export CFLAGS=${CFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
+  export CXXFLAGS=${CXXFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
+  export CPPFLAGS=${CPPFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
+fi
+
 if [[ "$target_platform" == osx* ]]; then
     if [[ "$target_platform" == "$host_platform" ]]; then
         export LDFLAGS_FOR_TARGET="$LDFLAGS_FOR_TARGET $LDFLAGS"
@@ -140,7 +148,7 @@ if [[ "$host_platform" == "$target_platform" ]]; then
     sed -i.bak "s/USE_FORTRAN_TRUE=.*/USE_FORTRAN_TRUE=/g" $SRC_DIR/libgomp/configure
   fi
 
-  make -j"${CPU_COUNT}" || (cat $TARGET/libgomp/*.log && false)
+  make -j"${CPU_COUNT}" || (cat $TARGET/libquadmath/*.log && false)
   make install-strip -j${CPU_COUNT}
   rm $PREFIX/lib/libgomp.dylib
   rm $PREFIX/lib/libgomp.1.dylib

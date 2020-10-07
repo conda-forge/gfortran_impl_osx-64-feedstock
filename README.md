@@ -1,5 +1,5 @@
-About gfortran_impl_osx-arm64
-=============================
+About gfortran_impl_osx-64
+==========================
 
 Home: http://gcc.gnu.org/
 
@@ -233,22 +233,23 @@ Current release info
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gfortran_impl_osx--64-green.svg)](https://anaconda.org/conda-forge/gfortran_impl_osx-64) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gfortran_impl_osx-64.svg)](https://anaconda.org/conda-forge/gfortran_impl_osx-64) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gfortran_impl_osx-64.svg)](https://anaconda.org/conda-forge/gfortran_impl_osx-64) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gfortran_impl_osx-64.svg)](https://anaconda.org/conda-forge/gfortran_impl_osx-64) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gfortran_impl_osx--arm64-green.svg)](https://anaconda.org/conda-forge/gfortran_impl_osx-arm64) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gfortran_impl_osx-arm64.svg)](https://anaconda.org/conda-forge/gfortran_impl_osx-arm64) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gfortran_impl_osx-arm64.svg)](https://anaconda.org/conda-forge/gfortran_impl_osx-arm64) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gfortran_impl_osx-arm64.svg)](https://anaconda.org/conda-forge/gfortran_impl_osx-arm64) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-libgfortran-green.svg)](https://anaconda.org/conda-forge/libgfortran) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libgfortran.svg)](https://anaconda.org/conda-forge/libgfortran) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libgfortran.svg)](https://anaconda.org/conda-forge/libgfortran) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libgfortran.svg)](https://anaconda.org/conda-forge/libgfortran) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-libgfortran--devel_linux--64-green.svg)](https://anaconda.org/conda-forge/libgfortran-devel_linux-64) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libgfortran-devel_linux-64.svg)](https://anaconda.org/conda-forge/libgfortran-devel_linux-64) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libgfortran-devel_linux-64.svg)](https://anaconda.org/conda-forge/libgfortran-devel_linux-64) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libgfortran-devel_linux-64.svg)](https://anaconda.org/conda-forge/libgfortran-devel_linux-64) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-libgfortran4-green.svg)](https://anaconda.org/conda-forge/libgfortran4) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libgfortran4.svg)](https://anaconda.org/conda-forge/libgfortran4) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libgfortran4.svg)](https://anaconda.org/conda-forge/libgfortran4) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libgfortran4.svg)](https://anaconda.org/conda-forge/libgfortran4) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-libgfortran5-green.svg)](https://anaconda.org/conda-forge/libgfortran5) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libgfortran5.svg)](https://anaconda.org/conda-forge/libgfortran5) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libgfortran5.svg)](https://anaconda.org/conda-forge/libgfortran5) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libgfortran5.svg)](https://anaconda.org/conda-forge/libgfortran5) |
 
-Installing gfortran_impl_osx-arm64
-==================================
+Installing gfortran_impl_osx-64
+===============================
 
-Installing `gfortran_impl_osx-arm64` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `gfortran_impl_osx-64` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
 conda config --add channels conda-forge
 ```
 
-Once the `conda-forge` channel has been enabled, `gfortran_impl_osx-64, gfortran_impl_osx-arm64, libgfortran, libgfortran4, libgfortran5` can be installed with:
+Once the `conda-forge` channel has been enabled, `gfortran_impl_osx-64, gfortran_impl_osx-arm64, libgfortran, libgfortran-devel_linux-64, libgfortran4, libgfortran5` can be installed with:
 
 ```
-conda install gfortran_impl_osx-64 gfortran_impl_osx-arm64 libgfortran libgfortran4 libgfortran5
+conda install gfortran_impl_osx-64 gfortran_impl_osx-arm64 libgfortran libgfortran-devel_linux-64 libgfortran4 libgfortran5
 ```
 
 It is possible to list all of the versions of `gfortran_impl_osx-64` available on your platform with:
@@ -296,17 +297,17 @@ Terminology
                   produce the finished article (built conda distributions)
 
 
-Updating gfortran_impl_osx-arm64-feedstock
-==========================================
+Updating gfortran_impl_osx-64-feedstock
+=======================================
 
-If you would like to improve the gfortran_impl_osx-arm64 recipe or build a new
+If you would like to improve the gfortran_impl_osx-64 recipe or build a new
 package version, please fork this repository and submit a PR. Upon submission,
 your changes will be run on the appropriate platforms to give the reviewer an
 opportunity to confirm that the changes result in a successful build. Once
 merged, the recipe will be re-built and uploaded automatically to the
 `conda-forge` channel, whereupon the built conda packages will be available for
 everybody to install and use from the `conda-forge` channel.
-Note that all branches in the conda-forge/gfortran_impl_osx-arm64-feedstock are
+Note that all branches in the conda-forge/gfortran_impl_osx-64-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
 on branches in forks and branches in the main repository should only be used to
 build distinct package versions.
