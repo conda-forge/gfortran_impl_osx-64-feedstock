@@ -149,6 +149,7 @@ if [[ "$host_platform" == "$target_platform" ]]; then
   fi
 
   make -j"${CPU_COUNT}" || (cat $TARGET/libquadmath/*.log && false)
+  cat $TARGET/libquadmath/*.log
   make install-strip -j${CPU_COUNT}
   rm $PREFIX/lib/libgomp.dylib
   rm $PREFIX/lib/libgomp.1.dylib
