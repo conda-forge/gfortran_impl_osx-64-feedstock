@@ -149,6 +149,7 @@ if [[ "$host_platform" == "$target_platform" ]]; then
   fi
 
   make -j"${CPU_COUNT}" || (cat $TARGET/libquadmath/*.log && false)
+  cat $TARGET/libquadmath/*.log
   make install-strip -j${CPU_COUNT}
   rm $PREFIX/lib/libgomp.dylib
   rm $PREFIX/lib/libgomp.1.dylib
@@ -156,7 +157,11 @@ if [[ "$host_platform" == "$target_platform" ]]; then
   ln -s $PREFIX/lib/libomp.dylib $PREFIX/lib/libgomp.1.dylib
 
   rm ${PREFIX}/lib/libgfortran.spec
-  sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > ${PREFIX}/lib/libgfortran.spec
+  sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > libgfortran.spec
+  if [[ "$target_platform" == "osx-arm64" ]]; then
+    sed -i.bak "s#-lquadmath##g" libgfortran.spec
+  fi
+  mv libgfortran.spec ${PREFIX}/lib/libgfortran.spec
 
   for file in libgfortran.spec libgomp.spec; do
     mv $PREFIX/lib/$file $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/$file
