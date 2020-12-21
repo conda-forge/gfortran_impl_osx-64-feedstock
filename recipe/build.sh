@@ -160,6 +160,9 @@ if [[ "$host_platform" == "$target_platform" ]]; then
   sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > libgfortran.spec
   if [[ "$target_platform" == "osx-arm64" ]]; then
     sed -i.bak "s#-lquadmath##g" libgfortran.spec
+    sed -i.bak "s#@LIBGCC_DYLIB@#-lgcc_s.2#g" libgfortran.spec
+  else
+    sed -i.bak "s#@LIBGCC_DYLIB@#-lgcc_s.1#g" libgfortran.spec
   fi
   mv libgfortran.spec ${PREFIX}/lib/libgfortran.spec
 
