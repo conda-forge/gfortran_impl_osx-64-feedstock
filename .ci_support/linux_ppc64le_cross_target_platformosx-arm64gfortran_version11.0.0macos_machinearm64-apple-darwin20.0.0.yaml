@@ -1,7 +1,9 @@
 c_compiler:
 - gcc
 c_compiler_version:
-- '8'
+- '9'
+cdt_name:
+- cos7
 channel_sources:
 - conda-forge,defaults
 channel_targets:
@@ -11,9 +13,9 @@ cross_target_platform:
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '8'
+- '9'
 docker_image:
-- condaforge/linux-anvil-ppc64le
+- quay.io/condaforge/linux-anvil-ppc64le
 gfortran_version:
 - 11.0.0
 gmp:
@@ -40,6 +42,8 @@ pin_run_as_build:
 target_platform:
 - linux-ppc64le
 zip_keys:
+- - c_compiler_version
+  - cxx_compiler_version
 - - cross_target_platform
   - macos_machine
 zlib:
