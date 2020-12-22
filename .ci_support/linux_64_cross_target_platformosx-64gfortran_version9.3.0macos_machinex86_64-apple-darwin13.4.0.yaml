@@ -1,15 +1,11 @@
-BUILD:
-- aarch64-conda_cos7-linux-gnu
 c_compiler:
 - gcc
 c_compiler_version:
-- '7.5'
-cdt_arch:
-- aarch64
+- '9'
 cdt_name:
-- cos7
+- cos6
 channel_sources:
-- conda-forge
+- conda-forge,defaults
 channel_targets:
 - conda-forge main
 cross_target_platform:
@@ -17,11 +13,11 @@ cross_target_platform:
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '7.5'
+- '9'
 docker_image:
-- condaforge/linux-anvil-aarch64
+- quay.io/condaforge/linux-anvil-comp7
 gfortran_version:
-- 7.5.0
+- 9.3.0
 gmp:
 - '6'
 isl:
@@ -44,8 +40,10 @@ pin_run_as_build:
   zlib:
     max_pin: x.x
 target_platform:
-- linux-aarch64
+- linux-64
 zip_keys:
+- - c_compiler_version
+  - cxx_compiler_version
 - - cross_target_platform
   - macos_machine
 zlib:
