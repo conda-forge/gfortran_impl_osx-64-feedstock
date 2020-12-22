@@ -3,7 +3,7 @@ BUILD:
 c_compiler:
 - gcc
 c_compiler_version:
-- '7.5'
+- '9'
 cdt_arch:
 - aarch64
 cdt_name:
@@ -17,9 +17,9 @@ cross_target_platform:
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '7.5'
+- '9'
 docker_image:
-- condaforge/linux-anvil-aarch64
+- quay.io/condaforge/linux-anvil-aarch64
 gfortran_version:
 - 7.5.0
 gmp:
@@ -46,6 +46,8 @@ pin_run_as_build:
 target_platform:
 - linux-aarch64
 zip_keys:
+- - c_compiler_version
+  - cxx_compiler_version
 - - cross_target_platform
   - macos_machine
 zlib:
