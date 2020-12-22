@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 14 %}
+{% set build_number = 15 %}
 {% set version_suffix = "" %}
 
 {% if gfortran_version == "7.5.0" %}
@@ -68,6 +68,7 @@ test:
   files:
     - hello.f90
     - maths.f90
+    - omp-threadprivate.f90
     - gfortran_test.sh
   commands:
     - set -ex
