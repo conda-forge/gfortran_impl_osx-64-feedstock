@@ -2,6 +2,10 @@
 {% set build_number = 16 %}
 {% set version_suffix = "" %}
 
+{% if gfortran_version is undefined %}
+{% set gfortran_version = "7.5.0" %}
+{% endif %}
+
 {% if gfortran_version == "7.5.0" %}
 {% set libgfortran_version = "4.0.0" %}
 {% set max_libgfortran_version = "5.0.0.a0" %}
