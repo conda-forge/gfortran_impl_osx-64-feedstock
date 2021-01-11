@@ -1,5 +1,36 @@
 ---
 kind: pipeline
+name: linux_aarch64_cross_target_platform_h3cd132ba9c
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: Install and build
+  image: quay.io/condaforge/linux-anvil-aarch64
+  environment:
+    CONFIG: linux_aarch64_cross_target_platformosx-64gfortran_version10.2.0macos_machinex86_64-apple-darwin13.4.0
+    UPLOAD_PACKAGES: True
+    PLATFORM: linux-aarch64
+    BINSTAR_TOKEN:
+      from_secret: BINSTAR_TOKEN
+    FEEDSTOCK_TOKEN:
+      from_secret: FEEDSTOCK_TOKEN
+    STAGING_BINSTAR_TOKEN:
+      from_secret: STAGING_BINSTAR_TOKEN
+  commands:
+    - export FEEDSTOCK_ROOT="$DRONE_WORKSPACE"
+    - export RECIPE_ROOT="$FEEDSTOCK_ROOT/recipe"
+    - export CI=drone
+    - export GIT_BRANCH="$DRONE_BRANCH"
+    - export FEEDSTOCK_NAME=$(basename ${DRONE_REPO_NAME})
+    - sed -i '$ichown -R conda:conda "$FEEDSTOCK_ROOT"' /opt/docker/bin/entrypoint
+    - /opt/docker/bin/entrypoint $FEEDSTOCK_ROOT/.scripts/build_steps.sh
+    - echo "Done building"
+
+---
+kind: pipeline
 name: linux_aarch64_cross_target_platform_h4f7e4bf3a4
 
 platform:
@@ -73,6 +104,37 @@ steps:
   image: quay.io/condaforge/linux-anvil-aarch64
   environment:
     CONFIG: linux_aarch64_cross_target_platformosx-64gfortran_version9.3.0macos_machinex86_64-apple-darwin13.4.0
+    UPLOAD_PACKAGES: True
+    PLATFORM: linux-aarch64
+    BINSTAR_TOKEN:
+      from_secret: BINSTAR_TOKEN
+    FEEDSTOCK_TOKEN:
+      from_secret: FEEDSTOCK_TOKEN
+    STAGING_BINSTAR_TOKEN:
+      from_secret: STAGING_BINSTAR_TOKEN
+  commands:
+    - export FEEDSTOCK_ROOT="$DRONE_WORKSPACE"
+    - export RECIPE_ROOT="$FEEDSTOCK_ROOT/recipe"
+    - export CI=drone
+    - export GIT_BRANCH="$DRONE_BRANCH"
+    - export FEEDSTOCK_NAME=$(basename ${DRONE_REPO_NAME})
+    - sed -i '$ichown -R conda:conda "$FEEDSTOCK_ROOT"' /opt/docker/bin/entrypoint
+    - /opt/docker/bin/entrypoint $FEEDSTOCK_ROOT/.scripts/build_steps.sh
+    - echo "Done building"
+
+---
+kind: pipeline
+name: linux_aarch64_cross_target_platform_heca718e064
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: Install and build
+  image: quay.io/condaforge/linux-anvil-aarch64
+  environment:
+    CONFIG: linux_aarch64_cross_target_platformosx-arm64gfortran_version10.2.0macos_machinearm64-apple-darwin20.0.0
     UPLOAD_PACKAGES: True
     PLATFORM: linux-aarch64
     BINSTAR_TOKEN:
