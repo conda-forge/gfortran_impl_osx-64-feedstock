@@ -47,7 +47,7 @@ source:
   url: {{ url }}
   sha256: {{ source_sha }}
   patches:
-    - libgcc_macosx_min_version.patch
+    - libgcc_macosx_min_version.patch  # [gfortran_version in ("7.5.0", "9.3.0")]
 
 build:
   number: {{ build_number }}
