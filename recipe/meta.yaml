@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 15 %}
+{% set build_number = 16 %}
 {% set version_suffix = "" %}
 
 {% if gfortran_version == "7.5.0" %}
@@ -18,13 +18,21 @@
 {% set url = "https://ftp.gnu.org/gnu/gcc/gcc-9.3.0/gcc-9.3.0.tar.gz" %}
 {% endif %}
 
+{% if gfortran_version == "10.2.0" %}
+{% set libgfortran_version = "5.0.0" %}
+{% set max_libgfortran_version = "6.0.0.a0" %}
+{% set libgfortran_major_version = "5" %}
+{% set source_sha = "869269fc5bee3fa2bf5968d6ff71603ab26d2c2f842e1f188cf99c038fdbfbdf" %}
+{% set url = "https://github.com/fxcoudert/gcc/archive/6ae8fb9bc550592ce0a3f8744cbe6745445119e7.tar.gz" %}
+{% endif %}
+
 {% if gfortran_version == "11.0.0" %}
 {% set libgfortran_version = "5.0.0" %}
 {% set version_suffix = ".dev0" %}
 {% set max_libgfortran_version = "6.0.0.a0" %}
 {% set libgfortran_major_version = "5" %}
-{% set source_sha = "04783e036b781c853cd4df3f2e77768f403cc845e65a97cb35f8558570e7d874" %}
-{% set url = "https://github.com/iains/gcc-darwin-arm64/archive/3d2bb84d1f7fc7bacadb7224035cea3b6fbf3b9d.tar.gz" %}
+{% set source_sha = "78d53790044acb343d0429370911c7fc41ae003630b9b0f7264999dc4251379f" %}
+{% set url = "https://github.com/iains/gcc-darwin-arm64/archive/62cfbb7cf8a06c2ec07d3343bfdc67ca8123239e.tar.gz" %}
 {% endif %}
 
 package:
@@ -40,8 +48,8 @@ source:
 build:
   number: {{ build_number }}
   skip: True  # [win]
-  skip: True  # [gfortran_version == "11.0.0" and cross_target_platform != "osx-arm64"]
-  skip: True  # [gfortran_version != "11.0.0" and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
+  skip: True  # [gfortran_version in ("11.0.0", "10.2.0") and cross_target_platform != "osx-arm64"]
+  skip: True  # [gfortran_version not in ("11.0.0", "10.2.0") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
 
 requirements:
   build:
@@ -81,8 +89,8 @@ outputs:
     version: {{ gfortran_version }}{{ version_suffix }}
     build:
       skip: True  # [target_platform != cross_target_platform]
-      skip: True  # [gfortran_version == "11.0.0" and cross_target_platform != "osx-arm64"]
-      skip: True  # [gfortran_version != "11.0.0" and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
+      skip: True  # [gfortran_version in ("11.0.0", "10.2.0") and cross_target_platform != "osx-arm64"]
+      skip: True  # [gfortran_version not in ("11.0.0", "10.2.0") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
       noarch: generic
     files:
       # these are not generated for the cross compiler
@@ -114,8 +122,8 @@ outputs:
     build:
       activate_in_script: True
       skip: True  # [win]
-      skip: True  # [gfortran_version == "11.0.0" and cross_target_platform != "osx-arm64"]
-      skip: True  # [gfortran_version != "11.0.0" and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
+      skip: True  # [gfortran_version in ("11.0.0", "10.2.0") and cross_target_platform != "osx-arm64"]
+      skip: True  # [gfortran_version not in ("11.0.0", "10.2.0") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -175,8 +183,9 @@ outputs:
     target: {{ cross_target_platform }}
     build:
       skip: True  # [target_platform != cross_target_platform]
-      skip: True  # [gfortran_version == "11.0.0" and cross_target_platform != "osx-arm64"]
-      skip: True  # [gfortran_version != "11.0.0" and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
+      skip: True  # [gfortran_version in ("11.0.0", "10.2.0") and cross_target_platform != "osx-arm64"]
+      skip: True  # [gfortran_version not in ("11.0.0", "10.2.0") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
+      string: {{ gfortran_version.replace(".", "_") }}_h{{ PKG_HASH }}_{{ build_number }}
     requirements:
       run:
         - libgfortran{{ libgfortran_major_version }}
@@ -186,8 +195,8 @@ outputs:
     target: {{ cross_target_platform }}
     build:
       skip: True  # [target_platform != cross_target_platform]
-      skip: True  # [gfortran_version == "11.0.0" and cross_target_platform != "osx-arm64"]
-      skip: True  # [gfortran_version != "11.0.0" and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
+      skip: True  # [gfortran_version in ("11.0.0", "10.2.0") and cross_target_platform != "osx-arm64"]
+      skip: True  # [gfortran_version not in ("11.0.0", "10.2.0") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
       run_exports:
         - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}{{ version_suffix }}
     files:
