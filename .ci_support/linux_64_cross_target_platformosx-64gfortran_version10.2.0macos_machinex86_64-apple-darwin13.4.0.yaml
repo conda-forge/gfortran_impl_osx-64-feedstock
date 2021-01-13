@@ -17,7 +17,7 @@ cxx_compiler_version:
 docker_image:
 - quay.io/condaforge/linux-anvil-comp7
 gfortran_version:
-- 9.3.0
+- 10.2.0
 gmp:
 - '6'
 isl:
