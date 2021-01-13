@@ -33,6 +33,11 @@ start_spinner
 
 set -x
 
+if [[ -f "libcody/build-aux/config.sub" ]]; then
+  rm libcody/build-aux/config.sub
+  cp config.sub libcody/build-aux/config.sub
+fi
+
 # Undo conda-build madness
 export host_platform=$target_platform
 export target_platform=$cross_target_platform
@@ -40,6 +45,8 @@ export target_platform=$cross_target_platform
 export TARGET=${macos_machine}
 # clang emits a ton of warnings
 export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprecated -Wno-mismatched-tags -Wno-unused-command-line-argument -Wno-ignored-attributes"
+# Remove C++ flags as libcody expects exactly C++11
+export CXXFLAGS="$(echo $CXXFLAGS | sed s/-std=c++[0-9]*/-std=c++11/g)"
 
 if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_platform" ]]; then
     # We need to compile the target libraries when host_platform == target_platform, but if

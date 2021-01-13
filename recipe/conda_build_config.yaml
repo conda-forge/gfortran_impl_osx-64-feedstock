@@ -10,4 +10,5 @@ zip_keys:
 gfortran_version:
   - 7.5.0
   - 9.3.0
+  - 10.2.1
   - 11.0.0
