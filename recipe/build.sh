@@ -33,9 +33,9 @@ start_spinner
 
 set -x
 
-if [[ -f "libcody/config.sub" ]]; then
-  rm libcody/config.sub
-  cp config.sub libcody/config.sub
+if [[ -f "libcody/build-aux/config.sub" ]]; then
+  rm libcody/build-aux/config.sub
+  cp config.sub libcody/build-aux/config.sub
 fi
 
 # Undo conda-build madness

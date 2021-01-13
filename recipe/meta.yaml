@@ -22,7 +22,7 @@
 {% set url = "https://ftp.gnu.org/gnu/gcc/gcc-9.3.0/gcc-9.3.0.tar.gz" %}
 {% endif %}
 
-{% if gfortran_version == "10.2.0" %}
+{% if gfortran_version == "10.2.1" %}
 {% set libgfortran_version = "5.0.0" %}
 {% set max_libgfortran_version = "6.0.0.a0" %}
 {% set libgfortran_major_version = "5" %}
