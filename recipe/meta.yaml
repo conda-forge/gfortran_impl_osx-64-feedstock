@@ -26,8 +26,8 @@
 {% set libgfortran_version = "5.0.0" %}
 {% set max_libgfortran_version = "6.0.0.a0" %}
 {% set libgfortran_major_version = "5" %}
-{% set source_sha = "869269fc5bee3fa2bf5968d6ff71603ab26d2c2f842e1f188cf99c038fdbfbdf" %}
-{% set url = "https://github.com/fxcoudert/gcc/archive/6ae8fb9bc550592ce0a3f8744cbe6745445119e7.tar.gz" %}
+{% set source_sha = "72423969058b3071e87c9afd7215c8e068c56911b15805eb57390f45b9cd3db5" %}
+{% set url = "https://github.com/fxcoudert/gcc/archive/e884c192980f62683e7ea4341f1099133913cfa8.tar.gz" %}
 {% endif %}
 
 {% if gfortran_version == "11.0.0" %}
