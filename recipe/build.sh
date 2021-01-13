@@ -46,7 +46,7 @@ export TARGET=${macos_machine}
 # clang emits a ton of warnings
 export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprecated -Wno-mismatched-tags -Wno-unused-command-line-argument -Wno-ignored-attributes"
 # Remove C++ flags as libcody expects exactly C++11
-export CXXFLAGS="$(echo $CXXFLAGS | sed s/-std=c++[0-9]*//g)"
+export CXXFLAGS="$(echo $CXXFLAGS | sed s/-std=c++[0-9]*/-std=c++11/g)"
 
 if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_platform" ]]; then
     # We need to compile the target libraries when host_platform == target_platform, but if
