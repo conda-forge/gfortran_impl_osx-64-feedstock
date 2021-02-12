@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 17 %}
+{% set build_number = 18 %}
 {% set version_suffix = "" %}
 
 {% if gfortran_version is undefined %}
@@ -35,8 +35,8 @@
 {% set version_suffix = ".dev0" %}
 {% set max_libgfortran_version = "6.0.0.a0" %}
 {% set libgfortran_major_version = "5" %}
-{% set source_sha = "78d53790044acb343d0429370911c7fc41ae003630b9b0f7264999dc4251379f" %}
-{% set url = "https://github.com/iains/gcc-darwin-arm64/archive/62cfbb7cf8a06c2ec07d3343bfdc67ca8123239e.tar.gz" %}
+{% set source_sha = "8d3a218e570aaeea9795a2c751eee844a4235578c9836dc090f308b92f0b4414" %}
+{% set url = "https://github.com/iains/gcc-darwin-arm64/archive/02d30eeb2534a593216564c07e94f4d49f0b679e.tar.gz" %}
 {% endif %}
 
 package:
