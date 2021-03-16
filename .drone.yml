@@ -31,7 +31,7 @@ steps:
 
 ---
 kind: pipeline
-name: linux_aarch64_cross_target_platform_h4f7e4bf3a4
+name: linux_aarch64_cross_target_platform_hfe51844aed
 
 platform:
   os: linux
@@ -41,7 +41,7 @@ steps:
 - name: Install and build
   image: quay.io/condaforge/linux-anvil-aarch64
   environment:
-    CONFIG: linux_aarch64_cross_target_platformosx-64gfortran_version11.0.0macos_machinex86_64-apple-darwin13.4.0
+    CONFIG: linux_aarch64_cross_target_platformosx-64gfortran_version11.0.1macos_machinex86_64-apple-darwin13.4.0
     UPLOAD_PACKAGES: True
     PLATFORM: linux-aarch64
     BINSTAR_TOKEN:
@@ -155,7 +155,7 @@ steps:
 
 ---
 kind: pipeline
-name: linux_aarch64_cross_target_platform_h72b6c8165c
+name: linux_aarch64_cross_target_platform_h89b09b00cc
 
 platform:
   os: linux
@@ -165,7 +165,7 @@ steps:
 - name: Install and build
   image: quay.io/condaforge/linux-anvil-aarch64
   environment:
-    CONFIG: linux_aarch64_cross_target_platformosx-arm64gfortran_version11.0.0macos_machinearm64-apple-darwin20.0.0
+    CONFIG: linux_aarch64_cross_target_platformosx-arm64gfortran_version11.0.1macos_machinearm64-apple-darwin20.0.0
     UPLOAD_PACKAGES: True
     PLATFORM: linux-aarch64
     BINSTAR_TOKEN:

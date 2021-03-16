@@ -11,8 +11,8 @@ jobs:
       osx_64_cross_target_platformosx-64gfortran_version10.2.1:
         CONFIG: osx_64_cross_target_platformosx-64gfortran_version10.2.1
         UPLOAD_PACKAGES: 'True'
-      osx_64_cross_target_platformosx-64gfortran_version11.0.0:
-        CONFIG: osx_64_cross_target_platformosx-64gfortran_version11.0.0
+      osx_64_cross_target_platformosx-64gfortran_version11.0.1:
+        CONFIG: osx_64_cross_target_platformosx-64gfortran_version11.0.1
         UPLOAD_PACKAGES: 'True'
       osx_64_cross_target_platformosx-64gfortran_version7.5.0:
         CONFIG: osx_64_cross_target_platformosx-64gfortran_version7.5.0
@@ -23,8 +23,8 @@ jobs:
       osx_64_cross_target_platformosx-arm64gfortran_version10.2.1:
         CONFIG: osx_64_cross_target_platformosx-arm64gfortran_version10.2.1
         UPLOAD_PACKAGES: 'True'
-      osx_64_cross_target_platformosx-arm64gfortran_version11.0.0:
-        CONFIG: osx_64_cross_target_platformosx-arm64gfortran_version11.0.0
+      osx_64_cross_target_platformosx-arm64gfortran_version11.0.1:
+        CONFIG: osx_64_cross_target_platformosx-arm64gfortran_version11.0.1
         UPLOAD_PACKAGES: 'True'
       osx_64_cross_target_platformosx-arm64gfortran_version7.5.0:
         CONFIG: osx_64_cross_target_platformosx-arm64gfortran_version7.5.0
@@ -34,6 +34,9 @@ jobs:
         UPLOAD_PACKAGES: 'True'
       osx_arm64_cross_target_platformosx-arm64gfortran_version10.2.1:
         CONFIG: osx_arm64_cross_target_platformosx-arm64gfortran_version10.2.1
+        UPLOAD_PACKAGES: 'True'
+      osx_arm64_cross_target_platformosx-arm64gfortran_version11.0.1:
+        CONFIG: osx_arm64_cross_target_platformosx-arm64gfortran_version11.0.1
         UPLOAD_PACKAGES: 'True'
   timeoutInMinutes: 360
 
