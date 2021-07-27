@@ -16,4 +16,11 @@ if [[ "$target_platform" == "$cross_target_platform" ]]; then
   "${PREFIX}/bin/${macos_machine}-gfortran" -fopenmp -o omp-threadprivate omp-threadprivate.f90 -v
   ./omp-threadprivate
   rm -f omp-threadprivate
+
+  ${macos_machine}-gfortran -v
+  ${macos_machine}-gfortran -E -dM - </dev/null
+
+  # check that we disable building C with gfortran
+  echo "int main() {}" > test.c
+  ${macos_machine}-gfortran test.c && exit 1
 fi

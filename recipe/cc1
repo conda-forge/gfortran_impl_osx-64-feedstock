@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# cc1 is used for compiling C/C++ files, but since we are using Fortran only, it's
+# not needed.
+#
+# however there are a few commands like '-dM' that calls 'cc1' and are used by
+# build systems like cmake, meson to identify the compiler.
+#
+# we enable that use case and disable building C/C++ files because we don't want
+# to accidentally build C/C++ files with gfortran
+
+if [[ ! " $@ " =~ " -dM " ]]; then
+  echo "commands without -dM to cc1 is disallowed right now."
+  echo "please open an issue in github.com/conda-forge/gfortran_impl_osx-64-feedstock"
+  exit 1
+fi
+
+@PATH@/cc1.bin $@
