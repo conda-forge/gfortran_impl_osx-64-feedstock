@@ -22,5 +22,5 @@ if [[ "$target_platform" == "$cross_target_platform" ]]; then
 
   # check that we disable building C with gfortran
   echo "int main() {}" > test.c
-  ${macos_machine}-gfortran test.c && exit 1
+  ! ${macos_machine}-gfortran test.c
 fi
