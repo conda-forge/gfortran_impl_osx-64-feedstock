@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 22 %}
+{% set build_number = 23 %}
 {% set version_suffix = "" %}
 
 {% if gfortran_version is undefined %}
@@ -171,6 +171,8 @@ outputs:
       - libexec/gcc/{{ chost }}/{{ gfortran_version }}/collect2
       - libexec/gcc/{{ chost }}/{{ gfortran_version }}/f951
       - libexec/gcc/{{ chost }}/{{ gfortran_version }}/lto-wrapper
+      - libexec/gcc/{{ chost }}/{{ gfortran_version }}/cc1
+      - libexec/gcc/{{ chost }}/{{ gfortran_version }}/cc1.bin
       - lib/libgfortran.spec
 
       # For -fopenmp

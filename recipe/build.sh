@@ -183,3 +183,7 @@ fi
 stop_spinner
 
 ls -al $PREFIX/lib
+
+mv ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1 ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1.bin
+sed "s#@PATH@#${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}#g" ${RECIPE_DIR}/cc1 > ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1
+chmod +x ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1
