@@ -29,7 +29,8 @@ function stop_spinner {
     >&2 echo "Building libraries finished."
 }
 
-start_spinner
+# we don't want to have the spinner, as this will leave a zombie for failed builds
+# start_spinner
 
 set -x
 
@@ -47,6 +48,9 @@ export TARGET=${macos_machine}
 export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprecated -Wno-mismatched-tags -Wno-unused-command-line-argument -Wno-ignored-attributes"
 # Remove C++ flags as libcody expects exactly C++11
 export CXXFLAGS="$(echo $CXXFLAGS | sed s/-std=c++[0-9]*/-std=c++11/g)"
+# we turn off stack-protector, as clang will give us here build failures ...
+export CXXFLAGS="${CXXFLAGS} -fno-stack-protector"
+export CFLAGS="${CFLAGS} -fno-stack-protector"
 
 if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_platform" ]]; then
     # We need to compile the target libraries when host_platform == target_platform, but if
@@ -128,7 +132,7 @@ fi
     --host=${HOST} \
     --target=${TARGET} \
     --with-libiconv-prefix=${PREFIX} \
-    --enable-languages=fortran \
+    --enable-languages="fortran" \
     --disable-multilib \
     --enable-checking=release \
     --disable-bootstrap \
@@ -180,10 +184,6 @@ else
   make install-gcc -j${CPU_COUNT}
 fi
 
-stop_spinner
+# see above for start_spinner ...
+# stop_spinner
 
-ls -al $PREFIX/lib
-
-mv ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1 ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1.bin
-sed "s#@PATH@#${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}#g" ${RECIPE_DIR}/cc1 > ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1
-chmod +x ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1
