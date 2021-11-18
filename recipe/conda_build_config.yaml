@@ -6,7 +6,7 @@ cross_target_platform:
   - osx-arm64
 gfortran_version:
   - 7.5.0
-  - 9.3.0
+  - 9.4.0
   - 10.3.0  # [osx and x86_64]
   - 10.2.1  # [osx and arm64]
   - 11.2.0  # [osx and x86_64]
