@@ -4,11 +4,20 @@ macos_machine:
 cross_target_platform:
   - osx-64
   - osx-arm64
-zip_keys:
-  - - cross_target_platform
-    - macos_machine
 gfortran_version:
   - 7.5.0
   - 9.3.0
-  - 10.2.1
+  - 10.3.0  # [osx and x86_64]
+  - 10.2.1  # [osx and arm64]
   - 11.0.1
+libgfortran_version:
+  - 4.0.0
+  - 5.0.0
+  - 5.0.0  # [osx and x86_64]
+  - 5.0.0  # [osx and arm64]
+  - 5.0.0
+zip_keys:
+  - - cross_target_platform
+    - macos_machine
+  - - gfortran_version
+    - libgfortran_version
