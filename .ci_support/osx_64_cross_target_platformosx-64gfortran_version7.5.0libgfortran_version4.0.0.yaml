@@ -5,7 +5,7 @@ c_compiler:
 c_compiler_version:
 - '11'
 channel_sources:
-- conda-forge,defaults
+- conda-forge
 channel_targets:
 - conda-forge main
 cross_target_platform:
@@ -15,11 +15,13 @@ cxx_compiler:
 cxx_compiler_version:
 - '11'
 gfortran_version:
-- 9.3.0
+- 7.5.0
 gmp:
 - '6'
 isl:
 - '0.22'
+libgfortran_version:
+- 4.0.0
 libiconv:
 - '1.16'
 macos_machine:
@@ -44,5 +46,7 @@ zip_keys:
   - cxx_compiler_version
 - - cross_target_platform
   - macos_machine
+- - gfortran_version
+  - libgfortran_version
 zlib:
 - '1.2'

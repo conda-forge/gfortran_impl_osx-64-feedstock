@@ -1,11 +1,11 @@
 MACOSX_DEPLOYMENT_TARGET:
-- '10.9'
+- '11.0'
 c_compiler:
 - clang
 c_compiler_version:
 - '11'
 channel_sources:
-- conda-forge,defaults
+- conda-forge
 channel_targets:
 - conda-forge main
 cross_target_platform:
@@ -15,11 +15,13 @@ cxx_compiler:
 cxx_compiler_version:
 - '11'
 gfortran_version:
-- 11.0.1
+- 11.1.0
 gmp:
 - '6'
 isl:
 - '0.22'
+libgfortran_version:
+- 5.0.0
 libiconv:
 - '1.16'
 macos_machine:
@@ -38,11 +40,13 @@ pin_run_as_build:
   zlib:
     max_pin: x.x
 target_platform:
-- osx-64
+- osx-arm64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
 - - cross_target_platform
   - macos_machine
+- - gfortran_version
+  - libgfortran_version
 zlib:
 - '1.2'
