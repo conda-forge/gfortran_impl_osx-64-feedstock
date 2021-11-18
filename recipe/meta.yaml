@@ -20,6 +20,9 @@
 {% elif gfortran_version == "10.3.0" %}
     {% set url = "https://ftp.gnu.org/gnu/gcc/gcc-10.3.0/gcc-10.3.0.tar.gz" %}
     {% set source_sha = "8fcf994811ad4e5c7ac908e8cf62af2c1982319e5551f62ae72016064dacdf16" %}
+{% elif gfortran_version == "11.2.0" %}
+    {% set url = "https://ftp.gnu.org/gnu/gcc/gcc-11.2.0/gcc-11.2.0.tar.gz  " %}
+    {% set source_sha = "f0837f1bf8244a5cc23bd96ff6366712a791cfae01df8e25b137698aca26efc1" %}
 {% elif gfortran_version == "10.2.1" %}
     {% set url = "https://github.com/fxcoudert/gcc/archive/81a488d83ac6216835ef36d51cea1ae567464016.tar.gz" %}
     {% set source_sha = "ee3630fbe78cbf6c1f820700ecaedf92482c0cc72c77924acdebb8308cbf5d88" %}
