@@ -44,7 +44,8 @@ target_platform:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - cross_target_platform
+- - gfortran_version
+  - cross_target_platform
   - macos_machine
 zlib:
 - '1.2'
