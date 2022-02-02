@@ -77,7 +77,7 @@ requirements:
     - automake
     - autoconf
     - patch     # [not win]
-   host:
+  host:
     - libiconv
     - zlib
     - gmp
