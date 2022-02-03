@@ -30,6 +30,14 @@
 {% set url = "https://github.com/fxcoudert/gcc/archive/81a488d83ac6216835ef36d51cea1ae567464016.tar.gz" %}
 {% endif %}
 
+{% if gfortran_version == "10.3.0" %}
+{% set libgfortran_version = "5.0.0" %}
+{% set max_libgfortran_version = "6.0.0.a0" %}
+{% set libgfortran_major_version = "5" %}
+{% set source_sha = "8fcf994811ad4e5c7ac908e8cf62af2c1982319e5551f62ae72016064dacdf16" %}
+{% set url = "https://ftp.gnu.org/gnu/gcc/gcc-10.3.0/gcc-10.3.0.tar.gz" %}
+{% endif %}
+
 {% if gfortran_version == "11.0.1" %}
 {% set libgfortran_version = "5.0.0" %}
 {% set version_suffix = ".dev0" %}
