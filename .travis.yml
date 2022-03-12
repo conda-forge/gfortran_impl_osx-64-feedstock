@@ -7,42 +7,50 @@ language: generic
 
 matrix:
   include:
-    - env: CONFIG=linux_ppc64le_cross_target_platformosx-64gfortran_version10.2.1macos_machinex86_64-apple-darwin13.4.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
-      os: linux
-      arch: ppc64le
+  - env: CONFIG=linux_ppc64le_cross_target_platformosx-64gfortran_version10.2.1macos_machinex86_64-apple-darwin13.4.0
+      UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
+    os: linux
+    arch: ppc64le
 
-    - env: CONFIG=linux_ppc64le_cross_target_platformosx-64gfortran_version11.0.1macos_machinex86_64-apple-darwin13.4.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
-      os: linux
-      arch: ppc64le
+  - env: CONFIG=linux_ppc64le_cross_target_platformosx-64gfortran_version11.0.1macos_machinex86_64-apple-darwin13.4.0
+      UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
+    os: linux
+    arch: ppc64le
 
-    - env: CONFIG=linux_ppc64le_cross_target_platformosx-64gfortran_version7.5.0macos_machinex86_64-apple-darwin13.4.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
-      os: linux
-      arch: ppc64le
+  - env: CONFIG=linux_ppc64le_cross_target_platformosx-64gfortran_version7.5.0macos_machinex86_64-apple-darwin13.4.0
+      UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
+    os: linux
+    arch: ppc64le
 
-    - env: CONFIG=linux_ppc64le_cross_target_platformosx-64gfortran_version9.3.0macos_machinex86_64-apple-darwin13.4.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
-      os: linux
-      arch: ppc64le
+  - env: CONFIG=linux_ppc64le_cross_target_platformosx-64gfortran_version9.3.0macos_machinex86_64-apple-darwin13.4.0
+      UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
+    os: linux
+    arch: ppc64le
 
-    - env: CONFIG=linux_ppc64le_cross_target_platformosx-arm64gfortran_version10.2.1macos_machinearm64-apple-darwin20.0.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
-      os: linux
-      arch: ppc64le
+  - env: CONFIG=linux_ppc64le_cross_target_platformosx-arm64gfortran_version10.2.1macos_machinearm64-apple-darwin20.0.0
+      UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
+    os: linux
+    arch: ppc64le
 
-    - env: CONFIG=linux_ppc64le_cross_target_platformosx-arm64gfortran_version11.0.1macos_machinearm64-apple-darwin20.0.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
-      os: linux
-      arch: ppc64le
+  - env: CONFIG=linux_ppc64le_cross_target_platformosx-arm64gfortran_version11.0.1macos_machinearm64-apple-darwin20.0.0
+      UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
+    os: linux
+    arch: ppc64le
 
-    - env: CONFIG=linux_ppc64le_cross_target_platformosx-arm64gfortran_version7.5.0macos_machinearm64-apple-darwin20.0.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
-      os: linux
-      arch: ppc64le
+  - env: CONFIG=linux_ppc64le_cross_target_platformosx-arm64gfortran_version7.5.0macos_machinearm64-apple-darwin20.0.0
+      UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
+    os: linux
+    arch: ppc64le
 
-    - env: CONFIG=linux_ppc64le_cross_target_platformosx-arm64gfortran_version9.3.0macos_machinearm64-apple-darwin20.0.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
-      os: linux
-      arch: ppc64le
+  - env: CONFIG=linux_ppc64le_cross_target_platformosx-arm64gfortran_version9.3.0macos_machinearm64-apple-darwin20.0.0
+      UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
+    os: linux
+    arch: ppc64le
 
 script:
-  - export CI=travis
-  - export GIT_BRANCH="$TRAVIS_BRANCH"
-  - export FEEDSTOCK_NAME=$(basename ${TRAVIS_REPO_SLUG})
+- export CI=travis
+- export GIT_BRANCH="$TRAVIS_BRANCH"
+- export FEEDSTOCK_NAME=$(basename ${TRAVIS_REPO_SLUG})
 
 
-  - if [[ ${PLATFORM} =~ .*linux.* ]]; then ./.scripts/run_docker_build.sh; fi
+- if [[ ${PLATFORM} =~ .*linux.* ]]; then ./.scripts/run_docker_build.sh; fi
