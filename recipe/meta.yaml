@@ -114,6 +114,8 @@ outputs:
       skip: True  # [gfortran_version not in ("11.2.0", "11.1.0", "11.0.1", "10.2.1") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
  
       noarch: generic
+      missing_dso_whitelist:
+        - '*'
     files:
       # these are not generated for the cross compiler
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgomp.spec
@@ -153,6 +155,8 @@ outputs:
       skip: True  # [win]
       skip: True  # [gfortran_version in ("11.1.0", "11.0.1", "10.2.1") and cross_target_platform != "osx-arm64"]
       skip: True  # [gfortran_version not in ("11.2.0", "11.1.0", "11.0.1", "10.2.1") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
+      missing_dso_whitelist:
+        - '*'
     requirements:
       build:
         - {{ compiler('c') }}
@@ -223,6 +227,8 @@ outputs:
       skip: True  # [gfortran_version in ("11.1.0", "11.0.1", "10.2.1") and cross_target_platform != "osx-arm64"]
       skip: True  # [gfortran_version not in ("11.2.0", "11.1.0", "11.0.1", "10.2.1") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
       string: {{ gfortran_version.replace(".", "_") }}_h{{ PKG_HASH }}_{{ build_number }}
+      missing_dso_whitelist:
+        - '*'
     requirements:
       run:
         - libgfortran{{ libgfortran_major_version }}
@@ -236,6 +242,8 @@ outputs:
       skip: True  # [gfortran_version not in ("11.2.0", "11.1.0", "11.0.1", "10.2.1") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
       run_exports:
         - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}{{ version_suffix }}
+      missing_dso_whitelist:
+        - '*'
     files:
       - lib/libgfortran.dylib
       - lib/libgfortran.{{ libgfortran_major_version }}.dylib
@@ -293,3 +301,4 @@ extra:
   recipe-maintainers:
     - beckermr
     - isuruf
+    - katietz
