@@ -101,6 +101,8 @@ test:
     - gfortran_test.sh
   commands:
     - set -ex
+    - export MACOSX_DEPLOYMENT_TARGET={{ MACOSX_DEPLOYMENT_TARGET }}
+    - export CONDA_BUILD_SYSROOT={{ CONDA_BUILD_SYSROOT }}
     - export target_platform={{ target_platform }}
     - export cross_target_platform={{ cross_target_platform }}
     - bash gfortran_test.sh
