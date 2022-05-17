@@ -251,11 +251,12 @@ outputs:
       # Including libgcc_s for the time
       # being. This will need to be broken
       # out in the long term.
-      - lib/libgcc_s.1.dylib            # [cross_target_platform == "osx-64"]
-      - lib/libgcc_s.1.1.dylib          # [cross_target_platform == "osx-arm64"]
+      - lib/libgcc_s.1.dylib            # [cross_target_platform == "osx-64" and gfortran_version == "11.2.0"]
+      - lib/libgcc_s.1.1.dylib          # [cross_target_platform == "osx-arm64" or gfortran_version == "11.2.0"]
       - lib/libgcc_s_ppc64.1.dylib      # [cross_target_platform == "osx-64"]
       - lib/libgcc_s_x86_64.1.dylib     # [cross_target_platform == "osx-64"]
-      - lib/libgcc_s.dylib            # [cross_target_platform == "osx-arm64"]
+      - lib/libgcc_s_x86_64.1.1.dylib   # [cross_target_platform == "osx-64"]
+      - lib/libgcc_s.dylib              # [cross_target_platform == "osx-arm64" or gfortran_version == "11.2.0"]
 
     requirements:
       run:
@@ -275,11 +276,11 @@ outputs:
         - test -f "${PREFIX}/lib/libquadmath.dylib"    # [not (osx and arm64)]
         - test -f "${PREFIX}/lib/libquadmath.0.dylib"  # [not (osx and arm64)]
 
-        - test -f "${PREFIX}/lib/libgcc_s.1.dylib"          # [cross_target_platform == "osx-64"]
-        - test -f "${PREFIX}/lib/libgcc_s_ppc64.1.dylib"    # [cross_target_platform == "osx-64"]
-        - test -f "${PREFIX}/lib/libgcc_s_x86_64.1.dylib"   # [cross_target_platform == "osx-64"]
+        - test -f "${PREFIX}/lib/libgcc_s.1.dylib"          # [cross_target_platform == "osx-64" and gfortran_version != "11.2.0"]
+        - test -f "${PREFIX}/lib/libgcc_s_ppc64.1.dylib"    # [cross_target_platform == "osx-64" and gfortran_version != "11.2.0"]
+        - test -f "${PREFIX}/lib/libgcc_s_x86_64.1.dylib"   # [cross_target_platform == "osx-64" and gfortran_version != "11.2.0"]
 
-        - test -f "${PREFIX}/lib/libgcc_s.1.1.dylib"          # [cross_target_platform == "osx-arm64"]
+        - test -f "${PREFIX}/lib/libgcc_s.1.1.dylib"          # [cross_target_platform == "osx-arm64" or gfortran_version == "11.2.0"]
 
 about:
   home: http://gcc.gnu.org/
