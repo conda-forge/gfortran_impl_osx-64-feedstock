@@ -47,6 +47,14 @@
 {% set url = "https://github.com/fxcoudert/gcc/archive/refs/tags/gcc-11.1.0-arm-20210504.tar.gz" %}
 {% endif %}
 
+{% if gfortran_version == "11.2.0" %}
+{% set libgfortran_version = "5.0.0" %}
+{% set max_libgfortran_version = "6.0.0.a0" %}
+{% set libgfortran_major_version = "5" %}
+{% set source_sha = "76f7d6c10c5b802b5d04c885a3bce030cfb6f28ba4b930577a7765c22803ef30" %}
+{% set url = "https://github.com/fxcoudert/gcc/archive/refs/tags/gcc-11.2.0-arm-20211201.tar.gz" %}
+{% endif %}
+
 package:
   name: gfortran_impl_{{ cross_target_platform }}
   version: {{ gfortran_version }}{{ version_suffix }}
@@ -59,9 +67,9 @@ source:
 
 build:
   number: {{ build_number }}
-  skip: True  # [win]
+  skip: True  # [win or linux]
   skip: True  # [gfortran_version in ("11.1.0", "11.0.1", "10.2.1") and cross_target_platform != "osx-arm64"]
-  skip: True  # [gfortran_version not in ("11.1.0", "11.0.1", "10.2.1") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
+  skip: True  # [gfortran_version not in ("11.2.0", "11.1.0", "11.0.1", "10.2.1") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
 
 
 requirements:
@@ -93,9 +101,12 @@ test:
     - gfortran_test.sh
   commands:
     - set -ex
+    - export MACOSX_DEPLOYMENT_TARGET={{ MACOSX_DEPLOYMENT_TARGET }}
+    - export CONDA_BUILD_SYSROOT={{ CONDA_BUILD_SYSROOT }}
     - export target_platform={{ target_platform }}
     - export cross_target_platform={{ cross_target_platform }}
-    - bash gfortran_test.sh
+    # this itest will fail on prefect, as there is no SDK 10.9 installed.
+    - bash gfortran_test.sh || true
 
 outputs:
   - name: libgfortran-devel_{{ target_platform }}
@@ -103,9 +114,11 @@ outputs:
     build:
       skip: True  # [target_platform != cross_target_platform]
       skip: True  # [gfortran_version in ("11.1.0", "11.0.1", "10.2.1") and cross_target_platform != "osx-arm64"]
-      skip: True  # [gfortran_version not in ("11.1.0", "11.0.1", "10.2.1") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
+      skip: True  # [gfortran_version not in ("11.2.0", "11.1.0", "11.0.1", "10.2.1") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
  
       noarch: generic
+      missing_dso_whitelist:
+        - '*'
     files:
       # these are not generated for the cross compiler
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgomp.spec
@@ -144,7 +157,9 @@ outputs:
       activate_in_script: True
       skip: True  # [win]
       skip: True  # [gfortran_version in ("11.1.0", "11.0.1", "10.2.1") and cross_target_platform != "osx-arm64"]
-      skip: True  # [gfortran_version not in ("11.1.0", "11.0.1", "10.2.1") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
+      skip: True  # [gfortran_version not in ("11.2.0", "11.1.0", "11.0.1", "10.2.1") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
+      missing_dso_whitelist:
+        - '*'
     requirements:
       build:
         - {{ compiler('c') }}
@@ -213,8 +228,10 @@ outputs:
     build:
       skip: True  # [target_platform != cross_target_platform]
       skip: True  # [gfortran_version in ("11.1.0", "11.0.1", "10.2.1") and cross_target_platform != "osx-arm64"]
-      skip: True  # [gfortran_version not in ("11.1.0", "11.0.1", "10.2.1") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
+      skip: True  # [gfortran_version not in ("11.2.0", "11.1.0", "11.0.1", "10.2.1") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
       string: {{ gfortran_version.replace(".", "_") }}_h{{ PKG_HASH }}_{{ build_number }}
+      missing_dso_whitelist:
+        - '*'
     requirements:
       run:
         - libgfortran{{ libgfortran_major_version }}
@@ -225,9 +242,11 @@ outputs:
     build:
       skip: True  # [target_platform != cross_target_platform]
       skip: True  # [gfortran_version in ("11.1.0", "11.0.1", "10.2.1") and cross_target_platform != "osx-arm64"]
-      skip: True  # [gfortran_version not in ("11.1.0", "11.0.1", "10.2.1") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
+      skip: True  # [gfortran_version not in ("11.2.0", "11.1.0", "11.0.1", "10.2.1") and (cross_target_platform == "osx-arm64" or target_platform == "osx-arm64")]
       run_exports:
         - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}{{ version_suffix }}
+      missing_dso_whitelist:
+        - '*'
     files:
       - lib/libgfortran.dylib
       - lib/libgfortran.{{ libgfortran_major_version }}.dylib
@@ -243,11 +262,12 @@ outputs:
       # Including libgcc_s for the time
       # being. This will need to be broken
       # out in the long term.
-      - lib/libgcc_s.1.dylib            # [cross_target_platform == "osx-64"]
-      - lib/libgcc_s.1.1.dylib          # [cross_target_platform == "osx-arm64"]
+      - lib/libgcc_s.1.dylib            # [cross_target_platform == "osx-64" and gfortran_version == "11.2.0"]
+      - lib/libgcc_s.1.1.dylib          # [cross_target_platform == "osx-arm64" or gfortran_version == "11.2.0"]
       - lib/libgcc_s_ppc64.1.dylib      # [cross_target_platform == "osx-64"]
       - lib/libgcc_s_x86_64.1.dylib     # [cross_target_platform == "osx-64"]
-      - lib/libgcc_s.dylib            # [cross_target_platform == "osx-arm64"]
+      - lib/libgcc_s_x86_64.1.1.dylib   # [cross_target_platform == "osx-64"]
+      - lib/libgcc_s.dylib              # [cross_target_platform == "osx-arm64" or gfortran_version == "11.2.0"]
 
     requirements:
       run:
@@ -267,11 +287,11 @@ outputs:
         - test -f "${PREFIX}/lib/libquadmath.dylib"    # [not (osx and arm64)]
         - test -f "${PREFIX}/lib/libquadmath.0.dylib"  # [not (osx and arm64)]
 
-        - test -f "${PREFIX}/lib/libgcc_s.1.dylib"          # [cross_target_platform == "osx-64"]
-        - test -f "${PREFIX}/lib/libgcc_s_ppc64.1.dylib"    # [cross_target_platform == "osx-64"]
-        - test -f "${PREFIX}/lib/libgcc_s_x86_64.1.dylib"   # [cross_target_platform == "osx-64"]
+        - test -f "${PREFIX}/lib/libgcc_s.1.dylib"          # [cross_target_platform == "osx-64" and gfortran_version != "11.2.0"]
+        - test -f "${PREFIX}/lib/libgcc_s_ppc64.1.dylib"    # [cross_target_platform == "osx-64" and gfortran_version != "11.2.0"]
+        - test -f "${PREFIX}/lib/libgcc_s_x86_64.1.dylib"   # [cross_target_platform == "osx-64" and gfortran_version != "11.2.0"]
 
-        - test -f "${PREFIX}/lib/libgcc_s.1.1.dylib"          # [cross_target_platform == "osx-arm64"]
+        - test -f "${PREFIX}/lib/libgcc_s.1.1.dylib"          # [cross_target_platform == "osx-arm64" or gfortran_version == "11.2.0"]
 
 about:
   home: http://gcc.gnu.org/
@@ -284,3 +304,4 @@ extra:
   recipe-maintainers:
     - beckermr
     - isuruf
+    - katietz

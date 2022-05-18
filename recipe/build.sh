@@ -101,6 +101,8 @@ if [[ "$host_platform" != "$build_platform" ]]; then
 fi
 
 if [[ "$target_platform" == osx* ]]; then
+    export CFLAGS="-mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET} ${CFLAGS}"
+    export CXXFLAGS="-mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET} ${CXXFLAGS}"
     if [[ "$target_platform" == "$host_platform" ]]; then
         export LDFLAGS_FOR_TARGET="$LDFLAGS_FOR_TARGET $LDFLAGS"
         export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET $CFLAGS"
