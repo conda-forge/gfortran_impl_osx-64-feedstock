@@ -41,7 +41,6 @@ fi
 
 # Undo conda-build madness
 export host_platform=$target_platform
-export target_platform=$cross_target_platform
 # set the TARGET variable. HOST and BUILD are already set by the compilers/conda-build
 export TARGET=${macos_machine}
 # clang emits a ton of warnings
