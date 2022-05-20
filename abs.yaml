@@ -1,0 +1,3 @@
+# we need to get all noarchs here ... not only linux-64
+noarch_upload:
+  - all
