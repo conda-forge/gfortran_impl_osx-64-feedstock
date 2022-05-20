@@ -3,57 +3,14 @@
 {% set version_suffix = "" %}
 
 {% if gfortran_version is undefined %}
-{% set gfortran_version = "7.5.0" %}
+{% set gfortran_version = "11.2.0" %}
 {% endif %}
 
-{% if gfortran_version == "7.5.0" %}
-{% set libgfortran_version = "4.0.0" %}
-{% set max_libgfortran_version = "5.0.0.a0" %}
-{% set libgfortran_major_version = "4" %}
-{% set source_sha = "4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f" %}
-{% set url = "https://ftp.gnu.org/gnu/gcc/gcc-7.5.0/gcc-7.5.0.tar.gz" %}
-{% endif %}
-
-{% if gfortran_version == "9.3.0" %}
-{% set libgfortran_version = "5.0.0" %}
-{% set max_libgfortran_version = "6.0.0.a0" %}
-{% set libgfortran_major_version = "5" %}
-{% set source_sha = "5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6" %}
-{% set url = "https://ftp.gnu.org/gnu/gcc/gcc-9.3.0/gcc-9.3.0.tar.gz" %}
-{% endif %}
-
-{% if gfortran_version == "10.2.1" %}
-{% set libgfortran_version = "5.0.0" %}
-{% set max_libgfortran_version = "6.0.0.a0" %}
-{% set libgfortran_major_version = "5" %}
-{% set source_sha = "ee3630fbe78cbf6c1f820700ecaedf92482c0cc72c77924acdebb8308cbf5d88" %}
-{% set url = "https://github.com/fxcoudert/gcc/archive/81a488d83ac6216835ef36d51cea1ae567464016.tar.gz" %}
-{% endif %}
-
-{% if gfortran_version == "11.0.1" %}
-{% set libgfortran_version = "5.0.0" %}
-{% set version_suffix = ".dev0" %}
-{% set max_libgfortran_version = "6.0.0.a0" %}
-{% set libgfortran_major_version = "5" %}
-{% set source_sha = "6b20738e5fac3933456829b67eb3e89bde7f42ef7d649ee67ba8240420372632" %}
-{% set url = "https://github.com/iains/gcc-darwin-arm64/archive/bd796f1b0d4f8ff170ce51831916e9038dd8b1b9.tar.gz" %}
-{% endif %}
-
-{% if gfortran_version == "11.1.0" %}
-{% set libgfortran_version = "5.0.0" %}
-{% set max_libgfortran_version = "6.0.0.a0" %}
-{% set libgfortran_major_version = "5" %}
-{% set source_sha = "ce862b4a4bdc8f36c9240736d23cd625a48af82c2332d2915df0e16e1609a74c" %}
-{% set url = "https://github.com/fxcoudert/gcc/archive/refs/tags/gcc-11.1.0-arm-20210504.tar.gz" %}
-{% endif %}
-
-{% if gfortran_version == "11.2.0" %}
 {% set libgfortran_version = "5.0.0" %}
 {% set max_libgfortran_version = "6.0.0.a0" %}
 {% set libgfortran_major_version = "5" %}
 {% set source_sha = "76f7d6c10c5b802b5d04c885a3bce030cfb6f28ba4b930577a7765c22803ef30" %}
 {% set url = "https://github.com/fxcoudert/gcc/archive/refs/tags/gcc-11.2.0-arm-20211201.tar.gz" %}
-{% endif %}
 
 package:
   name: gfortran_impl_{{ target_platform }}
@@ -62,15 +19,10 @@ package:
 source:
   url: {{ url }}
   sha256: {{ source_sha }}
-  patches:
-    - libgcc_macosx_min_version.patch  # [gfortran_version in ("7.5.0", "9.3.0")]
 
 build:
   number: {{ build_number }}
   skip: True  # [win or linux]
-  skip: True  # [gfortran_version in ("11.1.0", "11.0.1", "10.2.1") and target_platform != "osx-arm64"]
-  skip: True  # [gfortran_version not in ("11.2.0", "11.1.0", "11.0.1", "10.2.1") and target_platform == "osx-arm64"]
-
 
 requirements:
   build:
@@ -104,7 +56,6 @@ test:
     - export MACOSX_DEPLOYMENT_TARGET={{ MACOSX_DEPLOYMENT_TARGET }}
     - export CONDA_BUILD_SYSROOT={{ CONDA_BUILD_SYSROOT }}
     - export target_platform={{ target_platform }}
-    - export cross_target_platform={{ target_platform }}
     # this itest will fail on prefect, as there is no SDK 10.9 installed.
     - bash gfortran_test.sh || true
 
@@ -112,9 +63,6 @@ outputs:
   - name: libgfortran-devel_{{ target_platform }}
     version: {{ gfortran_version }}{{ version_suffix }}
     build:
-      skip: True  # [gfortran_version in ("11.1.0", "11.0.1", "10.2.1") and target_platform != "osx-arm64"]
-      skip: True  # [gfortran_version not in ("11.2.0", "11.1.0", "11.0.1", "10.2.1") and (target_platform == "osx-arm64")]
- 
       noarch: generic
       missing_dso_whitelist:
         - '*'
@@ -154,9 +102,7 @@ outputs:
     version: {{ gfortran_version }}{{ version_suffix }}
     build:
       activate_in_script: True
-      skip: True  # [win]
-      skip: True  # [gfortran_version in ("11.1.0", "11.0.1", "10.2.1") and target_platform != "osx-arm64"]
-      skip: True  # [gfortran_version not in ("11.2.0", "11.1.0", "11.0.1", "10.2.1") and target_platform == "osx-arm64"]
+      skip: True  # [not osx]
       missing_dso_whitelist:
         - '*'
     requirements:
@@ -219,8 +165,6 @@ outputs:
     version: {{ libgfortran_version }}{{ version_suffix }}
     target: {{ target_platform }}
     build:
-      skip: True  # [gfortran_version in ("11.1.0", "11.0.1", "10.2.1") and target_platform != "osx-arm64"]
-      skip: True  # [gfortran_version not in ("11.2.0", "11.1.0", "11.0.1", "10.2.1") and target_platform == "osx-arm64"]
       string: {{ gfortran_version.replace(".", "_") }}_h{{ PKG_HASH }}_{{ build_number }}
       missing_dso_whitelist:
         - '*'
@@ -232,8 +176,6 @@ outputs:
     version: {{ gfortran_version }}{{ version_suffix }}
     target: {{ target_platform }}
     build:
-      skip: True  # [gfortran_version in ("11.1.0", "11.0.1", "10.2.1") and target_platform != "osx-arm64"]
-      skip: True  # [gfortran_version not in ("11.2.0", "11.1.0", "11.0.1", "10.2.1") and target_platform == "osx-arm64"]
       run_exports:
         - libgfortran{{ libgfortran_major_version }} >={{ gfortran_version }}{{ version_suffix }}
       missing_dso_whitelist:
