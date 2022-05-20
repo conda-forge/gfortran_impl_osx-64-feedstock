@@ -23,7 +23,6 @@ source:
 build:
   number: {{ build_number }}
   skip: True  # [not osx]
-  # trigger: 0
 
 requirements:
   build:
