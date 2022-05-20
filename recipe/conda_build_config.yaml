@@ -11,13 +11,6 @@ macos_min_version:
 CONDA_BUILD_SYSROOT:
   - /opt/MacOSX10.10.sdk        # [osx and x86_64]
   - /Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk  # [osx and arm64]
-cross_target_platform:
-  - osx-64                     # [osx and x86_64]
-  - osx-arm64                  # [osx and arm64]
-  - dummy                      # [not osx]
-zip_keys:
-  - - cross_target_platform
-    - macos_machine
 gfortran_version:
   # - 7.5.0   # [osx and x86_64]
   # - 9.3.0   # [osx and x86_64]
