@@ -3,7 +3,7 @@ MACOSX_DEPLOYMENT_TARGET:
 c_compiler:
 - clang
 c_compiler_version:
-- '12'
+- '13'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -13,7 +13,7 @@ cross_target_platform:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '12'
+- '13'
 gfortran_version:
 - 11.0.1
 gmp:
