@@ -25,7 +25,7 @@
     {% set source_sha = "98438e6cc7294298b474cf0da7655d9a8c8b796421bb0210531c294a950374ed" %}
 {% elif gfortran_version == "11.2.0" and cross_target_platform == "osx-arm64" %}
     {% set url = "https://github.com/fxcoudert/gcc/archive/refs/tags/gcc-11.2.0-arm-20211201.tar.gz" %}
-    {% set source_sha = "ce862b4a4bdc8f36c9240736d23cd625a48af82c2332d2915df0e16e1609a74c" %}
+    {% set source_sha = "76f7d6c10c5b802b5d04c885a3bce030cfb6f28ba4b930577a7765c22803ef30" %}
 {% endif %}
 
 package:
