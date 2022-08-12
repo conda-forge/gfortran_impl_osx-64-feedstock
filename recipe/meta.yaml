@@ -3,31 +3,28 @@
 {% set version_suffix = "" %}
 
 {% if gfortran_version is undefined %}
-{% set gfortran_version = "7.5.0" %}
-{% set libgfortran_version = "4.0.0" %}
+{% set gfortran_version = "9.5.0" %}
+{% set libgfortran_version = "5.0.0" %}
 {% endif %}
 
 {% set libgfortran_major_version = libgfortran_version.split(".")[0] %}
 {% set libgfortran_next_major = (libgfortran_version|int +1)|string %}
 {% set max_libgfortran_version = libgfortran_next_major + ".0.0.a0" %}
 
-{% if gfortran_version == "7.5.0" %}
-    {% set url = "https://ftp.gnu.org/gnu/gcc/gcc-7.5.0/gcc-7.5.0.tar.gz" %}
-    {% set source_sha = "4f518f18cfb694ad7975064e99e200fe98af13603b47e67e801ba9580e50a07f" %}
-{% elif gfortran_version == "9.4.0" %}
-    {% set url = "https://ftp.gnu.org/gnu/gcc/gcc-9.4.0/gcc-9.4.0.tar.gz" %}
-    {% set source_sha = "07ea650894cde75ab0f7cfbee0e69832c8a789b01efa2de3bfba7569338e24cb" %}
-{% elif gfortran_version == "10.3.0" and cross_target_platform == "osx-64" %}
-    {% set url = "https://ftp.gnu.org/gnu/gcc/gcc-10.3.0/gcc-10.3.0.tar.gz" %}
-    {% set source_sha = "8fcf994811ad4e5c7ac908e8cf62af2c1982319e5551f62ae72016064dacdf16" %}
+{% if gfortran_version == "9.5.0" %}
+    {% set url = "https://ftp.gnu.org/gnu/gcc/gcc-9.5.0/gcc-9.5.0.tar.gz" %}
+    {% set source_sha = "15b34072105272a3eb37f6927409f7ce9aa0dd1498efebc35f851d6e6f029a4d" %}
+{% elif gfortran_version == "10.4.0" and cross_target_platform == "osx-64" %}
+    {% set url = "https://ftp.gnu.org/gnu/gcc/gcc-10.4.0/gcc-10.4.0.tar.gz" %}
+    {% set source_sha = "ab1974017834430de27fd803ade4389602a7d6ca1362496c57bef384b2a4cb07" %}
 {% elif gfortran_version == "10.3.0" and cross_target_platform == "osx-arm64" %}
     {% set url = "https://github.com/fxcoudert/gcc/archive/refs/tags/gcc-10.3-arm-20210410.tar.gz" %}
     {% set source_sha = "48b1ec3e09ad3fde2eeeebab6ce5aa17c7c58f74723e18090bc1c79f7b06d4d7" %}
-{% elif gfortran_version == "11.2.0" and cross_target_platform == "osx-64" %}
-    {% set url = "https://ftp.gnu.org/gnu/gcc/gcc-11.2.0/gcc-11.2.0.tar.gz  " %}
-    {% set source_sha = "f0837f1bf8244a5cc23bd96ff6366712a791cfae01df8e25b137698aca26efc1" %}
-{% elif gfortran_version == "11.1.0" and cross_target_platform == "osx-arm64" %}
-    {% set url = "https://github.com/fxcoudert/gcc/archive/refs/tags/gcc-11.1.0-arm-20210504.tar.gz" %}
+{% elif gfortran_version == "11.3.0" and cross_target_platform == "osx-64" %}
+    {% set url = "https://ftp.gnu.org/gnu/gcc/gcc-11.3.0/gcc-11.3.0.tar.gz  " %}
+    {% set source_sha = "98438e6cc7294298b474cf0da7655d9a8c8b796421bb0210531c294a950374ed" %}
+{% elif gfortran_version == "11.2.0" and cross_target_platform == "osx-arm64" %}
+    {% set url = "https://github.com/fxcoudert/gcc/archive/refs/tags/gcc-11.2.0-arm-20211201.tar.gz" %}
     {% set source_sha = "ce862b4a4bdc8f36c9240736d23cd625a48af82c2332d2915df0e16e1609a74c" %}
 {% endif %}
 
@@ -39,7 +36,7 @@ source:
   url: {{ url }}
   sha256: {{ source_sha }}
   patches:
-    - libgcc_macosx_min_version.patch  # [gfortran_version in ("7.5.0", "9.4.0")]
+    - libgcc_macosx_min_version.patch  # [gfortran_version == "9.5.0"]
 
 build:
   number: {{ build_number }}
