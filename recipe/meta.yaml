@@ -55,6 +55,7 @@ requirements:
     - mpfr      # [build_platform != target_platform]
     - isl       # [build_platform != target_platform]
     - mpc       # [build_platform != target_platform]
+    - coreutils  # [osx]
   host:
     - libiconv
     - zlib
