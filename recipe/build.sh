@@ -52,7 +52,7 @@ if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_plat
     # We need to compile the target libraries when host_platform == target_platform, but if
     # build_platform != host_platform, we need gfortran (to build libgfortran) and gcc (to build libgcc).
     # So, we need a compiler that can target target_platform, but can run on build_platform.
-    mkdir -p build_host
+    mkdir -p build_host/gcc
     pushd build_host
     CC=$CC_FOR_BUILD CXX=$CXX_FOR_BUILD AR="$($CC_FOR_BUILD -print-prog-name=ar)" LD="$($CC_FOR_BUILD -print-prog-name=ld)" \
          RANLIB="$($CC_FOR_BUILD -print-prog-name=ranlib)" NM="$($CC_FOR_BUILD -print-prog-name=nm)"  \
@@ -72,6 +72,9 @@ if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_plat
        --with-mpfr=${BUILD_PREFIX} \
        --with-mpc=${BUILD_PREFIX} \
        --with-isl=${BUILD_PREFIX}
+
+    cp ../gcc/gcc-ar.c gcc/gcc-nm.c
+
     echo "Building a compiler that runs on ${BUILD} and targets ${TARGET}"
     make all-gcc -j${CPU_COUNT}
     make install-gcc -j${CPU_COUNT}
@@ -85,7 +88,7 @@ if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_plat
     ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ld       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ld
 fi
 
-mkdir build_conda
+mkdir -p build_conda/gcc
 cd build_conda
 
 # libatomic is having trouble with pthreads and stack protector checks
@@ -138,6 +141,8 @@ fi
     --with-mpc=${PREFIX} \
     --with-isl=${PREFIX} \
     ${extra_configure_options}
+
+cp ../gcc/gcc-ar.c gcc/gcc-nm.c
 
 echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
 if [[ "$host_platform" == "$target_platform" ]]; then
