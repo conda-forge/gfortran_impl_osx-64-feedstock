@@ -74,6 +74,7 @@ if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_plat
        --with-isl=${BUILD_PREFIX}
 
     cp ../gcc/gcc-ar.c gcc/gcc-nm.c
+    cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
 
     echo "Building a compiler that runs on ${BUILD} and targets ${TARGET}"
     make all-gcc -j${CPU_COUNT}
@@ -143,6 +144,7 @@ fi
     ${extra_configure_options}
 
 cp ../gcc/gcc-ar.c gcc/gcc-nm.c
+cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
 
 echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
 if [[ "$host_platform" == "$target_platform" ]]; then
