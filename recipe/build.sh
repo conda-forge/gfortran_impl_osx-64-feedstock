@@ -49,6 +49,7 @@ export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprec
 export CXXFLAGS="$(echo $CXXFLAGS | sed s/-std=c++[0-9]*/-std=c++11/g)"
 
 sed -i.bak 's/cp xgcc/echo cp xgcc/g' gcc/Makefile.in
+sed -i.bak 's@cp $(srcdir)/../fixincludes/README-fixinc@echo cp $(srcdir)/../fixincludes/README-fixinc@g' gcc/Makefile.in
 
 if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_platform" ]]; then
     # We need to compile the target libraries when host_platform == target_platform, but if
