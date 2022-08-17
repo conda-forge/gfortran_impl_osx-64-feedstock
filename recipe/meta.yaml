@@ -210,7 +210,7 @@ outputs:
       # being. This will need to be broken
       # out in the long term.
       - lib/libgcc_s.1.dylib            # [cross_target_platform == "osx-64"]
-      {% if gfrotran_major_version <= 9 %}
+      {% if gfortran_major_version <= 9 %}
       - lib/libgcc_s_ppc64.1.dylib      # [cross_target_platform == "osx-64"]
       - lib/libgcc_s_x86_64.1.dylib     # [cross_target_platform == "osx-64"]
       {% else %}
