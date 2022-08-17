@@ -76,11 +76,10 @@ if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_plat
        --with-mpc=${BUILD_PREFIX} \
        --with-isl=${BUILD_PREFIX}
 
-    mkdir -p gcc
-    mkdir -p include-fixed
+    mkdir -p gcc/include-fixed
     cp ../gcc/gcc-ar.c gcc/gcc-nm.c
     cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
-    cp ../fixincludes/README-fixinc include-fixed/README
+    cp ../fixincludes/README-fixinc gcc/include-fixed/README
     ln -sf $PWD/gcc/xgcc $PWD/gcc/gcc-cross
 
     echo "Building a compiler that runs on ${BUILD} and targets ${TARGET}"
@@ -150,11 +149,10 @@ fi
     --with-isl=${PREFIX} \
     ${extra_configure_options}
 
-mkdir -p gcc
-mkdir -p include-fixed
+mkdir -p gcc/include-fixed
 cp ../gcc/gcc-ar.c gcc/gcc-nm.c
 cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
-cp ../fixincludes/README-fixinc include-fixed/README
+cp ../fixincludes/README-fixinc gcc/include-fixed/README
 ln -sf $PWD/gcc/xgcc $PWD/gcc/gcc-cross
 
 echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
