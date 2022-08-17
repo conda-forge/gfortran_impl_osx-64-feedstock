@@ -49,6 +49,7 @@ export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprec
 export CXXFLAGS="$(echo $CXXFLAGS | sed s/-std=c++[0-9]*/-std=c++11/g)"
 
 sed -i.bak 's/cp xgcc/echo cp xgcc/g' gcc/Makefile.in
+sed -i.bak 's/cp gfortran/echo cp gfortran/g' gcc/fortran/Make-lang.in
 sed -i.bak 's@rm -f include-fixed/README@@g' gcc/Makefile.in
 sed -i.bak 's@rm -rf include-fixed; mkdir include-fixed@echo rm -rf include-fixed; echo mkdir include-fixed@g' gcc/Makefile.in
 sed -i.bak 's@cp $(srcdir)/../fixincludes/README-fixinc@pwd; ls -alh include-fixed; echo cp $(srcdir)/../fixincludes/README-fixinc@g' gcc/Makefile.in
@@ -83,6 +84,7 @@ if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_plat
     cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
     cp ../fixincludes/README-fixinc gcc/include-fixed/README
     ln -sf $PWD/gcc/xgcc $PWD/gcc/gcc-cross
+    ln -sf $PWD/gcc/gfortran $PWD/gcc/gfortran-cross
 
     echo "Building a compiler that runs on ${BUILD} and targets ${TARGET}"
     make all-gcc -j${CPU_COUNT}
@@ -156,6 +158,7 @@ cp ../gcc/gcc-ar.c gcc/gcc-nm.c
 cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
 cp ../fixincludes/README-fixinc gcc/include-fixed/README
 ln -sf $PWD/gcc/xgcc $PWD/gcc/gcc-cross
+ln -sf $PWD/gcc/gfortran $PWD/gcc/gfortran-cross
 
 echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
 if [[ "$host_platform" == "$target_platform" ]]; then
