@@ -56,10 +56,8 @@ sed -i.bak 's@rm -f include-fixed/README@@g' gcc/Makefile.in
 sed -i.bak 's@rm -rf include-fixed; mkdir include-fixed@echo rm -rf include-fixed; echo mkdir include-fixed@g' gcc/Makefile.in
 sed -i.bak 's@cp $(srcdir)/../fixincludes/README-fixinc@pwd; ls -alh include-fixed; echo cp $(srcdir)/../fixincludes/README-fixinc@g' gcc/Makefile.in
 
-if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_platform" ]]; then
-    # We need to compile the target libraries when host_platform == target_platform, but if
-    # build_platform != host_platform, we need gfortran (to build libgfortran) and gcc (to build libgcc).
-    # So, we need a compiler that can target target_platform, but can run on build_platform.
+if [[ "$host_platform" != "$build_platform" && "$host_platform" ]]; then
+    # We need to compile GFORTRAN_FOR_TARGET and GCC_FOR_TARGET
     mkdir -p build_host
     pushd build_host
     CC=$CC_FOR_BUILD CXX=$CXX_FOR_BUILD AR="$($CC_FOR_BUILD -print-prog-name=ar)" LD="$($CC_FOR_BUILD -print-prog-name=ld)" \
