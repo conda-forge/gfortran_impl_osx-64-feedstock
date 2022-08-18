@@ -236,8 +236,12 @@ outputs:
         - test -f "${PREFIX}/lib/libquadmath.0.dylib"
 
         - test -f "${PREFIX}/lib/libgcc_s.1.dylib"          # [cross_target_platform == "osx-64"]
+        {% if gfortran_major_version <= 9 %}
         - test -f "${PREFIX}/lib/libgcc_s_ppc64.1.dylib"    # [cross_target_platform == "osx-64"]
         - test -f "${PREFIX}/lib/libgcc_s_x86_64.1.dylib"   # [cross_target_platform == "osx-64"]
+        {% else %}
+        - test -f "${PREFIX}/lib/libgcc_s.1.1.dylib"        # [cross_target_platform == "osx-64"]
+        {% endif %}
 
         - test -f "${PREFIX}/lib/libgcc_s.2.dylib"          # [cross_target_platform == "osx-arm64"]
 
