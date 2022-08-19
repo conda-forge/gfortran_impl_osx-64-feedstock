@@ -1,0 +1,36 @@
+From https://dev.haiku-os.org/ticket/17191
+
+diff --git a/gcc/config/aarch64/aarch64.h b/gcc/config/aarch64/aarch64.h
+index a7c2c50e7..ecc3b3e44 100644
+--- a/gcc/config/aarch64/aarch64.h
++++ b/gcc/config/aarch64/aarch64.h
+@@ -1264,7 +1264,7 @@ extern const char *aarch64_rewrite_mcpu (int argc, const char **argv);
+ #define MCPU_TO_MARCH_SPEC_FUNCTIONS \
+   { "rewrite_mcpu", aarch64_rewrite_mcpu },
+ 
+-#if defined(__aarch64__)
++#if defined(__aarch64__) && ! defined(__APPLE__)
+ extern const char *host_detect_local_cpu (int argc, const char **argv);
+ #define HAVE_LOCAL_CPU_DETECT
+ # define EXTRA_SPEC_FUNCTIONS						\
+diff --git a/gcc/config/host-darwin.c b/gcc/config/host-darwin.c
+index b57876715..edec73053 100644
+--- a/gcc/config/host-darwin.c
++++ b/gcc/config/host-darwin.c
+@@ -22,6 +22,8 @@
+ #include "coretypes.h"
+ #include "diagnostic-core.h"
+ #include "config/host-darwin.h"
++#include "hosthooks.h"
++#include "hosthooks-def.h"
+ 
+ /* Yes, this is really supposed to work.  */
+ /* This allows for a pagesize of 16384, which we have on Darwin20, but should
+@@ -79,3 +81,7 @@
+ 
+   return ret;
+ }
++
++#if defined(__aarch64__)
++const struct host_hooks host_hooks = HOST_HOOKS_INITIALIZER;
++#endif

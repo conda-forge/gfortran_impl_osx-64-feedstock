@@ -48,12 +48,21 @@ export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprec
 # Remove C++ flags as libcody expects exactly C++11
 export CXXFLAGS="$(echo $CXXFLAGS | sed s/-std=c++[0-9]*/-std=c++11/g)"
 
-if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_platform" ]]; then
-    # We need to compile the target libraries when host_platform == target_platform, but if
-    # build_platform != host_platform, we need gfortran (to build libgfortran) and gcc (to build libgcc).
-    # So, we need a compiler that can target target_platform, but can run on build_platform.
+export enable_darwin_at_rpath=yes
+
+sed -i.bak 's/cp xgcc/echo cp xgcc/g' gcc/Makefile.in
+sed -i.bak 's/cp gfortran/echo cp gfortran/g' gcc/fortran/Make-lang.in
+sed -i.bak 's@rm -f include-fixed/README@@g' gcc/Makefile.in
+sed -i.bak 's@rm -rf include-fixed; mkdir include-fixed@echo rm -rf include-fixed; echo mkdir include-fixed@g' gcc/Makefile.in
+sed -i.bak 's@cp $(srcdir)/../fixincludes/README-fixinc@pwd; ls -alh include-fixed; echo cp $(srcdir)/../fixincludes/README-fixinc@g' gcc/Makefile.in
+
+if [[ "$host_platform" != "$build_platform" ]]; then
+    # We need to compile GFORTRAN_FOR_TARGET and GCC_FOR_TARGET
     mkdir -p build_host
     pushd build_host
+    if [[ "$build_platform" == "$target_platform" ]]; then
+       extra_host_options="--with-native-system-header-dir=$CONDA_BUILD_SYSROOT/usr/include"
+    fi
     CC=$CC_FOR_BUILD CXX=$CXX_FOR_BUILD AR="$($CC_FOR_BUILD -print-prog-name=ar)" LD="$($CC_FOR_BUILD -print-prog-name=ld)" \
          RANLIB="$($CC_FOR_BUILD -print-prog-name=ranlib)" NM="$($CC_FOR_BUILD -print-prog-name=nm)"  \
          CFLAGS="$NO_WARN_CFLAGS" CXXFLAGS="$NO_WARN_CFLAGS" CPPFLAGS="$NO_WARN_CFLAGS" \
@@ -71,7 +80,16 @@ if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_plat
        --with-gmp=${BUILD_PREFIX} \
        --with-mpfr=${BUILD_PREFIX} \
        --with-mpc=${BUILD_PREFIX} \
-       --with-isl=${BUILD_PREFIX}
+       --with-isl=${BUILD_PREFIX} \
+       $extra_host_options
+
+    mkdir -p gcc/include-fixed
+    cp ../gcc/gcc-ar.c gcc/gcc-nm.c
+    cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
+    cp ../fixincludes/README-fixinc gcc/include-fixed/README
+    ln -sf $PWD/gcc/xgcc $PWD/gcc/gcc-cross
+    ln -sf $PWD/gcc/gfortran $PWD/gcc/gfortran-cross
+
     echo "Building a compiler that runs on ${BUILD} and targets ${TARGET}"
     make all-gcc -j${CPU_COUNT}
     make install-gcc -j${CPU_COUNT}
@@ -85,7 +103,7 @@ if [[ "$host_platform" != "$build_platform" && "$host_platform" == "$target_plat
     ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ld       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ld
 fi
 
-mkdir build_conda
+mkdir -p build_conda
 cd build_conda
 
 # libatomic is having trouble with pthreads and stack protector checks
@@ -137,7 +155,15 @@ fi
     --with-mpfr=${PREFIX} \
     --with-mpc=${PREFIX} \
     --with-isl=${PREFIX} \
+    --enable-darwin-at-rpath \
     ${extra_configure_options}
+
+mkdir -p gcc/include-fixed
+cp ../gcc/gcc-ar.c gcc/gcc-nm.c
+cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
+cp ../fixincludes/README-fixinc gcc/include-fixed/README
+ln -sf $PWD/gcc/xgcc $PWD/gcc/gcc-cross
+ln -sf $PWD/gcc/gfortran $PWD/gcc/gfortran-cross
 
 echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
 if [[ "$host_platform" == "$target_platform" ]]; then
@@ -187,3 +213,7 @@ ls -al $PREFIX/lib
 mv ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1 ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1.bin
 sed "s#@PATH@#${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}#g" ${RECIPE_DIR}/cc1 > ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1
 chmod +x ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1
+
+if [[ ! -f $PREFIX/bin/${TARGET}-gfortran ]]; then
+  ln -sf ${PREFIX}/bin/gfortran ${PREFIX}/bin/${TARGET}-gfortran
+fi
