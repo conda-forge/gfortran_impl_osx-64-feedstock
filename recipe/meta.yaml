@@ -37,11 +37,11 @@ source:
   patches:
     - libgcc_macosx_min_version.patch  # [gfortran_version == "9.5.0"]
     - gcc-11.3.0-arm.diff              # [cross_target_platform == "osx-arm64" and gfortran_version == "11.3.0"]
-    - gcc-11.3.0-arm-cross.diff        # [cross_target_platform == "osx-64" and gfortran_version == "11.3.0"]
+    - gcc-11.3.0-arm-cross.diff        # [cross_target_platform == "osx-64" and gfortran_version == "11.3.0" and target_platform == "osx-arm64"]
 
 build:
   number: {{ build_number }}
-  skip: True  # [win or (osx and arm64 and gfortran_version == "10.3.0")]
+  skip: True  # [win]
 
 requirements:
   build:
