@@ -9,36 +9,25 @@ channel_sources:
 channel_targets:
 - conda-forge main
 cross_target_platform:
-- osx-arm64
+- osx-64
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
 - '14'
 gfortran_version:
-- 11.3.0
+- 9.5.0
 gmp:
 - '6'
 isl:
-- '0.22'
+- '0.25'
 libgfortran_version:
 - 5.0.0
 libiconv:
-- '1.16'
+- '1'
 macos_machine:
-- arm64-apple-darwin20.0.0
+- x86_64-apple-darwin13.4.0
 mpfr:
 - '4'
-pin_run_as_build:
-  gmp:
-    max_pin: x
-  isl:
-    max_pin: x.x
-  libiconv:
-    max_pin: x.x
-  mpfr:
-    max_pin: x
-  zlib:
-    max_pin: x.x
 target_platform:
 - osx-64
 zip_keys:
