@@ -73,6 +73,7 @@ test:
     - gfortran_test.sh
   commands:
     - echo "SDKROOT=${SDKROOT}"
+    - echo "CONDA_BUILD_SYSROOT=${CONDA_BUILD_SYSROOT}"
     - set -ex
     - export target_platform={{ target_platform }}
     - export cross_target_platform={{ cross_target_platform }}
