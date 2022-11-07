@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 25 %}
+{% set build_number = 26 %}
 {% set version_suffix = "" %}
 
 {% if gfortran_version is undefined %}
@@ -72,6 +72,9 @@ test:
     - omp-threadprivate.f90
     - gfortran_test.sh
   commands:
+    - echo "CONDA_BUILD_SYSROOT=${CONDA_BUILD_SYSROOT}"
+    - export SDKROOT="${CONDA_BUILD_SYSROOT}"
+    - echo "SDKROOT=${SDKROOT}"
     - set -ex
     - export target_platform={{ target_platform }}
     - export cross_target_platform={{ cross_target_platform }}

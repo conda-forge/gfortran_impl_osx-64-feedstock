@@ -21,24 +21,13 @@ gfortran_version:
 gmp:
 - '6'
 isl:
-- '0.22'
+- '0.25'
 libiconv:
-- '1.16'
+- '1'
 macos_machine:
 - arm64-apple-darwin20.0.0
 mpfr:
 - '4'
-pin_run_as_build:
-  gmp:
-    max_pin: x
-  isl:
-    max_pin: x.x
-  libiconv:
-    max_pin: x.x
-  mpfr:
-    max_pin: x
-  zlib:
-    max_pin: x.x
 target_platform:
 - linux-64
 zip_keys:
