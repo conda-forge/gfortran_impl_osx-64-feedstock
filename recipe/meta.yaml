@@ -72,7 +72,7 @@ test:
     - omp-threadprivate.f90
     - gfortran_test.sh
   commands:
-    - echo "SDKROOT: ${SDKROOT}"
+    - echo "SDKROOT=${SDKROOT}"
     - set -ex
     - export target_platform={{ target_platform }}
     - export cross_target_platform={{ cross_target_platform }}
