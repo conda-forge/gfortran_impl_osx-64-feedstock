@@ -8,24 +8,20 @@ jobs:
     vmImage: ubuntu-latest
   strategy:
     matrix:
-      linux_64_cross_target_platformosx-64gfortran_version10.4.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: linux_64_cross_target_platformosx-64gfortran_version10.4.0macos_machinex86_64-apple-darwin13.4.0
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
       linux_64_cross_target_platformosx-64gfortran_version11.3.0macos_machinex86_64-apple-darwin13.4.0:
         CONFIG: linux_64_cross_target_platformosx-64gfortran_version11.3.0macos_machinex86_64-apple-darwin13.4.0
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-      linux_64_cross_target_platformosx-64gfortran_version9.5.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: linux_64_cross_target_platformosx-64gfortran_version9.5.0macos_machinex86_64-apple-darwin13.4.0
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-      linux_64_cross_target_platformosx-arm64gfortran_version10.3.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: linux_64_cross_target_platformosx-arm64gfortran_version10.3.0macos_machinearm64-apple-darwin20.0.0
+      linux_64_cross_target_platformosx-64gfortran_version12.2.0macos_machinex86_64-apple-darwin13.4.0:
+        CONFIG: linux_64_cross_target_platformosx-64gfortran_version12.2.0macos_machinex86_64-apple-darwin13.4.0
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
       linux_64_cross_target_platformosx-arm64gfortran_version11.3.0macos_machinearm64-apple-darwin20.0.0:
         CONFIG: linux_64_cross_target_platformosx-arm64gfortran_version11.3.0macos_machinearm64-apple-darwin20.0.0
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
+      linux_64_cross_target_platformosx-arm64gfortran_version12.2.0macos_machinearm64-apple-darwin20.0.0:
+        CONFIG: linux_64_cross_target_platformosx-arm64gfortran_version12.2.0macos_machinearm64-apple-darwin20.0.0
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
   timeoutInMinutes: 360

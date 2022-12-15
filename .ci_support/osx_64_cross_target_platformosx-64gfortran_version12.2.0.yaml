@@ -15,7 +15,7 @@ cxx_compiler:
 cxx_compiler_version:
 - '14'
 gfortran_version:
-- 9.5.0
+- 12.2.0
 gmp:
 - '6'
 isl:
@@ -33,9 +33,9 @@ target_platform:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
+- - cross_target_platform
+  - macos_machine
 - - gfortran_version
   - libgfortran_version
-  - cross_target_platform
-  - macos_machine
 zlib:
 - '1.2'
