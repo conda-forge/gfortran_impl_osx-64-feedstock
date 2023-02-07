@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 27 %}
+{% set build_number = 28 %}
 {% set version_suffix = "" %}
 
 {% if gfortran_version is undefined %}
