@@ -1,0 +1,16 @@
+From https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=6725f186cb70d48338f69456864bf469a12ee5be
+
+diff --git a/gcc/config/darwin-c.cc b/gcc/config/darwin-c.cc
+index 9203c84d2c2..1f82b36d2de 100644
+--- a/gcc/config/darwin-c.cc
++++ b/gcc/config/darwin-c.cc
+@@ -691,7 +691,8 @@ macosx_version_as_macro (void)
+   if (!version_array)
+     goto fail;
+ 
+-  if (version_array[MAJOR] < 10 || version_array[MAJOR] > 12)
++  /* System tools accept up to 99 as a major version.  */
++  if (version_array[MAJOR] < 10 || version_array[MAJOR] > 99)
+     goto fail;
+ 
+   if (version_array[MAJOR] == 10 && version_array[MINOR] < 10)
