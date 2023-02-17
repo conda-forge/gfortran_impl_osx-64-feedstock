@@ -11,24 +11,31 @@ jobs:
       osx_64_cross_target_platformosx-64gfortran_version10.4.0:
         CONFIG: osx_64_cross_target_platformosx-64gfortran_version10.4.0
         UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: osx_64_cross_target_platformosx-64g_h72c3152c95
       osx_64_cross_target_platformosx-64gfortran_version11.3.0:
         CONFIG: osx_64_cross_target_platformosx-64gfortran_version11.3.0
         UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: osx_64_cross_target_platformosx-64g_h9532e8dd6c
       osx_64_cross_target_platformosx-64gfortran_version9.5.0:
         CONFIG: osx_64_cross_target_platformosx-64gfortran_version9.5.0
         UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: osx_64_cross_target_platformosx-64g_h79c7e1c281
       osx_64_cross_target_platformosx-arm64gfortran_version10.3.0:
         CONFIG: osx_64_cross_target_platformosx-arm64gfortran_version10.3.0
         UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: osx_64_cross_target_platformosx-arm_hc18aa45dc6
       osx_64_cross_target_platformosx-arm64gfortran_version11.3.0:
         CONFIG: osx_64_cross_target_platformosx-arm64gfortran_version11.3.0
         UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: osx_64_cross_target_platformosx-arm_h75e2668fd4
       osx_arm64_cross_target_platformosx-64gfortran_version11.3.0macos_machinex86_64-apple-darwin13.4.0:
         CONFIG: osx_arm64_cross_target_platformosx-64gfortran_version11.3.0macos_machinex86_64-apple-darwin13.4.0
         UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_h1c4365e5ca
       osx_arm64_cross_target_platformosx-arm64gfortran_version11.3.0macos_machinearm64-apple-darwin20.0.0:
         CONFIG: osx_arm64_cross_target_platformosx-arm64gfortran_version11.3.0macos_machinearm64-apple-darwin20.0.0
         UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_h122efdb4b2
   timeoutInMinutes: 360
 
   steps:
@@ -49,3 +56,32 @@ jobs:
       BINSTAR_TOKEN: $(BINSTAR_TOKEN)
       FEEDSTOCK_TOKEN: $(FEEDSTOCK_TOKEN)
       STAGING_BINSTAR_TOKEN: $(STAGING_BINSTAR_TOKEN)
+  - script: |
+      export CI=azure
+      export CI_RUN_ID=$(build.BuildNumber).$(system.JobAttempt)
+      export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+      export CONDA_BLD_DIR=/Users/runner/miniforge3/conda-bld
+      export ARTIFACT_STAGING_DIR="$(Build.ArtifactStagingDirectory)"
+      # Archive everything in CONDA_BLD_DIR except environments
+      export BLD_ARTIFACT_PREFIX=conda_artifacts
+      if [[ "$AGENT_JOBSTATUS" == "Failed" ]]; then
+        # Archive the CONDA_BLD_DIR environments only when the job fails
+        export ENV_ARTIFACT_PREFIX=conda_envs
+      fi
+      ./.scripts/create_conda_build_artifacts.sh
+    displayName: Prepare conda build artifacts
+    condition: succeededOrFailed()
+
+  - task: PublishPipelineArtifact@1
+    displayName: Store conda build artifacts
+    condition: not(eq(variables.BLD_ARTIFACT_PATH, ''))
+    inputs:
+      targetPath: $(BLD_ARTIFACT_PATH)
+      artifactName: $(BLD_ARTIFACT_NAME)
+
+  - task: PublishPipelineArtifact@1
+    displayName: Store conda build environment artifacts
+    condition: not(eq(variables.ENV_ARTIFACT_PATH, ''))
+    inputs:
+      targetPath: $(ENV_ARTIFACT_PATH)
+      artifactName: $(ENV_ARTIFACT_NAME)
