@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 28 %}
+{% set build_number = 29 %}
 {% set version_suffix = "" %}
 
 {% if gfortran_version is undefined %}
@@ -23,6 +23,9 @@
 {% elif gfortran_version == "11.3.0" %}
     {% set url = "https://ftp.gnu.org/gnu/gcc/gcc-11.3.0/gcc-11.3.0.tar.gz  " %}
     {% set source_sha = "98438e6cc7294298b474cf0da7655d9a8c8b796421bb0210531c294a950374ed" %}
+{% elif gfortran_version == "12.2.0" %}
+    {% set url = "https://ftp.gnu.org/gnu/gcc/gcc-12.2.0/gcc-12.2.0.tar.gz  " %}
+    {% set source_sha = "ac6b317eb4d25444d87cf29c0d141dedc1323a1833ec9995211b13e1a851261c" %}
 {% endif %}
 
 {% set gfortran_major_version = gfortran_version.split('.')[0]|int %}
