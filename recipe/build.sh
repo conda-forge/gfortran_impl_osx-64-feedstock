@@ -84,8 +84,13 @@ if [[ "$host_platform" != "$build_platform" ]]; then
        $extra_host_options
 
     mkdir -p gcc/include-fixed
-    cp ../gcc/gcc-ar.c gcc/gcc-nm.c
-    cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
+    if [[ "$gfortran_version" == "12.2.0" ]]; then
+        cp ../gcc/gcc-ar.cc gcc/gcc-nm.cc
+        cp ../gcc/gcc-ar.cc gcc/gcc-ranlib.cc
+    else
+        cp ../gcc/gcc-ar.c gcc/gcc-nm.c
+        cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
+    fi
     cp ../fixincludes/README-fixinc gcc/include-fixed/README
     ln -sf $PWD/gcc/xgcc $PWD/gcc/gcc-cross
     ln -sf $PWD/gcc/gfortran $PWD/gcc/gfortran-cross
@@ -159,8 +164,13 @@ fi
     ${extra_configure_options}
 
 mkdir -p gcc/include-fixed
-cp ../gcc/gcc-ar.c gcc/gcc-nm.c
-cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
+if [[ "$gfortran_version" == "12.2.0" ]]; then
+    cp ../gcc/gcc-ar.cc gcc/gcc-nm.cc
+    cp ../gcc/gcc-ar.cc gcc/gcc-ranlib.cc
+else
+    cp ../gcc/gcc-ar.c gcc/gcc-nm.c
+    cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
+fi
 cp ../fixincludes/README-fixinc gcc/include-fixed/README
 ln -sf $PWD/gcc/xgcc $PWD/gcc/gcc-cross
 ln -sf $PWD/gcc/gfortran $PWD/gcc/gfortran-cross
