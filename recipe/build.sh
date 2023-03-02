@@ -91,8 +91,8 @@ if [[ "$host_platform" != "$build_platform" ]]; then
     ln -sf $PWD/gcc/gfortran $PWD/gcc/gfortran-cross
 
     echo "Building a compiler that runs on ${BUILD} and targets ${TARGET}"
-    make all-gcc  # -j${CPU_COUNT}
-    make install-gcc  # -j${CPU_COUNT}
+    make all-gcc -j${CPU_COUNT}
+    make install-gcc -j${CPU_COUNT}
     popd
     # For the target compiler to work, it need some tools
     ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ar       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ar
@@ -183,7 +183,7 @@ if [[ "$host_platform" == "$target_platform" ]]; then
 
   make -j"${CPU_COUNT}" || (cat $TARGET/libquadmath/*.log && false)
   cat $TARGET/libquadmath/*.log
-  make install-strip # -j${CPU_COUNT}
+  make install-strip -j${CPU_COUNT}
   rm $PREFIX/lib/libgomp.dylib
   rm $PREFIX/lib/libgomp.1.dylib
   ln -s $PREFIX/lib/libomp.dylib $PREFIX/lib/libgomp.dylib
@@ -202,8 +202,8 @@ if [[ "$host_platform" == "$target_platform" ]]; then
   done
 else
   # The compiler is a cross compiler. Only make the compiler. No target libraries
-  make all-gcc  # -j${CPU_COUNT}
-  make install-gcc # -j${CPU_COUNT}
+  make all-gcc -j${CPU_COUNT}
+  make install-gcc -j${CPU_COUNT}
 fi
 
 stop_spinner
