@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 function start_spinner {
     if [ -n "$SPINNER_PID" ]; then
