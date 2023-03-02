@@ -43,7 +43,7 @@ source:
     - gcc-11.3.0-arm-cross.diff        # [cross_target_platform == "osx-64" and gfortran_version == "11.3.0"]
     - gcc-11.3-ventura.diff            # [gfortran_version == "11.3.0"]
     - gcc-11.3-ventura2.diff           # [cross_target_platform != "osx-arm64" and gfortran_version == "11.3.0"]
-    - gcc-12.2.0-arm-cross.diff        # [cross_target_platform == "osx-arm64" and gfortran_version == "12.2.0"]
+    - gcc-12.2.0-arm.diff              # [cross_target_platform == "osx-arm64" and gfortran_version == "12.2.0"]
 
 build:
   number: {{ build_number }}
