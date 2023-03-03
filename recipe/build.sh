@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 function start_spinner {
     if [ -n "$SPINNER_PID" ]; then
@@ -84,8 +84,8 @@ if [[ "$host_platform" != "$build_platform" ]]; then
        $extra_host_options
 
     mkdir -p gcc/include-fixed
-    cp ../gcc/gcc-ar.c gcc/gcc-nm.c
-    cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
+    cp ../gcc/gcc-ar.cc gcc/gcc-nm.cc || cp ../gcc/gcc-ar.c gcc/gcc-nm.c
+    cp ../gcc/gcc-ar.cc gcc/gcc-ranlib.cc || cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
     cp ../fixincludes/README-fixinc gcc/include-fixed/README
     ln -sf $PWD/gcc/xgcc $PWD/gcc/gcc-cross
     ln -sf $PWD/gcc/gfortran $PWD/gcc/gfortran-cross
@@ -159,8 +159,8 @@ fi
     ${extra_configure_options}
 
 mkdir -p gcc/include-fixed
-cp ../gcc/gcc-ar.c gcc/gcc-nm.c
-cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
+cp ../gcc/gcc-ar.cc gcc/gcc-nm.cc || cp ../gcc/gcc-ar.c gcc/gcc-nm.c
+cp ../gcc/gcc-ar.cc gcc/gcc-ranlib.cc || cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
 cp ../fixincludes/README-fixinc gcc/include-fixed/README
 ln -sf $PWD/gcc/xgcc $PWD/gcc/gcc-cross
 ln -sf $PWD/gcc/gfortran $PWD/gcc/gfortran-cross
