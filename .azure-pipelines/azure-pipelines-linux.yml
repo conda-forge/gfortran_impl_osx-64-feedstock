@@ -28,46 +28,6 @@ jobs:
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
         SHORT_CONFIG: linux_64_cross_target_platformosx-a_h5519e181f6
-      linux_aarch64_cross_target_platformosx-64gfortran_version11.3.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: linux_aarch64_cross_target_platformosx-64gfortran_version11.3.0macos_machinex86_64-apple-darwin13.4.0
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-        SHORT_CONFIG: linux_aarch64_cross_target_platform_h3f21920278
-      linux_aarch64_cross_target_platformosx-64gfortran_version12.2.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: linux_aarch64_cross_target_platformosx-64gfortran_version12.2.0macos_machinex86_64-apple-darwin13.4.0
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-        SHORT_CONFIG: linux_aarch64_cross_target_platform_h7e99fbd44e
-      linux_aarch64_cross_target_platformosx-arm64gfortran_version11.3.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: linux_aarch64_cross_target_platformosx-arm64gfortran_version11.3.0macos_machinearm64-apple-darwin20.0.0
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-        SHORT_CONFIG: linux_aarch64_cross_target_platform_h86819b7da1
-      linux_aarch64_cross_target_platformosx-arm64gfortran_version12.2.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: linux_aarch64_cross_target_platformosx-arm64gfortran_version12.2.0macos_machinearm64-apple-darwin20.0.0
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-        SHORT_CONFIG: linux_aarch64_cross_target_platform_ha7b52ab8d5
-      linux_ppc64le_cross_target_platformosx-64gfortran_version11.3.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: linux_ppc64le_cross_target_platformosx-64gfortran_version11.3.0macos_machinex86_64-apple-darwin13.4.0
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-        SHORT_CONFIG: linux_ppc64le_cross_target_platform_h6f64bd7dd6
-      linux_ppc64le_cross_target_platformosx-64gfortran_version12.2.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: linux_ppc64le_cross_target_platformosx-64gfortran_version12.2.0macos_machinex86_64-apple-darwin13.4.0
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-        SHORT_CONFIG: linux_ppc64le_cross_target_platform_h2a21254d28
-      linux_ppc64le_cross_target_platformosx-arm64gfortran_version11.3.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: linux_ppc64le_cross_target_platformosx-arm64gfortran_version11.3.0macos_machinearm64-apple-darwin20.0.0
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-        SHORT_CONFIG: linux_ppc64le_cross_target_platform_hd3a5c0eeca
-      linux_ppc64le_cross_target_platformosx-arm64gfortran_version12.2.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: linux_ppc64le_cross_target_platformosx-arm64gfortran_version12.2.0macos_machinearm64-apple-darwin20.0.0
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-        SHORT_CONFIG: linux_ppc64le_cross_target_platform_h16f00fe89a
   timeoutInMinutes: 360
 
   steps:
