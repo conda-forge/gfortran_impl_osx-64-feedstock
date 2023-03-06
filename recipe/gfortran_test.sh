@@ -2,8 +2,8 @@
 
 set -xe
 
-# TODO: figure out why the following line does not work on CI
-# ${PREFIX}/bin/${macos_machine}-gfortran -v
+${PREFIX}/bin/${macos_machine}-gfortran --help
+${PREFIX}/bin/${macos_machine}-gfortran -v
 
 if [[ "$target_platform" == "$cross_target_platform" ]]; then
   "${PREFIX}/bin/${macos_machine}-gfortran" -o hello hello.f90 -v
