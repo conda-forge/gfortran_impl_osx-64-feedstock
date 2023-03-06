@@ -56,6 +56,9 @@ sed -i.bak 's@rm -f include-fixed/README@@g' gcc/Makefile.in
 sed -i.bak 's@rm -rf include-fixed; mkdir include-fixed@echo rm -rf include-fixed; echo mkdir include-fixed@g' gcc/Makefile.in
 sed -i.bak 's@cp $(srcdir)/../fixincludes/README-fixinc@pwd; ls -alh include-fixed; echo cp $(srcdir)/../fixincludes/README-fixinc@g' gcc/Makefile.in
 
+# conda binary prefix rewriting fails if the variables are not volatile
+sed -i.bak 's/static const char \*const standard_/static const char * volatile standard_/g' gcc/gcc.c*
+
 if [[ "$host_platform" != "$build_platform" ]]; then
     # We need to compile GFORTRAN_FOR_TARGET and GCC_FOR_TARGET
     mkdir -p build_host
