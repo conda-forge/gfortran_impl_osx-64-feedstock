@@ -23,14 +23,15 @@ source:
   sha256: undefined                        # [gfortran_version != "12.3.0" and gfortran_version != "11.4.0"]
   patches:
     {% if gfortran_major_version == 11 %}
-    - gcc-11.3.0-arm.diff              # [cross_target_platform == "osx-arm64"]
+    # https://raw.githubusercontent.com/Homebrew/formula-patches/master/gcc/gcc-11.4.0.diff
+    - gcc-11.4.0.diff                  # [cross_target_platform == "osx-arm64"]
     - gcc-11.3.0-arm-cross.diff        # [cross_target_platform == "osx-64"]
     {% endif %}
     {% if gfortran_major_version == 12 %}
     # Following patch downloaded from
-    # https://raw.githubusercontent.com/Homebrew/formula-patches/1d184289/gcc/gcc-12.2.0-arm.diff
-    # on 3/1/2023.  This was then edited to remove the errors in the `-nodefaultrpaths` flags.
-    - gcc-12.2.0-arm.diff              # [cross_target_platform == "osx-arm64"]
+    # https://raw.githubusercontent.com/Homebrew/formula-patches/f1188b90d610e2ed170b22512ff7435ba5c891e2/gcc/gcc-12.3.0.diff
+    # This was then edited with `s/-Wc,-nodefaultrpaths/-nodefaultrpaths`.
+    - gcc-13.2.0-arm.diff              # [cross_target_platform == "osx-arm64"]
     {% endif %}
 
 build:
