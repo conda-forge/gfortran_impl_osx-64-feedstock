@@ -219,5 +219,5 @@ chmod +x ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1
 
 if [[ ! -f $PREFIX/bin/${TARGET}-gfortran ]]; then
   mv ${PREFIX}/bin/gfortran ${PREFIX}/bin/${TARGET}-gfortran
-  ln -sf ${PREFIX}/bin/${TARGET}-gfortran ${PREFIX}/bin/gfortran
+  # -ln -sf ${PREFIX}/bin/${TARGET}-gfortran ${PREFIX}/bin/gfortran
 fi
