@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 31 %}
+{% set build_number = 32 %}
 
 {% if gfortran_version is undefined %}
 {% set gfortran_version = "11.3.0" %}
@@ -240,6 +240,7 @@ about:
   summary: Fortran compiler and libraries from the GNU Compiler Collection
 
 extra:
+  feedstock-name: gfortran_impl_osx-64
   recipe-maintainers:
     - beckermr
     - isuruf

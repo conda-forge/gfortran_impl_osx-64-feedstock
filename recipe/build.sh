@@ -218,5 +218,6 @@ sed "s#@PATH@#${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}#g" ${RECIPE_DI
 chmod +x ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1
 
 if [[ ! -f $PREFIX/bin/${TARGET}-gfortran ]]; then
-  ln -sf ${PREFIX}/bin/gfortran ${PREFIX}/bin/${TARGET}-gfortran
+  mv ${PREFIX}/bin/gfortran ${PREFIX}/bin/${TARGET}-gfortran
+  ln -sf ${PREFIX}/bin/${TARGET}-gfortran ${PREFIX}/bin/gfortran
 fi
