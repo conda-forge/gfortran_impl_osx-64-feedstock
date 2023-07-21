@@ -31,7 +31,7 @@ source:
     # Following patch downloaded from
     # https://raw.githubusercontent.com/Homebrew/formula-patches/f1188b90d610e2ed170b22512ff7435ba5c891e2/gcc/gcc-12.3.0.diff
     # This was then edited with `s/-Wc,-nodefaultrpaths/-nodefaultrpaths`.
-    - gcc-12.3.0-arm.diff              # [cross_target_platform == "osx-arm64"]
+    - gcc-12.3.0.diff              # [cross_target_platform == "osx-arm64"]
     {% endif %}
 
 build:
