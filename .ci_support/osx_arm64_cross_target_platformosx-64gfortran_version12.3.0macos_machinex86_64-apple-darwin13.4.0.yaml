@@ -15,7 +15,7 @@ cxx_compiler:
 cxx_compiler_version:
 - '15'
 gfortran_version:
-- 11.3.0
+- 12.3.0
 gmp:
 - '6'
 isl:
