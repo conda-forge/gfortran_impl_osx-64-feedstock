@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 0 %}
+{% set build_number = 1 %}
 
 {% if gfortran_version is undefined %}
 {% set gfortran_version = "11.3.0" %}
@@ -182,7 +182,7 @@ outputs:
       string: {{ gfortran_version.replace(".", "_") }}_h{{ PKG_HASH }}_{{ build_number }}
     requirements:
       run:
-        - libgfortran{{ libgfortran_major_version }}
+        - {{ pin_subpackage("libgfortran" ~ libgfortran_major_version, exact=True) }}
 
   - name: libgfortran{{ libgfortran_major_version }}
     version: {{ gfortran_version }}
@@ -213,7 +213,7 @@ outputs:
       run:
         - llvm-openmp >=8.0.0
       run_constrained:
-        - libgfortran {{ libgfortran_version }} *_{{ build_number }}
+        - libgfortran {{ libgfortran_version }} {{ gfortran_version.replace(".", "_") }}_*_{{ build_number }}
 
     test:
       commands:
