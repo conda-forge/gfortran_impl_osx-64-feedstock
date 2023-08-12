@@ -18,16 +18,10 @@ package:
 
 source:
   url: https://ftp.gnu.org/gnu/gcc/gcc-{{ gfortran_version }}/gcc-{{ gfortran_version }}.tar.gz
-  sha256: af828619dd1970734dda3cfb792ea3f2cba61b5a00170ba8bce4910749d73c07  # [gfortran_version == "11.4.0"]
   sha256: bacd4c614d8bd5983404585e53478d467a254249e0f1bb747c8bc6d787bd4fa2  # [gfortran_version == "13.1.0"]
   sha256: 11275aa7bb34cd8ab101d01b341015499f8d9466342a2574ece93f954d92273b  # [gfortran_version == "12.3.0"]
-  sha256: undefined                                         # [gfortran_version not in ("13.1.0", "12.3.0", "11.4.0")]
+  sha256: undefined                                         # [gfortran_version not in ("13.1.0", "12.3.0")]
   patches:
-    {% if gfortran_major_version == 11 %}
-    # https://raw.githubusercontent.com/Homebrew/formula-patches/master/gcc/gcc-11.4.0.diff
-    - patches/gcc-11.4.0.diff                   # [cross_target_platform == "osx-arm64"]
-    - patches/gcc-11.3.0-arm-cross.diff         # [cross_target_platform == "osx-64"]
-    {% endif %}
     {% if gfortran_major_version == 12 %}
     # Following patch downloaded from
     # https://raw.githubusercontent.com/Homebrew/formula-patches/f1188b90d610e2ed170b22512ff7435ba5c891e2/gcc/gcc-12.3.0.diff
