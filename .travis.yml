@@ -7,17 +7,12 @@ language: generic
 
 matrix:
   include:
-    - env: CONFIG=linux_aarch64_cross_target_platformosx-64gfortran_version11.4.0macos_machinex86_64-apple-darwin13.4.0 UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64
-      os: linux
-      arch: arm64
-      dist: focal
-
     - env: CONFIG=linux_aarch64_cross_target_platformosx-64gfortran_version12.3.0macos_machinex86_64-apple-darwin13.4.0 UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64
       os: linux
       arch: arm64
       dist: focal
 
-    - env: CONFIG=linux_aarch64_cross_target_platformosx-arm64gfortran_version11.4.0macos_machinearm64-apple-darwin20.0.0 UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64
+    - env: CONFIG=linux_aarch64_cross_target_platformosx-64gfortran_version13.1.0macos_machinex86_64-apple-darwin13.4.0 UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64
       os: linux
       arch: arm64
       dist: focal
@@ -27,9 +22,9 @@ matrix:
       arch: arm64
       dist: focal
 
-    - env: CONFIG=linux_ppc64le_cross_target_platformosx-64gfortran_version11.4.0macos_machinex86_64-apple-darwin13.4.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
+    - env: CONFIG=linux_aarch64_cross_target_platformosx-arm64gfortran_version13.1.0macos_machinearm64-apple-darwin20.0.0 UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64
       os: linux
-      arch: ppc64le
+      arch: arm64
       dist: focal
 
     - env: CONFIG=linux_ppc64le_cross_target_platformosx-64gfortran_version12.3.0macos_machinex86_64-apple-darwin13.4.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
@@ -37,12 +32,17 @@ matrix:
       arch: ppc64le
       dist: focal
 
-    - env: CONFIG=linux_ppc64le_cross_target_platformosx-arm64gfortran_version11.4.0macos_machinearm64-apple-darwin20.0.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
+    - env: CONFIG=linux_ppc64le_cross_target_platformosx-64gfortran_version13.1.0macos_machinex86_64-apple-darwin13.4.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
       os: linux
       arch: ppc64le
       dist: focal
 
     - env: CONFIG=linux_ppc64le_cross_target_platformosx-arm64gfortran_version12.3.0macos_machinearm64-apple-darwin20.0.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
+      os: linux
+      arch: ppc64le
+      dist: focal
+
+    - env: CONFIG=linux_ppc64le_cross_target_platformosx-arm64gfortran_version13.1.0macos_machinearm64-apple-darwin20.0.0 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
       os: linux
       arch: ppc64le
       dist: focal

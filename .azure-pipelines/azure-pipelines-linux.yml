@@ -8,34 +8,29 @@ jobs:
     vmImage: ubuntu-latest
   strategy:
     matrix:
-      linux_64_cross_target_platformosx-64gfortran_version11.4.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: linux_64_cross_target_platformosx-64gfortran_version11.4.0macos_machinex86_64-apple-darwin13.4.0
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-        SHORT_CONFIG: linux_64_cross_target_platformosx-6_ha6509c1a71
       linux_64_cross_target_platformosx-64gfortran_version12.3.0macos_machinex86_64-apple-darwin13.4.0:
         CONFIG: linux_64_cross_target_platformosx-64gfortran_version12.3.0macos_machinex86_64-apple-darwin13.4.0
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
         SHORT_CONFIG: linux_64_cross_target_platformosx-6_hc1bbb9bf0c
-      linux_64_cross_target_platformosx-arm64gfortran_version11.4.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: linux_64_cross_target_platformosx-arm64gfortran_version11.4.0macos_machinearm64-apple-darwin20.0.0
+      linux_64_cross_target_platformosx-64gfortran_version13.1.0macos_machinex86_64-apple-darwin13.4.0:
+        CONFIG: linux_64_cross_target_platformosx-64gfortran_version13.1.0macos_machinex86_64-apple-darwin13.4.0
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-        SHORT_CONFIG: linux_64_cross_target_platformosx-a_hb57554e618
+        SHORT_CONFIG: linux_64_cross_target_platformosx-6_h74492fd6ab
       linux_64_cross_target_platformosx-arm64gfortran_version12.3.0macos_machinearm64-apple-darwin20.0.0:
         CONFIG: linux_64_cross_target_platformosx-arm64gfortran_version12.3.0macos_machinearm64-apple-darwin20.0.0
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
         SHORT_CONFIG: linux_64_cross_target_platformosx-a_h36902606f2
+      linux_64_cross_target_platformosx-arm64gfortran_version13.1.0macos_machinearm64-apple-darwin20.0.0:
+        CONFIG: linux_64_cross_target_platformosx-arm64gfortran_version13.1.0macos_machinearm64-apple-darwin20.0.0
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
+        SHORT_CONFIG: linux_64_cross_target_platformosx-a_h62cba15124
   timeoutInMinutes: 360
 
   steps:
-  - script: |
-         rm -rf /opt/ghc
-         df -h
-    displayName: Manage disk space
-
   # configure qemu binfmt-misc running.  This allows us to run docker containers
   # embedded qemu-static
   - script: |
