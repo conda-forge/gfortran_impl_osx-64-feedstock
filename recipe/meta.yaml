@@ -18,9 +18,9 @@ package:
 
 source:
   url: https://ftp.gnu.org/gnu/gcc/gcc-{{ gfortran_version }}/gcc-{{ gfortran_version }}.tar.gz
-  sha256: bacd4c614d8bd5983404585e53478d467a254249e0f1bb747c8bc6d787bd4fa2  # [gfortran_version == "13.1.0"]
+  sha256: 8cb4be3796651976f94b9356fa08d833524f62420d6292c5033a9a26af315078  # [gfortran_version == "13.2.0"]
   sha256: 11275aa7bb34cd8ab101d01b341015499f8d9466342a2574ece93f954d92273b  # [gfortran_version == "12.3.0"]
-  sha256: undefined                                         # [gfortran_version not in ("13.1.0", "12.3.0")]
+  sha256: undefined                                         # [gfortran_version not in ("13.2.0", "12.3.0")]
   patches:
     {% if gfortran_major_version == 12 %}
     # Following patch downloaded from
@@ -29,9 +29,9 @@ source:
     - patches/gcc-12.3.0.diff                   # [cross_target_platform == "osx-arm64"]
     {% endif %}
     {% if gfortran_major_version == 13 %}
-    # https://raw.githubusercontent.com/Homebrew/formula-patches/5c206c47e2a08d522ec9795bb314346fff5fc4c5/gcc/gcc-13.1.0.diff
+    # https://raw.githubusercontent.com/Homebrew/formula-patches/3c5cbc8e9cf444a1967786af48e430588e1eb481/gcc/gcc-13.2.0.diff
     # processed as for v12: `s/-Wc,-nodefaultrpaths/-nodefaultrpaths/g`
-    - patches/gcc-13.1.0.diff                   # [cross_target_platform == "osx-arm64"]
+    - patches/gcc-13.2.0.diff                   # [cross_target_platform == "osx-arm64"]
     {% endif %}
 
 build:
