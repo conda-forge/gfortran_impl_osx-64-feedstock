@@ -52,6 +52,9 @@ export enable_darwin_at_rpath=yes
 
 sed -i.bak 's/cp xgcc/echo cp xgcc/g' gcc/Makefile.in
 sed -i.bak 's/cp gfortran/echo cp gfortran/g' gcc/fortran/Make-lang.in
+# GCC 13+
+sed -i.bak 's@rm -f include-fixed/README;@@g' gcc/Makefile.in
+# GCC <=12
 sed -i.bak 's@rm -f include-fixed/README@@g' gcc/Makefile.in
 sed -i.bak 's@rm -rf include-fixed; mkdir include-fixed@echo rm -rf include-fixed; echo mkdir include-fixed@g' gcc/Makefile.in
 sed -i.bak 's@cp $(srcdir)/../fixincludes/README-fixinc@pwd; ls -alh include-fixed; echo cp $(srcdir)/../fixincludes/README-fixinc@g' gcc/Makefile.in
