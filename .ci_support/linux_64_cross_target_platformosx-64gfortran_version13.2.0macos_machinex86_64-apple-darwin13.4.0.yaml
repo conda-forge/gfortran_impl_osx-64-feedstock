@@ -21,7 +21,7 @@ gfortran_version:
 gmp:
 - '6'
 isl:
-- '0.25'
+- '0.26'
 libiconv:
 - '1'
 macos_machine:
