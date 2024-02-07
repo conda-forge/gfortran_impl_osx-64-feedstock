@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 2 %}
+{% set build_number = 3 %}
 
 {% if gfortran_version is undefined %}
 {% set gfortran_version = "11.3.0" %}
@@ -101,6 +101,7 @@ outputs:
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/crttme.o
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgcov.a
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/libcaf_single.a
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/include/ISO_Fortran_binding.h
 
     test:
       commands:
@@ -113,6 +114,7 @@ outputs:
         - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/finclude/omp_lib.f90"
         - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/finclude/omp_lib.mod"
         - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/finclude/ieee_features.mod"
+        - test -f "${PREFIX}/lib/gcc/{{ chost }}/{{ gfortran_version }}/include/ISO_Fortran_binding.h"
 
   - name: gfortran_impl_{{ cross_target_platform }}
     version: {{ gfortran_version }}
