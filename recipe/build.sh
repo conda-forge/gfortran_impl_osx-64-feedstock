@@ -109,12 +109,6 @@ if [[ "$host_platform" != "$build_platform" ]]; then
     ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ld       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ld
 fi
 
-echo "=== DEBUG 1==="
-echo "find ${BUILD_PREFIX} -iname ISO_Fortran_binding.h"
-found=$(find ${BUILD_PREFIX} -iname ISO_Fortran_binding.h)
-echo "FOUND: ${found}"
-echo "=== END DEBUG 1==="
-
 mkdir -p build_conda
 cd build_conda
 
@@ -221,13 +215,6 @@ fi
 stop_spinner
 
 ls -al $PREFIX/lib
-
-echo "=== DEBUG 2==="
-echo "find ${PREFIX} -iname ISO_Fortran_binding.h"
-found=$(find ${PREFIX} -iname ISO_Fortran_binding.h)
-echo "FOUND: ${found}"
-echo "=== END DEBUG 2==="
-
 
 mv ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1 ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1.bin
 sed "s#@PATH@#${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}#g" ${RECIPE_DIR}/cc1 > ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1
