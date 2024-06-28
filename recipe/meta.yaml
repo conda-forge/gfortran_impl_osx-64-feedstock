@@ -10,8 +10,6 @@
 {% set libgfortran_next_major = (libgfortran_version|int +1)|string %}
 {% set max_libgfortran_version = libgfortran_next_major + ".0.0.a0" %}
 
-{% set gfortran_major_version = gfortran_version.split('.')[0]|int %}
-
 package:
   name: gfortran_impl_{{ cross_target_platform }}
   version: {{ gfortran_version }}
@@ -22,17 +20,9 @@ source:
   sha256: 3a2b10cab86e32358fdac871546d57e2700e9bdb5875ef33fff5b601265b9e32  # [gfortran_version == "13.3.0"]
   sha256: 5a30de2be740062bb3ddd3fd13c9b1bb4584d8f85616d33f23a713439d714148  # [gfortran_version == "12.4.0"]
   patches:
-    {% if gfortran_major_version == 12 %}
-    # Following patch downloaded from
-    # https://raw.githubusercontent.com/Homebrew/formula-patches/f1188b90d610e2ed170b22512ff7435ba5c891e2/gcc/gcc-12.3.0.diff
-    # This was then edited with `s/-Wc,-nodefaultrpaths/-nodefaultrpaths`.
-    - patches/gcc-12.3.0.diff                   # [cross_target_platform == "osx-arm64"]
-    {% endif %}
-    {% if gfortran_major_version == 13 %}
-    # https://raw.githubusercontent.com/Homebrew/formula-patches/3c5cbc8e9cf444a1967786af48e430588e1eb481/gcc/gcc-13.2.0.diff
-    # processed as for v12: `s/-Wc,-nodefaultrpaths/-nodefaultrpaths/g`
-    - patches/gcc-13.2.0.diff                   # [cross_target_platform == "osx-arm64"]
-    {% endif %}
+    # all patches from https://github.com/Homebrew/formula-patches/tree/ca7047dad38f16fb02eb63bd4447e17d0b68b3bb/gcc
+    # and edited with `s/-Wc,-nodefaultrpaths/-nodefaultrpaths`.
+    - patches/gcc-{{ gfortran_version }}.diff   # [cross_target_platform == "osx-arm64"]
 
 build:
   number: {{ build_number }}
