@@ -5,42 +5,47 @@
 jobs:
 - job: osx
   pool:
-    vmImage: macOS-11
+    vmImage: macOS-12
   strategy:
     matrix:
-      osx_64_cross_target_platformosx-64gfortran_version12.3.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: osx_64_cross_target_platformosx-64gfortran_version12.3.0macos_machinex86_64-apple-darwin13.4.0
+      osx_64_cross_target_platformosx-64gfortran_version12.4.0:
+        CONFIG: osx_64_cross_target_platformosx-64gfortran_version12.4.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_64_cross_target_platformosx-64g_h9275fed2f9
-      osx_64_cross_target_platformosx-64gfortran_version13.2.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: osx_64_cross_target_platformosx-64gfortran_version13.2.0macos_machinex86_64-apple-darwin13.4.0
+      osx_64_cross_target_platformosx-64gfortran_version13.3.0:
+        CONFIG: osx_64_cross_target_platformosx-64gfortran_version13.3.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_64_cross_target_platformosx-64g_h7488eca582
-      osx_64_cross_target_platformosx-arm64gfortran_version12.3.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: osx_64_cross_target_platformosx-arm64gfortran_version12.3.0macos_machinearm64-apple-darwin20.0.0
+      osx_64_cross_target_platformosx-64gfortran_version14.1.0:
+        CONFIG: osx_64_cross_target_platformosx-64gfortran_version14.1.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_64_cross_target_platformosx-arm_h58c2e704bc
-      osx_64_cross_target_platformosx-arm64gfortran_version13.2.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: osx_64_cross_target_platformosx-arm64gfortran_version13.2.0macos_machinearm64-apple-darwin20.0.0
+      osx_64_cross_target_platformosx-arm64gfortran_version12.4.0:
+        CONFIG: osx_64_cross_target_platformosx-arm64gfortran_version12.4.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_64_cross_target_platformosx-arm_hcd346efd43
-      osx_arm64_cross_target_platformosx-64gfortran_version12.3.0:
-        CONFIG: osx_arm64_cross_target_platformosx-64gfortran_version12.3.0
+      osx_64_cross_target_platformosx-arm64gfortran_version13.3.0:
+        CONFIG: osx_64_cross_target_platformosx-arm64gfortran_version13.3.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_h0234dd775d
-      osx_arm64_cross_target_platformosx-64gfortran_version13.2.0:
-        CONFIG: osx_arm64_cross_target_platformosx-64gfortran_version13.2.0
+      osx_64_cross_target_platformosx-arm64gfortran_version14.1.0:
+        CONFIG: osx_64_cross_target_platformosx-arm64gfortran_version14.1.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_h66d0ac990a
-      osx_arm64_cross_target_platformosx-arm64gfortran_version12.3.0:
-        CONFIG: osx_arm64_cross_target_platformosx-arm64gfortran_version12.3.0
+      osx_arm64_cross_target_platformosx-64gfortran_version12.4.0macos_machinex86_64-apple-darwin13.4.0:
+        CONFIG: osx_arm64_cross_target_platformosx-64gfortran_version12.4.0macos_machinex86_64-apple-darwin13.4.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_hfc68d6ac76
-      osx_arm64_cross_target_platformosx-arm64gfortran_version13.2.0:
-        CONFIG: osx_arm64_cross_target_platformosx-arm64gfortran_version13.2.0
+      osx_arm64_cross_target_platformosx-64gfortran_version13.3.0macos_machinex86_64-apple-darwin13.4.0:
+        CONFIG: osx_arm64_cross_target_platformosx-64gfortran_version13.3.0macos_machinex86_64-apple-darwin13.4.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_hec878a7f57
+      osx_arm64_cross_target_platformosx-64gfortran_version14.1.0macos_machinex86_64-apple-darwin13.4.0:
+        CONFIG: osx_arm64_cross_target_platformosx-64gfortran_version14.1.0macos_machinex86_64-apple-darwin13.4.0
+        UPLOAD_PACKAGES: 'True'
+      osx_arm64_cross_target_platformosx-arm64gfortran_version12.4.0macos_machinearm64-apple-darwin20.0.0:
+        CONFIG: osx_arm64_cross_target_platformosx-arm64gfortran_version12.4.0macos_machinearm64-apple-darwin20.0.0
+        UPLOAD_PACKAGES: 'True'
+      osx_arm64_cross_target_platformosx-arm64gfortran_version13.3.0macos_machinearm64-apple-darwin20.0.0:
+        CONFIG: osx_arm64_cross_target_platformosx-arm64gfortran_version13.3.0macos_machinearm64-apple-darwin20.0.0
+        UPLOAD_PACKAGES: 'True'
+      osx_arm64_cross_target_platformosx-arm64gfortran_version14.1.0macos_machinearm64-apple-darwin20.0.0:
+        CONFIG: osx_arm64_cross_target_platformosx-arm64gfortran_version14.1.0macos_machinearm64-apple-darwin20.0.0
+        UPLOAD_PACKAGES: 'True'
   timeoutInMinutes: 360
+  variables: {}
 
   steps:
   # TODO: Fast finish on azure pipelines?
@@ -63,32 +68,3 @@ jobs:
       BINSTAR_TOKEN: $(BINSTAR_TOKEN)
       FEEDSTOCK_TOKEN: $(FEEDSTOCK_TOKEN)
       STAGING_BINSTAR_TOKEN: $(STAGING_BINSTAR_TOKEN)
-  - script: |
-      export CI=azure
-      export CI_RUN_ID=$(build.BuildNumber).$(system.JobAttempt)
-      export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
-      export CONDA_BLD_DIR=/Users/runner/miniforge3/conda-bld
-      export ARTIFACT_STAGING_DIR="$(Build.ArtifactStagingDirectory)"
-      # Archive everything in CONDA_BLD_DIR except environments
-      export BLD_ARTIFACT_PREFIX=conda_artifacts
-      if [[ "$AGENT_JOBSTATUS" == "Failed" ]]; then
-        # Archive the CONDA_BLD_DIR environments only when the job fails
-        export ENV_ARTIFACT_PREFIX=conda_envs
-      fi
-      ./.scripts/create_conda_build_artifacts.sh
-    displayName: Prepare conda build artifacts
-    condition: succeededOrFailed()
-
-  - task: PublishPipelineArtifact@1
-    displayName: Store conda build artifacts
-    condition: not(eq(variables.BLD_ARTIFACT_PATH, ''))
-    inputs:
-      targetPath: $(BLD_ARTIFACT_PATH)
-      artifactName: $(BLD_ARTIFACT_NAME)
-
-  - task: PublishPipelineArtifact@1
-    displayName: Store conda build environment artifacts
-    condition: not(eq(variables.ENV_ARTIFACT_PATH, ''))
-    inputs:
-      targetPath: $(ENV_ARTIFACT_PATH)
-      artifactName: $(ENV_ARTIFACT_NAME)
