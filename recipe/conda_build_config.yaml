@@ -5,9 +5,11 @@ cross_target_platform:
   - osx-64
   - osx-arm64
 gfortran_version:
-  - 13.2.0
-  - 12.3.0
+  - 14.1.0
+  - 13.3.0
+  - 12.4.0
 libgfortran_version:
+  - 5.0.0
   - 5.0.0
   - 5.0.0
 zip_keys:
