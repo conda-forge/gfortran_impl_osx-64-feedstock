@@ -1,21 +1,27 @@
-MACOSX_DEPLOYMENT_TARGET:
-- '10.9'
 c_compiler:
-- clang
+- gcc
 c_compiler_version:
-- '16'
+- '13'
+c_stdlib:
+- sysroot
+c_stdlib_version:
+- '2.17'
+cdt_name:
+- cos7
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
 cross_target_platform:
-- osx-arm64
+- osx-64
 cxx_compiler:
-- clangxx
+- gxx
 cxx_compiler_version:
-- '16'
+- '13'
+docker_image:
+- quay.io/condaforge/linux-anvil-cos7-x86_64
 gfortran_version:
-- 12.3.0
+- 12.4.0
 gmp:
 - '6'
 isl:
@@ -25,17 +31,19 @@ libgfortran_version:
 libiconv:
 - '1'
 macos_machine:
-- arm64-apple-darwin20.0.0
+- x86_64-apple-darwin13.4.0
 mpfr:
 - '4'
 target_platform:
-- osx-64
+- linux-64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
+- - c_stdlib_version
+  - cdt_name
 - - cross_target_platform
   - macos_machine
 - - gfortran_version
   - libgfortran_version
 zlib:
-- '1.2'
+- '1'
