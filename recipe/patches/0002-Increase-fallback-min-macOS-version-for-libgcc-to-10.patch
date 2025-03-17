@@ -1,4 +1,4 @@
-From f1c5707a3e9e69a79bd4df9d5daaacb7173b6366 Mon Sep 17 00:00:00 2001
+From 7f926062a18e1b520871ce958829b1c3c6ceb574 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Mos=C3=A8=20Giordano?= <mose@gnu.org>
 Date: Sat, 4 Jan 2025 01:48:23 +0100
 Subject: [PATCH 2/2] Increase fallback min macOS version for libgcc to 10.8
