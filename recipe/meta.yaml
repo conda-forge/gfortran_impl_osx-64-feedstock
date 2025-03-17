@@ -94,6 +94,7 @@ outputs:
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgcc.a
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/libemutls_w.a
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgcc_eh.a
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/libheapt_w.a
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/crtfastmath.o
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/crt3.o
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/d10-uwfef.o
