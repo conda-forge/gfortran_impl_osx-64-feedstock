@@ -1,8 +1,8 @@
-From 479cfab437c352f33ae04ac918e5ae2f4ce294b9 Mon Sep 17 00:00:00 2001
+From e05e46794f0654a8a6581aee4266e362cd31bd7e Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Thu, 1 Aug 2024 10:33:12 +1100
-Subject: [PATCH] Revert "fixincludes: Update darwin_flt_eval_method for macOS
- 14"
+Subject: [PATCH 1/2] Revert "fixincludes: Update darwin_flt_eval_method for
+ macOS 14"
 
 This reverts commit 93f803d53b5ccaabded9d7b4512b54da81c1c616.
 ---
