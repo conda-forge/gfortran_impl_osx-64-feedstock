@@ -66,9 +66,6 @@ if [[ "$host_platform" != "$build_platform" ]]; then
     # We need to compile GFORTRAN_FOR_TARGET and GCC_FOR_TARGET
     mkdir -p build_host
     pushd build_host
-    if [[ "$build_platform" == "$target_platform" ]]; then
-       extra_host_options="--with-native-system-header-dir=$CONDA_BUILD_SYSROOT/usr/include"
-    fi
     CC=$CC_FOR_BUILD CXX=$CXX_FOR_BUILD AR="$($CC_FOR_BUILD -print-prog-name=ar)" LD="$($CC_FOR_BUILD -print-prog-name=ld)" \
          RANLIB="$($CC_FOR_BUILD -print-prog-name=ranlib)" NM="$($CC_FOR_BUILD -print-prog-name=nm)"  \
          CFLAGS="$NO_WARN_CFLAGS" CXXFLAGS="$NO_WARN_CFLAGS" CPPFLAGS="$NO_WARN_CFLAGS" \
@@ -87,7 +84,7 @@ if [[ "$host_platform" != "$build_platform" ]]; then
        --with-mpfr=${BUILD_PREFIX} \
        --with-mpc=${BUILD_PREFIX} \
        --with-isl=${BUILD_PREFIX} \
-       $extra_host_options
+       --with-sysroot=$CONDA_BUILD_SYSROOT
 
     mkdir -p gcc/include-fixed
     cp ../gcc/gcc-ar.cc gcc/gcc-nm.cc || cp ../gcc/gcc-ar.c gcc/gcc-nm.c
@@ -142,10 +139,6 @@ if [[ "$host_platform" == osx* ]]; then
     export CPPFLAGS="$CPPFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
 fi
 
-if [[ "$build_platform" == "$host_platform" ]]; then
-    extra_configure_options="$extra_configure_options --with-native-system-header-dir=$CONDA_BUILD_SYSROOT/usr/include"
-fi
-
 ../configure \
     --prefix=${PREFIX} \
     --build=${BUILD} \
@@ -162,7 +155,7 @@ fi
     --with-mpc=${PREFIX} \
     --with-isl=${PREFIX} \
     --enable-darwin-at-rpath \
-    ${extra_configure_options}
+    --with-sysroot=$CONDA_BUILD_SYSROOT
 
 mkdir -p gcc/include-fixed
 cp ../gcc/gcc-ar.cc gcc/gcc-nm.cc || cp ../gcc/gcc-ar.c gcc/gcc-nm.c
