@@ -29,7 +29,7 @@ source:
     # this depends on the exact content of `math.h` in the SDK; as long as
     # we are building with an SDK<14.0, we need to revert the following commit:
     # https://github.com/gcc-mirror/gcc/commit/93f803d53b5ccaabded9d7b4512b54da81c1c616
-    - patches/0001-{{ gfortran_version }}-Revert-fixincludes-Update-darwin_flt_eval_met.patch
+    # - patches/0001-{{ gfortran_version }}-Revert-fixincludes-Update-darwin_flt_eval_met.patch
     # from https://github.com/JuliaPackaging/Yggdrasil/blob/master/0_RootFS/GCCBootstrap%4014/bundled/patches/gcc/gcc1420-Increase-fallback-min-macOS-version-for-libgcc-to-10.8.patch
     - patches/0002-Increase-fallback-min-macOS-version-for-libgcc-to-10.patch   # [gfortran_version == "14.2.0" and cross_target_platform == "osx-64"]
 
