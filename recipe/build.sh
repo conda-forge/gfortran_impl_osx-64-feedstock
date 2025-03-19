@@ -179,8 +179,7 @@ if [[ "$host_platform" == "$target_platform" ]]; then
     sed -i.bak "s/USE_FORTRAN_TRUE=.*/USE_FORTRAN_TRUE=/g" $SRC_DIR/libgomp/configure
   fi
 
-  make -j"${CPU_COUNT}" || (cat $TARGET/libquadmath/*.log && false)
-  cat $TARGET/libquadmath/*.log
+  make -j"${CPU_COUNT}"
   make install-strip -j${CPU_COUNT}
   rm $PREFIX/lib/libgomp.dylib
   rm $PREFIX/lib/libgomp.1.dylib
