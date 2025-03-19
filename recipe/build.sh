@@ -82,8 +82,6 @@ if [[ "$host_platform" != "$build_platform" ]]; then
        --with-sysroot=$CONDA_BUILD_SYSROOT
 
     mkdir -p gcc/include-fixed
-    cp ../gcc/gcc-ar.cc gcc/gcc-nm.cc || cp ../gcc/gcc-ar.c gcc/gcc-nm.c
-    cp ../gcc/gcc-ar.cc gcc/gcc-ranlib.cc || cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
     cp ../fixincludes/README-fixinc gcc/include-fixed/README
     ln -sf $PWD/gcc/xgcc $PWD/gcc/gcc-cross
     ln -sf $PWD/gcc/gfortran $PWD/gcc/gfortran-cross
@@ -152,8 +150,6 @@ fi
     --with-sysroot=$CONDA_BUILD_SYSROOT
 
 mkdir -p gcc/include-fixed
-cp ../gcc/gcc-ar.cc gcc/gcc-nm.cc || cp ../gcc/gcc-ar.c gcc/gcc-nm.c
-cp ../gcc/gcc-ar.cc gcc/gcc-ranlib.cc || cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
 cp ../fixincludes/README-fixinc gcc/include-fixed/README
 ln -sf $PWD/gcc/xgcc $PWD/gcc/gcc-cross
 ln -sf $PWD/gcc/gfortran $PWD/gcc/gfortran-cross
