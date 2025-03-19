@@ -43,9 +43,6 @@ export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprec
 
 export enable_darwin_at_rpath=yes
 
-sed -i.bak 's/cp xgcc/echo cp xgcc/g' gcc/Makefile.in
-sed -i.bak 's/cp gfortran/echo cp gfortran/g' gcc/fortran/Make-lang.in
-
 # conda binary prefix rewriting fails if the variables are not volatile
 sed -i.bak 's/static const char \*const standard_/static const char * volatile standard_/g' gcc/gcc.c*
 
@@ -72,10 +69,6 @@ if [[ "$host_platform" != "$build_platform" ]]; then
        --with-mpc=${BUILD_PREFIX} \
        --with-isl=${BUILD_PREFIX} \
        --with-sysroot=$CONDA_BUILD_SYSROOT
-
-    mkdir -p gcc
-    ln -sf $PWD/gcc/xgcc $PWD/gcc/gcc-cross
-    ln -sf $PWD/gcc/gfortran $PWD/gcc/gfortran-cross
 
     echo "Building a compiler that runs on ${BUILD} and targets ${TARGET}"
     make all-gcc -j${CPU_COUNT}
@@ -139,10 +132,6 @@ fi
     --with-isl=${PREFIX} \
     --enable-darwin-at-rpath \
     --with-sysroot=$CONDA_BUILD_SYSROOT
-
-mkdir -p gcc
-ln -sf $PWD/gcc/xgcc $PWD/gcc/gcc-cross
-ln -sf $PWD/gcc/gfortran $PWD/gcc/gfortran-cross
 
 echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
 if [[ "$host_platform" == "$target_platform" ]]; then
