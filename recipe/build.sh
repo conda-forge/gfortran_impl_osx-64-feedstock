@@ -40,8 +40,6 @@ export target_platform=$cross_target_platform
 export TARGET=${macos_machine}
 # clang emits a ton of warnings
 export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprecated -Wno-mismatched-tags -Wno-unused-command-line-argument -Wno-ignored-attributes"
-# Remove C++ flags as libcody expects exactly C++11
-export CXXFLAGS="$(echo $CXXFLAGS | sed s/-std=c++[0-9]*/-std=c++11/g)"
 
 export enable_darwin_at_rpath=yes
 
