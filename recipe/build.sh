@@ -126,9 +126,9 @@ if [[ "$target_platform" == osx* ]]; then
     fi
     # $PWD/$TARGET/libgcc is needed because the previous bootstrap compiler we built needs libemutls_w.a
     export LDFLAGS_FOR_TARGET="$LDFLAGS_FOR_TARGET -L$PWD/$TARGET/libgcc -L$CONDA_BUILD_SYSROOT/usr/lib"
-    export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET -O3 $LDFLAGS_FOR_TARGET"
-    export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET -O3 $LDFLAGS_FOR_TARGET"
-    export CPPFLAGS_FOR_TARGET="$CPPFLAGS_FOR_TARGET -O3 $LDFLAGS_FOR_TARGET"
+    export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET $LDFLAGS_FOR_TARGET"
+    export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET $LDFLAGS_FOR_TARGET"
+    export CPPFLAGS_FOR_TARGET="$CPPFLAGS_FOR_TARGET $LDFLAGS_FOR_TARGET"
 fi
 
 if [[ "$host_platform" == osx* ]]; then
