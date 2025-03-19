@@ -1,5 +1,5 @@
 {% set chost = macos_machine %}
-{% set build_number = 3 %}
+{% set build_number = 0 %}
 
 {% if gfortran_version is undefined %}
 {% set gfortran_version = "11.3.0" %}
@@ -10,29 +10,23 @@
 {% set libgfortran_next_major = (libgfortran_version|int +1)|string %}
 {% set max_libgfortran_version = libgfortran_next_major + ".0.0.a0" %}
 
-{% set gfortran_major_version = gfortran_version.split('.')[0]|int %}
-
 package:
   name: gfortran_impl_{{ cross_target_platform }}
   version: {{ gfortran_version }}
 
 source:
   url: https://ftp.gnu.org/gnu/gcc/gcc-{{ gfortran_version }}/gcc-{{ gfortran_version }}.tar.gz
-  sha256: 8cb4be3796651976f94b9356fa08d833524f62420d6292c5033a9a26af315078  # [gfortran_version == "13.2.0"]
-  sha256: 11275aa7bb34cd8ab101d01b341015499f8d9466342a2574ece93f954d92273b  # [gfortran_version == "12.3.0"]
-  sha256: undefined                                         # [gfortran_version not in ("13.2.0", "12.3.0")]
+  sha256: 7d376d445f93126dc545e2c0086d0f647c3094aae081cdb78f42ce2bc25e7293  # [gfortran_version == "14.2.0"]
+  sha256: 3a2b10cab86e32358fdac871546d57e2700e9bdb5875ef33fff5b601265b9e32  # [gfortran_version == "13.3.0"]
+  sha256: 5a30de2be740062bb3ddd3fd13c9b1bb4584d8f85616d33f23a713439d714148  # [gfortran_version == "12.4.0"]
+  sha256: undefined                               # [gfortran_version not in ("14.2.0", "13.3.0", "12.4.0")]
   patches:
-    {% if gfortran_major_version == 12 %}
-    # Following patch downloaded from
-    # https://raw.githubusercontent.com/Homebrew/formula-patches/f1188b90d610e2ed170b22512ff7435ba5c891e2/gcc/gcc-12.3.0.diff
-    # This was then edited with `s/-Wc,-nodefaultrpaths/-nodefaultrpaths`.
-    - patches/gcc-12.3.0.diff                   # [cross_target_platform == "osx-arm64"]
-    {% endif %}
-    {% if gfortran_major_version == 13 %}
-    # https://raw.githubusercontent.com/Homebrew/formula-patches/3c5cbc8e9cf444a1967786af48e430588e1eb481/gcc/gcc-13.2.0.diff
-    # processed as for v12: `s/-Wc,-nodefaultrpaths/-nodefaultrpaths/g`
-    - patches/gcc-13.2.0.diff                   # [cross_target_platform == "osx-arm64"]
-    {% endif %}
+    # all patches from https://github.com/Homebrew/formula-patches/tree/f30c309442a60cfb926e780eae5d70571f8ab2cb/gcc
+    # and edited with `s/-Wc,-nodefaultrpaths/-nodefaultrpaths`.
+    # in case of several patches per version, use newest one
+    - patches/gcc-{{ gfortran_version }}.diff   # [cross_target_platform == "osx-arm64"]
+    # from https://github.com/JuliaPackaging/Yggdrasil/blob/master/0_RootFS/GCCBootstrap%4014/bundled/patches/gcc/gcc1420-Increase-fallback-min-macOS-version-for-libgcc-to-10.8.patch
+    - patches/0002-Increase-fallback-min-macOS-version-for-libgcc-to-10.patch   # [gfortran_version == "14.2.0" and cross_target_platform == "osx-64"]
 
 build:
   number: {{ build_number }}
@@ -41,6 +35,7 @@ build:
 
 requirements:
   build:
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - make
@@ -94,6 +89,7 @@ outputs:
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgcc.a
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/libemutls_w.a
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/libgcc_eh.a
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/libheapt_w.a
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/crtfastmath.o
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/crt3.o
       - lib/gcc/{{ chost }}/{{ gfortran_version }}/d10-uwfef.o
@@ -123,6 +119,7 @@ outputs:
       skip: True  # [win]
     requirements:
       build:
+        - {{ stdlib('c') }}
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - make

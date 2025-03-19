@@ -1,9 +1,15 @@
 MACOSX_DEPLOYMENT_TARGET:
-- '10.9'
+- '11.0'
+MACOSX_SDK_VERSION:
+- '14.5'
 c_compiler:
 - clang
 c_compiler_version:
-- '16'
+- '17'
+c_stdlib:
+- macosx_deployment_target
+c_stdlib_version:
+- '11.0'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -13,9 +19,9 @@ cross_target_platform:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '16'
+- '17'
 gfortran_version:
-- 12.3.0
+- 13.3.0
 gmp:
 - '6'
 isl:
@@ -29,7 +35,7 @@ macos_machine:
 mpfr:
 - '4'
 target_platform:
-- osx-64
+- osx-arm64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
@@ -38,4 +44,4 @@ zip_keys:
 - - gfortran_version
   - libgfortran_version
 zlib:
-- '1.2'
+- '1'
