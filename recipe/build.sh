@@ -102,9 +102,9 @@ fi
 
 if [[ "$host_platform" == osx* ]]; then
     export LDFLAGS="$LDFLAGS -L$CONDA_BUILD_SYSROOT/usr/lib"
-    export CFLAGS="$CFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
-    export CXXFLAGS="$CXXFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
-    export CPPFLAGS="$CPPFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
+    export CFLAGS="$CFLAGS $NO_WARN_CFLAGS"
+    export CXXFLAGS="$CXXFLAGS $NO_WARN_CFLAGS"
+    export CPPFLAGS="$CPPFLAGS $NO_WARN_CFLAGS"
 fi
 
 ../configure \
