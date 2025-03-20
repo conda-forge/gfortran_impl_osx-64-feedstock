@@ -33,11 +33,6 @@ start_spinner
 
 set -x
 
-if [[ -f "libcody/build-aux/config.sub" ]]; then
-  rm libcody/build-aux/config.sub
-  cp config.sub libcody/build-aux/config.sub
-fi
-
 # Undo conda-build madness
 export host_platform=$target_platform
 export target_platform=$cross_target_platform
@@ -45,19 +40,8 @@ export target_platform=$cross_target_platform
 export TARGET=${macos_machine}
 # clang emits a ton of warnings
 export NO_WARN_CFLAGS="-Wno-array-bounds -Wno-unknown-warning-option -Wno-deprecated -Wno-mismatched-tags -Wno-unused-command-line-argument -Wno-ignored-attributes"
-# Remove C++ flags as libcody expects exactly C++11
-export CXXFLAGS="$(echo $CXXFLAGS | sed s/-std=c++[0-9]*/-std=c++11/g)"
 
 export enable_darwin_at_rpath=yes
-
-sed -i.bak 's/cp xgcc/echo cp xgcc/g' gcc/Makefile.in
-sed -i.bak 's/cp gfortran/echo cp gfortran/g' gcc/fortran/Make-lang.in
-# GCC 13+
-sed -i.bak 's@rm -f include-fixed/README;@@g' gcc/Makefile.in
-# GCC <=12
-sed -i.bak 's@rm -f include-fixed/README@@g' gcc/Makefile.in
-sed -i.bak 's@rm -rf include-fixed; mkdir include-fixed@echo rm -rf include-fixed; echo mkdir include-fixed@g' gcc/Makefile.in
-sed -i.bak 's@cp $(srcdir)/../fixincludes/README-fixinc@pwd; ls -alh include-fixed; echo cp $(srcdir)/../fixincludes/README-fixinc@g' gcc/Makefile.in
 
 # conda binary prefix rewriting fails if the variables are not volatile
 sed -i.bak 's/static const char \*const standard_/static const char * volatile standard_/g' gcc/gcc.c*
@@ -86,13 +70,6 @@ if [[ "$host_platform" != "$build_platform" ]]; then
        --with-isl=${BUILD_PREFIX} \
        --with-sysroot=$CONDA_BUILD_SYSROOT
 
-    mkdir -p gcc/include-fixed
-    cp ../gcc/gcc-ar.cc gcc/gcc-nm.cc || cp ../gcc/gcc-ar.c gcc/gcc-nm.c
-    cp ../gcc/gcc-ar.cc gcc/gcc-ranlib.cc || cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
-    cp ../fixincludes/README-fixinc gcc/include-fixed/README
-    ln -sf $PWD/gcc/xgcc $PWD/gcc/gcc-cross
-    ln -sf $PWD/gcc/gfortran $PWD/gcc/gfortran-cross
-
     echo "Building a compiler that runs on ${BUILD} and targets ${TARGET}"
     make all-gcc -j${CPU_COUNT}
     make install-gcc -j${CPU_COUNT}
@@ -109,14 +86,6 @@ fi
 mkdir -p build_conda
 cd build_conda
 
-# libatomic is having trouble with pthreads and stack protector checks
-# for gcc 11 on osx-arm64
-if [[ "$host_platform" != "$build_platform" ]]; then
-  export CFLAGS=${CFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
-  export CXXFLAGS=${CXXFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
-  export CPPFLAGS=${CPPFLAGS//"-fstack-protector-strong"/"-fno-stack-protector"}
-fi
-
 if [[ "$target_platform" == osx* ]]; then
     if [[ "$target_platform" == "$host_platform" ]]; then
         export LDFLAGS_FOR_TARGET="$LDFLAGS_FOR_TARGET $LDFLAGS"
@@ -126,16 +95,16 @@ if [[ "$target_platform" == osx* ]]; then
     fi
     # $PWD/$TARGET/libgcc is needed because the previous bootstrap compiler we built needs libemutls_w.a
     export LDFLAGS_FOR_TARGET="$LDFLAGS_FOR_TARGET -L$PWD/$TARGET/libgcc -L$CONDA_BUILD_SYSROOT/usr/lib"
-    export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET -O3 $LDFLAGS_FOR_TARGET"
-    export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET -O3 $LDFLAGS_FOR_TARGET"
-    export CPPFLAGS_FOR_TARGET="$CPPFLAGS_FOR_TARGET -O3 $LDFLAGS_FOR_TARGET"
+    export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET $LDFLAGS_FOR_TARGET"
+    export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET $LDFLAGS_FOR_TARGET"
+    export CPPFLAGS_FOR_TARGET="$CPPFLAGS_FOR_TARGET $LDFLAGS_FOR_TARGET"
 fi
 
 if [[ "$host_platform" == osx* ]]; then
     export LDFLAGS="$LDFLAGS -L$CONDA_BUILD_SYSROOT/usr/lib"
-    export CFLAGS="$CFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
-    export CXXFLAGS="$CXXFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
-    export CPPFLAGS="$CPPFLAGS -isysroot $CONDA_BUILD_SYSROOT $NO_WARN_CFLAGS"
+    export CFLAGS="$CFLAGS $NO_WARN_CFLAGS"
+    export CXXFLAGS="$CXXFLAGS $NO_WARN_CFLAGS"
+    export CPPFLAGS="$CPPFLAGS $NO_WARN_CFLAGS"
 fi
 
 ../configure \
@@ -156,13 +125,6 @@ fi
     --enable-darwin-at-rpath \
     --with-sysroot=$CONDA_BUILD_SYSROOT
 
-mkdir -p gcc/include-fixed
-cp ../gcc/gcc-ar.cc gcc/gcc-nm.cc || cp ../gcc/gcc-ar.c gcc/gcc-nm.c
-cp ../gcc/gcc-ar.cc gcc/gcc-ranlib.cc || cp ../gcc/gcc-ar.c gcc/gcc-ranlib.c
-cp ../fixincludes/README-fixinc gcc/include-fixed/README
-ln -sf $PWD/gcc/xgcc $PWD/gcc/gcc-cross
-ln -sf $PWD/gcc/gfortran $PWD/gcc/gfortran-cross
-
 echo "Building a compiler that runs on ${HOST} and targets ${TARGET}"
 if [[ "$host_platform" == "$target_platform" ]]; then
   # Build if the compiler is a cross-native/native compiler
@@ -179,8 +141,7 @@ if [[ "$host_platform" == "$target_platform" ]]; then
     sed -i.bak "s/USE_FORTRAN_TRUE=.*/USE_FORTRAN_TRUE=/g" $SRC_DIR/libgomp/configure
   fi
 
-  make -j"${CPU_COUNT}" || (cat $TARGET/libquadmath/*.log && false)
-  cat $TARGET/libquadmath/*.log
+  make -j"${CPU_COUNT}"
   make install-strip -j${CPU_COUNT}
   rm $PREFIX/lib/libgomp.dylib
   rm $PREFIX/lib/libgomp.1.dylib
