@@ -26,8 +26,6 @@ gmp:
 - '6'
 isl:
 - '0.26'
-libgfortran_version:
-- 5.0.0
 libiconv:
 - '1'
 macos_machine:
@@ -41,7 +39,5 @@ zip_keys:
   - cxx_compiler_version
 - - cross_target_platform
   - macos_machine
-- - gfortran_version
-  - libgfortran_version
 zlib:
 - '1'
