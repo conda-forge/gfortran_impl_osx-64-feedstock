@@ -1,8 +1,9 @@
 {% set chost = macos_machine %}
-{# only reset build_number to 0 if _all_ output versions are increased as well #}
-{% set build_number = 2 %}
-{# use build offset to keep our builds newer than old libgfortran builds from another feedstock #}
+# only reset build_number to 0 if _all_ output versions are increased as well
+{% set build_number = 3 %}
 {% set build_offset = 100 %}
+# use build offset to keep our builds newer than old libgfortran builds from another feedstock
+{% set final_build_number = build_number + build_offset %}
 
 {% if gfortran_version is undefined %}
 {% set gfortran_version = "11.3.0" %}
@@ -32,7 +33,7 @@ source:
     - patches/0002-Increase-fallback-min-macOS-version-for-libgcc-to-10.patch   # [gfortran_version == "14.2.0" and cross_target_platform == "osx-64"]
 
 build:
-  number: {{ build_number + build_offset }}
+  number: {{ final_build_number }}
   # we don't need to cross-compile to osx from anything but osx or linux-64
   skip: true  # [not (osx or linux64)]
 
@@ -182,7 +183,7 @@ outputs:
     target: {{ cross_target_platform }}
     build:
       skip: True  # [target_platform != cross_target_platform]
-      string: {{ gfortran_version.replace(".", "_") }}_h{{ PKG_HASH }}_{{ build_number }}
+      string: {{ gfortran_version.replace(".", "_") }}_h{{ PKG_HASH }}_{{ final_build_number }}
     requirements:
       run:
         - {{ pin_subpackage("libgfortran" ~ libgfortran_major_version, exact=True) }}
@@ -216,7 +217,7 @@ outputs:
       run:
         - llvm-openmp >=8.0.0
       run_constrained:
-        - libgfortran {{ libgfortran_version }} {{ gfortran_version.replace(".", "_") }}_*_{{ build_number }}
+        - libgfortran {{ libgfortran_version }} {{ gfortran_version.replace(".", "_") }}_*_{{ final_build_number }}
 
     test:
       commands:
