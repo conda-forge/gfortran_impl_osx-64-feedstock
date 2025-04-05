@@ -173,7 +173,7 @@ outputs:
 
 
   - name: libgfortran
-    version: {{ version }}
+    version: {{ gfortran_version }}
     target: {{ cross_target_platform }}
     build:
       skip: True  # [target_platform != cross_target_platform]
