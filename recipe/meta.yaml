@@ -1,8 +1,8 @@
 {% set chost = macos_machine %}
 {# only reset build_number to 0 if _all_ output versions are increased as well #}
-{% set build_number = 2 %}
+{% set build_number = 3 %}
 {# use build offset to keep our builds newer than old libgfortran builds from another feedstock #}
-{% set build_offset = 100 %}
+{% set build_number = build_number + 100 %}
 
 {% if gfortran_version is undefined %}
 {% set gfortran_version = "11.3.0" %}
@@ -32,7 +32,7 @@ source:
     - patches/0002-Increase-fallback-min-macOS-version-for-libgcc-to-10.patch   # [gfortran_version == "14.2.0" and cross_target_platform == "osx-64"]
 
 build:
-  number: {{ build_number + build_offset }}
+  number: {{ build_number }}
   # we don't need to cross-compile to osx from anything but osx or linux-64
   skip: true  # [not (osx or linux64)]
 
