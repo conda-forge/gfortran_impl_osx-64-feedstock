@@ -6,6 +6,7 @@
 {% endif %}
 
 # only reset build_number to 0 if _all_ output versions are increased as well
+# otherwise increment and keep above 100
 {% set build_number = 104 %}
 
 package:
