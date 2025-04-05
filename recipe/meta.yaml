@@ -5,7 +5,7 @@
 {% set libgfortran_soversion = "5" %}
 {% endif %}
 
-{# only reset build_number to 0 if _all_ output versions are increased as well #}
+# only reset build_number to 0 if _all_ output versions are increased as well
 {% set build_number = 104 %}
 
 package:
