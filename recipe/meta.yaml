@@ -177,7 +177,7 @@ outputs:
     target: {{ cross_target_platform }}
     build:
       skip: True  # [target_platform != cross_target_platform]
-      string: {{ gfortran_version.replace(".", "_") }}_h{{ PKG_HASH }}_{{ final_build_number }}
+      string: {{ gfortran_version.replace(".", "_") }}_h{{ PKG_HASH }}_{{ build_number }}
     requirements:
       run:
         - {{ pin_subpackage("libgfortran" ~ libgfortran_soversion, exact=True) }}
