@@ -1,8 +1,9 @@
 {% set chost = macos_machine %}
-{# only reset build_number to 0 if _all_ output versions are increased as well #}
-{% set build_number = 3 %}
-{# use build offset to keep our builds newer than old libgfortran builds from another feedstock #}
-{% set build_number = build_number + 100 %}
+# only reset base_build_number to 0 if _all_ output versions are increased as well
+{% set base_build_number = 3 %}
+{% set build_offset = 100 %}
+# use build offset to keep our builds newer than old libgfortran builds from another feedstock
+{% set build_number = base_build_number + build_offset %}
 
 {% if gfortran_version is undefined %}
 {% set gfortran_version = "11.3.0" %}
