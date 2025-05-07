@@ -1,7 +1,7 @@
 {% set chost = macos_machine %}
 
 {% if gfortran_version is undefined %}
-{% set gfortran_version = "11.3.0" %}
+{% set gfortran_version = "15.1.0" %}
 {% set libgfortran_soversion = "5" %}
 {% endif %}
 
@@ -14,10 +14,10 @@ package:
 
 source:
   url: https://ftp.gnu.org/gnu/gcc/gcc-{{ gfortran_version }}/gcc-{{ gfortran_version }}.tar.gz
+  sha256: 51b9919ea69c980d7a381db95d4be27edf73b21254eb13d752a08003b4d013b1  # [gfortran_version == "15.1.0"]
   sha256: 7d376d445f93126dc545e2c0086d0f647c3094aae081cdb78f42ce2bc25e7293  # [gfortran_version == "14.2.0"]
   sha256: 3a2b10cab86e32358fdac871546d57e2700e9bdb5875ef33fff5b601265b9e32  # [gfortran_version == "13.3.0"]
-  sha256: 5a30de2be740062bb3ddd3fd13c9b1bb4584d8f85616d33f23a713439d714148  # [gfortran_version == "12.4.0"]
-  sha256: undefined                               # [gfortran_version not in ("14.2.0", "13.3.0", "12.4.0")]
+  sha256: undefined                               # [gfortran_version not in ("15.1.0", "14.2.0", "13.3.0")]
   patches:
     # all patches from https://github.com/Homebrew/formula-patches/tree/f30c309442a60cfb926e780eae5d70571f8ab2cb/gcc
     # and edited with `s/-Wc,-nodefaultrpaths/-nodefaultrpaths`.
