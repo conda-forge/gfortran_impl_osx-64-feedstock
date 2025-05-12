@@ -24,7 +24,7 @@ source:
     # in case of several patches per version, use newest one
     - patches/gcc-{{ gfortran_version }}.diff   # [cross_target_platform == "osx-arm64"]
     # from https://github.com/JuliaPackaging/Yggdrasil/blob/master/0_RootFS/GCCBootstrap%4014/bundled/patches/gcc/gcc1420-Increase-fallback-min-macOS-version-for-libgcc-to-10.8.patch
-    - patches/0002-Increase-fallback-min-macOS-version-for-libgcc-to-10.patch   # [gfortran_version == "14.2.0" and cross_target_platform == "osx-64"]
+    - patches/0001-GCC-{{ gfortran_maj_ver }}-Increase-fallback-min-macOS-version-for-libgc.patch   # [cross_target_platform == "osx-64" and gfortran_maj_ver != 13]
 
 build:
   number: {{ build_number }}
