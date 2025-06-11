@@ -19,7 +19,7 @@ source:
   sha256: 3a2b10cab86e32358fdac871546d57e2700e9bdb5875ef33fff5b601265b9e32  # [gfortran_version == "13.3.0"]
   sha256: undefined                         # [gfortran_version not in ("15.1.0", "14.3.0", "13.3.0")]
   patches:
-    # all patches from https://github.com/Homebrew/formula-patches/tree/a25079204c1cb3d78ba9dd7dd22b8aecce7ce264/gcc
+    # all patches from https://github.com/Homebrew/formula-patches/tree/698885df7f624d0ce15bceb79a4d9760a473b502/gcc
     # and edited with `s/-Wc,-nodefaultrpaths/-nodefaultrpaths`.
     # in case of several patches per version, use newest one
     - patches/gcc-{{ gfortran_version }}.diff   # [cross_target_platform == "osx-arm64"]
