@@ -23,7 +23,7 @@ cxx_compiler_version:
 gfortran_maj_ver:
 - '13'
 gfortran_version:
-- 13.3.0
+- 13.4.0
 gmp:
 - '6'
 isl:
