@@ -6,7 +6,7 @@
 {% endif %}
 
 # only reset build_number to 0 if _all_ output versions are increased as well
-{% set build_number = 105 %}
+{% set build_number = 0 %}
 
 package:
   name: gfortran_impl_{{ cross_target_platform }}
