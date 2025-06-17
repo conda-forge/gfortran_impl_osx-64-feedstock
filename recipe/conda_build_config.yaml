@@ -10,15 +10,20 @@ cross_target_platform:
   - osx-64
   - osx-arm64
 gfortran_version:
-  - 14.2.0
-  - 13.3.0
-  - 12.4.0
+  - 15.1.0
+  - 14.3.0
+  - 13.4.0
+gfortran_maj_ver:
+  - 15
+  - 14
+  - 13
 libgfortran_soversion:
   - 5
   - 5
   - 5
 zip_keys:
   - - gfortran_version
+    - gfortran_maj_ver
     - libgfortran_soversion
   - - cross_target_platform
     - macos_machine

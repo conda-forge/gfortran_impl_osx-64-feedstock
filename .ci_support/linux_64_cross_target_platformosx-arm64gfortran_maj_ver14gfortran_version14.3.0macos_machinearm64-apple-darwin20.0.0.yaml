@@ -20,8 +20,10 @@ cxx_compiler_version:
 - '13'
 docker_image:
 - quay.io/condaforge/linux-anvil-x86_64:alma9
+gfortran_maj_ver:
+- '14'
 gfortran_version:
-- 14.2.0
+- 14.3.0
 gmp:
 - '6'
 isl:
@@ -39,5 +41,7 @@ zip_keys:
   - cxx_compiler_version
 - - cross_target_platform
   - macos_machine
+- - gfortran_version
+  - gfortran_maj_ver
 zlib:
 - '1'

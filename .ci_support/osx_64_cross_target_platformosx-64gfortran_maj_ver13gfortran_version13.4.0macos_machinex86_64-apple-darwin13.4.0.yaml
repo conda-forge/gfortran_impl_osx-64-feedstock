@@ -20,8 +20,10 @@ cxx_compiler:
 - clangxx
 cxx_compiler_version:
 - '17'
+gfortran_maj_ver:
+- '13'
 gfortran_version:
-- 14.2.0
+- 13.4.0
 gmp:
 - '6'
 isl:
@@ -42,6 +44,7 @@ zip_keys:
 - - cross_target_platform
   - macos_machine
 - - gfortran_version
+  - gfortran_maj_ver
   - libgfortran_soversion
 zlib:
 - '1'

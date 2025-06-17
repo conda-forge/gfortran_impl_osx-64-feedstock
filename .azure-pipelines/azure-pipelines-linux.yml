@@ -8,36 +8,36 @@ jobs:
     vmImage: ubuntu-latest
   strategy:
     matrix:
-      linux_64_cross_target_platformosx-64gfortran_version12.4.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: linux_64_cross_target_platformosx-64gfortran_version12.4.0macos_machinex86_64-apple-darwin13.4.0
+      linux_64_cross_target_platformosx-64gfortran_maj_ver13gfortran_version13.4.0macos_machinex86_64-apple-darwin13.4.0:
+        CONFIG: linux_64_cross_target_platformosx-64gfortran_maj_ver13gfortran_version13.4.0macos_machinex86_64-apple-darwin13.4.0
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-        SHORT_CONFIG: linux_64_cross_target_platformosx-6_h968d48d18d
-      linux_64_cross_target_platformosx-64gfortran_version13.3.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: linux_64_cross_target_platformosx-64gfortran_version13.3.0macos_machinex86_64-apple-darwin13.4.0
+        SHORT_CONFIG: linux_64_cross_target_platformosx-6_h8ed321c23b
+      linux_64_cross_target_platformosx-64gfortran_maj_ver14gfortran_version14.3.0macos_machinex86_64-apple-darwin13.4.0:
+        CONFIG: linux_64_cross_target_platformosx-64gfortran_maj_ver14gfortran_version14.3.0macos_machinex86_64-apple-darwin13.4.0
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-        SHORT_CONFIG: linux_64_cross_target_platformosx-6_hc25b3c29bb
-      linux_64_cross_target_platformosx-64gfortran_version14.2.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: linux_64_cross_target_platformosx-64gfortran_version14.2.0macos_machinex86_64-apple-darwin13.4.0
+        SHORT_CONFIG: linux_64_cross_target_platformosx-6_h87498acf83
+      linux_64_cross_target_platformosx-64gfortran_maj_ver15gfortran_version15.1.0macos_machinex86_64-apple-darwin13.4.0:
+        CONFIG: linux_64_cross_target_platformosx-64gfortran_maj_ver15gfortran_version15.1.0macos_machinex86_64-apple-darwin13.4.0
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-        SHORT_CONFIG: linux_64_cross_target_platformosx-6_h9c4a127e91
-      linux_64_cross_target_platformosx-arm64gfortran_version12.4.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: linux_64_cross_target_platformosx-arm64gfortran_version12.4.0macos_machinearm64-apple-darwin20.0.0
+        SHORT_CONFIG: linux_64_cross_target_platformosx-6_ha286a5713f
+      linux_64_cross_target_platformosx-arm64gfortran_maj_ver13gfortran_version13.4.0macos_machinearm64-apple-darwin20.0.0:
+        CONFIG: linux_64_cross_target_platformosx-arm64gfortran_maj_ver13gfortran_version13.4.0macos_machinearm64-apple-darwin20.0.0
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-        SHORT_CONFIG: linux_64_cross_target_platformosx-a_h10511cd163
-      linux_64_cross_target_platformosx-arm64gfortran_version13.3.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: linux_64_cross_target_platformosx-arm64gfortran_version13.3.0macos_machinearm64-apple-darwin20.0.0
+        SHORT_CONFIG: linux_64_cross_target_platformosx-a_h93c9c47d18
+      linux_64_cross_target_platformosx-arm64gfortran_maj_ver14gfortran_version14.3.0macos_machinearm64-apple-darwin20.0.0:
+        CONFIG: linux_64_cross_target_platformosx-arm64gfortran_maj_ver14gfortran_version14.3.0macos_machinearm64-apple-darwin20.0.0
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-        SHORT_CONFIG: linux_64_cross_target_platformosx-a_ha9327e188f
-      linux_64_cross_target_platformosx-arm64gfortran_version14.2.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: linux_64_cross_target_platformosx-arm64gfortran_version14.2.0macos_machinearm64-apple-darwin20.0.0
+        SHORT_CONFIG: linux_64_cross_target_platformosx-a_h9de2a8bf98
+      linux_64_cross_target_platformosx-arm64gfortran_maj_ver15gfortran_version15.1.0macos_machinearm64-apple-darwin20.0.0:
+        CONFIG: linux_64_cross_target_platformosx-arm64gfortran_maj_ver15gfortran_version15.1.0macos_machinearm64-apple-darwin20.0.0
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-        SHORT_CONFIG: linux_64_cross_target_platformosx-a_h149d1f3272
+        SHORT_CONFIG: linux_64_cross_target_platformosx-a_h1a5307665d
   timeoutInMinutes: 360
   variables: {}
 

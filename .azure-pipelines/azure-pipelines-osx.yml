@@ -8,54 +8,54 @@ jobs:
     vmImage: macOS-13
   strategy:
     matrix:
-      osx_64_cross_target_platformosx-64gfortran_version12.4.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: osx_64_cross_target_platformosx-64gfortran_version12.4.0macos_machinex86_64-apple-darwin13.4.0
+      osx_64_cross_target_platformosx-64gfortran_maj_ver13gfortran_version13.4.0macos_machinex86_64-apple-darwin13.4.0:
+        CONFIG: osx_64_cross_target_platformosx-64gfortran_maj_ver13gfortran_version13.4.0macos_machinex86_64-apple-darwin13.4.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_64_cross_target_platformosx-64g_h9404691dc6
-      osx_64_cross_target_platformosx-64gfortran_version13.3.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: osx_64_cross_target_platformosx-64gfortran_version13.3.0macos_machinex86_64-apple-darwin13.4.0
+        SHORT_CONFIG: osx_64_cross_target_platformosx-64g_hda726a4271
+      osx_64_cross_target_platformosx-64gfortran_maj_ver14gfortran_version14.3.0macos_machinex86_64-apple-darwin13.4.0:
+        CONFIG: osx_64_cross_target_platformosx-64gfortran_maj_ver14gfortran_version14.3.0macos_machinex86_64-apple-darwin13.4.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_64_cross_target_platformosx-64g_h36df92bdec
-      osx_64_cross_target_platformosx-64gfortran_version14.2.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: osx_64_cross_target_platformosx-64gfortran_version14.2.0macos_machinex86_64-apple-darwin13.4.0
+        SHORT_CONFIG: osx_64_cross_target_platformosx-64g_hc4edb556ba
+      osx_64_cross_target_platformosx-64gfortran_maj_ver15gfortran_version15.1.0macos_machinex86_64-apple-darwin13.4.0:
+        CONFIG: osx_64_cross_target_platformosx-64gfortran_maj_ver15gfortran_version15.1.0macos_machinex86_64-apple-darwin13.4.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_64_cross_target_platformosx-64g_h2337db073c
-      osx_64_cross_target_platformosx-arm64gfortran_version12.4.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: osx_64_cross_target_platformosx-arm64gfortran_version12.4.0macos_machinearm64-apple-darwin20.0.0
+        SHORT_CONFIG: osx_64_cross_target_platformosx-64g_h860eba0e86
+      osx_64_cross_target_platformosx-arm64gfortran_maj_ver13gfortran_version13.4.0macos_machinearm64-apple-darwin20.0.0:
+        CONFIG: osx_64_cross_target_platformosx-arm64gfortran_maj_ver13gfortran_version13.4.0macos_machinearm64-apple-darwin20.0.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_64_cross_target_platformosx-arm_h895ca3db5f
-      osx_64_cross_target_platformosx-arm64gfortran_version13.3.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: osx_64_cross_target_platformosx-arm64gfortran_version13.3.0macos_machinearm64-apple-darwin20.0.0
+        SHORT_CONFIG: osx_64_cross_target_platformosx-arm_h40cd91a044
+      osx_64_cross_target_platformosx-arm64gfortran_maj_ver14gfortran_version14.3.0macos_machinearm64-apple-darwin20.0.0:
+        CONFIG: osx_64_cross_target_platformosx-arm64gfortran_maj_ver14gfortran_version14.3.0macos_machinearm64-apple-darwin20.0.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_64_cross_target_platformosx-arm_h6513bb5c1e
-      osx_64_cross_target_platformosx-arm64gfortran_version14.2.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: osx_64_cross_target_platformosx-arm64gfortran_version14.2.0macos_machinearm64-apple-darwin20.0.0
+        SHORT_CONFIG: osx_64_cross_target_platformosx-arm_h8e29be9d8a
+      osx_64_cross_target_platformosx-arm64gfortran_maj_ver15gfortran_version15.1.0macos_machinearm64-apple-darwin20.0.0:
+        CONFIG: osx_64_cross_target_platformosx-arm64gfortran_maj_ver15gfortran_version15.1.0macos_machinearm64-apple-darwin20.0.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_64_cross_target_platformosx-arm_he2763ca8c6
-      osx_arm64_cross_target_platformosx-64gfortran_version12.4.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: osx_arm64_cross_target_platformosx-64gfortran_version12.4.0macos_machinex86_64-apple-darwin13.4.0
+        SHORT_CONFIG: osx_64_cross_target_platformosx-arm_h9fb500e2d0
+      osx_arm64_cross_target_platformosx-64gfortran_maj_ver13gfortran_version13.4.0macos_machinex86_64-apple-darwin13.4.0:
+        CONFIG: osx_arm64_cross_target_platformosx-64gfortran_maj_ver13gfortran_version13.4.0macos_machinex86_64-apple-darwin13.4.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_haf3ec4bfa1
-      osx_arm64_cross_target_platformosx-64gfortran_version13.3.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: osx_arm64_cross_target_platformosx-64gfortran_version13.3.0macos_machinex86_64-apple-darwin13.4.0
+        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_h345ee058c1
+      osx_arm64_cross_target_platformosx-64gfortran_maj_ver14gfortran_version14.3.0macos_machinex86_64-apple-darwin13.4.0:
+        CONFIG: osx_arm64_cross_target_platformosx-64gfortran_maj_ver14gfortran_version14.3.0macos_machinex86_64-apple-darwin13.4.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_hda4748273c
-      osx_arm64_cross_target_platformosx-64gfortran_version14.2.0macos_machinex86_64-apple-darwin13.4.0:
-        CONFIG: osx_arm64_cross_target_platformosx-64gfortran_version14.2.0macos_machinex86_64-apple-darwin13.4.0
+        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_h8e1e22a5b3
+      osx_arm64_cross_target_platformosx-64gfortran_maj_ver15gfortran_version15.1.0macos_machinex86_64-apple-darwin13.4.0:
+        CONFIG: osx_arm64_cross_target_platformosx-64gfortran_maj_ver15gfortran_version15.1.0macos_machinex86_64-apple-darwin13.4.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_h2a1f79a6e8
-      osx_arm64_cross_target_platformosx-arm64gfortran_version12.4.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: osx_arm64_cross_target_platformosx-arm64gfortran_version12.4.0macos_machinearm64-apple-darwin20.0.0
+        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_ha32b7561f1
+      osx_arm64_cross_target_platformosx-arm64gfortran_maj_ver13gfortran_version13.4.0macos_machinearm64-apple-darwin20.0.0:
+        CONFIG: osx_arm64_cross_target_platformosx-arm64gfortran_maj_ver13gfortran_version13.4.0macos_machinearm64-apple-darwin20.0.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_h3b13e97a1c
-      osx_arm64_cross_target_platformosx-arm64gfortran_version13.3.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: osx_arm64_cross_target_platformosx-arm64gfortran_version13.3.0macos_machinearm64-apple-darwin20.0.0
+        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_ha35bc55ac6
+      osx_arm64_cross_target_platformosx-arm64gfortran_maj_ver14gfortran_version14.3.0macos_machinearm64-apple-darwin20.0.0:
+        CONFIG: osx_arm64_cross_target_platformosx-arm64gfortran_maj_ver14gfortran_version14.3.0macos_machinearm64-apple-darwin20.0.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_h2b9e4c55ca
-      osx_arm64_cross_target_platformosx-arm64gfortran_version14.2.0macos_machinearm64-apple-darwin20.0.0:
-        CONFIG: osx_arm64_cross_target_platformosx-arm64gfortran_version14.2.0macos_machinearm64-apple-darwin20.0.0
+        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_h3a1fa319f8
+      osx_arm64_cross_target_platformosx-arm64gfortran_maj_ver15gfortran_version15.1.0macos_machinearm64-apple-darwin20.0.0:
+        CONFIG: osx_arm64_cross_target_platformosx-arm64gfortran_maj_ver15gfortran_version15.1.0macos_machinearm64-apple-darwin20.0.0
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_h63c7e411c1
+        SHORT_CONFIG: osx_arm64_cross_target_platformosx-_he99ceb5749
   timeoutInMinutes: 360
   variables: {}
 

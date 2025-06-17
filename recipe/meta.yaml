@@ -1,12 +1,12 @@
 {% set chost = macos_machine %}
 
 {% if gfortran_version is undefined %}
-{% set gfortran_version = "11.3.0" %}
+{% set gfortran_version = "15.1.0" %}
 {% set libgfortran_soversion = "5" %}
 {% endif %}
 
 # only reset build_number to 0 if _all_ output versions are increased as well
-{% set build_number = 105 %}
+{% set build_number = 0 %}
 
 package:
   name: gfortran_impl_{{ cross_target_platform }}
@@ -14,17 +14,17 @@ package:
 
 source:
   url: https://ftp.gnu.org/gnu/gcc/gcc-{{ gfortran_version }}/gcc-{{ gfortran_version }}.tar.gz
-  sha256: 7d376d445f93126dc545e2c0086d0f647c3094aae081cdb78f42ce2bc25e7293  # [gfortran_version == "14.2.0"]
-  sha256: 3a2b10cab86e32358fdac871546d57e2700e9bdb5875ef33fff5b601265b9e32  # [gfortran_version == "13.3.0"]
-  sha256: 5a30de2be740062bb3ddd3fd13c9b1bb4584d8f85616d33f23a713439d714148  # [gfortran_version == "12.4.0"]
-  sha256: undefined                               # [gfortran_version not in ("14.2.0", "13.3.0", "12.4.0")]
+  sha256: 51b9919ea69c980d7a381db95d4be27edf73b21254eb13d752a08003b4d013b1  # [gfortran_version == "15.1.0"]
+  sha256: ace8b8b0dbfe6abfc22f821cb093e195aa5498b7ccf7cd23e4424b9f14afed22  # [gfortran_version == "14.3.0"]
+  sha256: bf0baf3e570c9c74c17c8201f0196c6924b4bd98c90e69d6b2ac0cd823f33bbc  # [gfortran_version == "13.4.0"]
+  sha256: undefined                               # [gfortran_version not in ("15.1.0", "14.3.0", "13.4.0")]
   patches:
-    # all patches from https://github.com/Homebrew/formula-patches/tree/f30c309442a60cfb926e780eae5d70571f8ab2cb/gcc
+    # all patches from https://github.com/Homebrew/formula-patches/tree/698885df7f624d0ce15bceb79a4d9760a473b502/gcc
     # and edited with `s/-Wc,-nodefaultrpaths/-nodefaultrpaths`.
     # in case of several patches per version, use newest one
     - patches/gcc-{{ gfortran_version }}.diff   # [cross_target_platform == "osx-arm64"]
     # from https://github.com/JuliaPackaging/Yggdrasil/blob/master/0_RootFS/GCCBootstrap%4014/bundled/patches/gcc/gcc1420-Increase-fallback-min-macOS-version-for-libgcc-to-10.8.patch
-    - patches/0002-Increase-fallback-min-macOS-version-for-libgcc-to-10.patch   # [gfortran_version == "14.2.0" and cross_target_platform == "osx-64"]
+    - patches/0001-GCC-{{ gfortran_maj_ver }}-Increase-fallback-min-macOS-version-for-libgc.patch   # [cross_target_platform == "osx-64" and gfortran_maj_ver != 13]
 
 build:
   number: {{ build_number }}
