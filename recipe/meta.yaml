@@ -6,7 +6,7 @@
 {% endif %}
 
 # only reset build_number to 0 if _all_ output versions are increased as well
-{% set build_number = 0 %}
+{% set build_number = 1 %}
 
 package:
   name: gfortran_impl_{{ cross_target_platform }}
@@ -145,6 +145,8 @@ outputs:
         - gmp
         - zlib
         - libiconv
+        - cctools_{{ cross_target_platform }}
+        - clang
     files:
       - bin/gfortran   # [target_platform == cross_target_platform]
       - bin/{{ chost }}-gfortran
@@ -171,6 +173,14 @@ outputs:
       - lib/libgcc_ext.10.4.dylib
       - lib/libgcc_ext.10.5.dylib
 
+      # util symlinks
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/ar
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/as
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/clang
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/nm
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/ranlib
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/strip
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/ld
 
   - name: libgfortran
     version: {{ gfortran_version }}

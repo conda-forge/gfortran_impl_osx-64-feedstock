@@ -177,3 +177,14 @@ if [[ ! -f $PREFIX/bin/${TARGET}-gfortran ]]; then
   mv ${PREFIX}/bin/gfortran ${PREFIX}/bin/${TARGET}-gfortran
   # -ln -sf ${PREFIX}/bin/${TARGET}-gfortran ${PREFIX}/bin/gfortran
 fi
+
+ln -s ${PREFIX}/bin/${TARGET}-ar       $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/ar
+ln -s ${PREFIX}/bin/${TARGET}-as       $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/as
+ln -s ${PREFIX}/bin/clang              $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/clang
+ln -s ${PREFIX}/bin/${TARGET}-nm       $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/nm
+ln -s ${PREFIX}/bin/${TARGET}-ranlib   $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/ranlib
+ln -s ${PREFIX}/bin/${TARGET}-strip    $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/strip
+ln -s ${PREFIX}/bin/${TARGET}-ld       $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/ld
+
+# remove this symlink so that conda-build doesn't follow symlinks
+rm -f ${PREFIX}/bin/clang
