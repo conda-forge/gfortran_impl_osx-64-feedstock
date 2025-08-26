@@ -6,14 +6,16 @@
 {% endif %}
 
 # only reset build_number to 0 if _all_ output versions are increased as well
-{% set build_number = 0 %}
+{% set build_number = 1 %}
 
 package:
   name: gfortran_impl_{{ cross_target_platform }}
   version: {{ gfortran_version }}
 
 source:
-  url: https://ftp.gnu.org/gnu/gcc/gcc-{{ gfortran_version }}/gcc-{{ gfortran_version }}.tar.gz
+  url:
+    - https://ftp.gnu.org/gnu/gcc/gcc-{{ gfortran_version }}/gcc-{{ gfortran_version }}.tar.gz
+    - https://mirrors.ocf.berkeley.edu/gnu/gcc/gcc-{{ gfortran_version }}/gcc-{{ gfortran_version }}.tar.gz
   sha256: 51b9919ea69c980d7a381db95d4be27edf73b21254eb13d752a08003b4d013b1  # [gfortran_version == "15.1.0"]
   sha256: ace8b8b0dbfe6abfc22f821cb093e195aa5498b7ccf7cd23e4424b9f14afed22  # [gfortran_version == "14.3.0"]
   sha256: bf0baf3e570c9c74c17c8201f0196c6924b4bd98c90e69d6b2ac0cd823f33bbc  # [gfortran_version == "13.4.0"]
@@ -145,6 +147,8 @@ outputs:
         - gmp
         - zlib
         - libiconv
+        - cctools_{{ cross_target_platform }}
+        - clang
     files:
       - bin/gfortran   # [target_platform == cross_target_platform]
       - bin/{{ chost }}-gfortran
@@ -171,6 +175,14 @@ outputs:
       - lib/libgcc_ext.10.4.dylib
       - lib/libgcc_ext.10.5.dylib
 
+      # util symlinks
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/ar
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/as
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/clang
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/nm
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/ranlib
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/strip
+      - lib/gcc/{{ chost }}/{{ gfortran_version }}/ld
 
   - name: libgfortran
     version: {{ gfortran_version }}
