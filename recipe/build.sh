@@ -75,12 +75,12 @@ if [[ "$host_platform" != "$build_platform" ]]; then
     make install-gcc -j${CPU_COUNT}
     popd
     # For the target compiler to work, it need some tools
-    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ar       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ar
-    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-as       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/as
-    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-nm       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/nm
-    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ranlib   ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ranlib
-    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-strip    ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/strip
-    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ld       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${gfortran_version}/ld
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ar       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${PKG_VERSION}/ar
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-as       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${PKG_VERSION}/as
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-nm       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${PKG_VERSION}/nm
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ranlib   ${BUILD_PREFIX}/lib/gcc/${TARGET}/${PKG_VERSION}/ranlib
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-strip    ${BUILD_PREFIX}/lib/gcc/${TARGET}/${PKG_VERSION}/strip
+    ln -sf ${BUILD_PREFIX}/bin/${TARGET}-ld       ${BUILD_PREFIX}/lib/gcc/${TARGET}/${PKG_VERSION}/ld
 fi
 
 mkdir -p build_conda
@@ -150,14 +150,14 @@ if [[ "$host_platform" == "$target_platform" ]]; then
 
   rm ${PREFIX}/lib/libgfortran.spec
   sed "s#@CONDA_PREFIX@#$PREFIX#g" $RECIPE_DIR/libgfortran.spec > libgfortran.spec
-  if [[ "$target_platform" == "osx-arm64" && "$gfortran_version" == "11.3.0" ]]; then
+  if [[ "$target_platform" == "osx-arm64" && "$PKG_VERSION" == "11.3.0" ]]; then
     sed -i.bak "s#-lquadmath##g" libgfortran.spec
   fi
   mv libgfortran.spec ${PREFIX}/lib/libgfortran.spec
 
   for file in libgfortran.spec libgomp.spec; do
-    mv $PREFIX/lib/$file $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/$file
-    ln -s $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/$file $PREFIX/lib/$file
+    mv $PREFIX/lib/$file $PREFIX/lib/gcc/${TARGET}/${PKG_VERSION}/$file
+    ln -s $PREFIX/lib/gcc/${TARGET}/${PKG_VERSION}/$file $PREFIX/lib/$file
   done
 else
   # The compiler is a cross compiler. Only make the compiler. No target libraries
@@ -169,22 +169,22 @@ stop_spinner
 
 ls -al $PREFIX/lib
 
-mv ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1 ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1.bin
-sed "s#@PATH@#${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}#g" ${RECIPE_DIR}/cc1 > ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1
-chmod +x ${PREFIX}/libexec/gcc/${TARGET}/${gfortran_version}/cc1
+mv ${PREFIX}/libexec/gcc/${TARGET}/${PKG_VERSION}/cc1 ${PREFIX}/libexec/gcc/${TARGET}/${PKG_VERSION}/cc1.bin
+sed "s#@PATH@#${PREFIX}/libexec/gcc/${TARGET}/${PKG_VERSION}#g" ${RECIPE_DIR}/cc1 > ${PREFIX}/libexec/gcc/${TARGET}/${PKG_VERSION}/cc1
+chmod +x ${PREFIX}/libexec/gcc/${TARGET}/${PKG_VERSION}/cc1
 
 if [[ ! -f $PREFIX/bin/${TARGET}-gfortran ]]; then
   mv ${PREFIX}/bin/gfortran ${PREFIX}/bin/${TARGET}-gfortran
   # -ln -sf ${PREFIX}/bin/${TARGET}-gfortran ${PREFIX}/bin/gfortran
 fi
 
-ln -s ${PREFIX}/bin/${TARGET}-ar       $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/ar
-ln -s ${PREFIX}/bin/${TARGET}-as       $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/as
-ln -s ${PREFIX}/bin/clang              $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/clang
-ln -s ${PREFIX}/bin/${TARGET}-nm       $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/nm
-ln -s ${PREFIX}/bin/${TARGET}-ranlib   $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/ranlib
-ln -s ${PREFIX}/bin/${TARGET}-strip    $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/strip
-ln -s ${PREFIX}/bin/${TARGET}-ld       $PREFIX/lib/gcc/${TARGET}/${gfortran_version}/ld
+ln -s ${PREFIX}/bin/${TARGET}-ar       $PREFIX/lib/gcc/${TARGET}/${PKG_VERSION}/ar
+ln -s ${PREFIX}/bin/${TARGET}-as       $PREFIX/lib/gcc/${TARGET}/${PKG_VERSION}/as
+ln -s ${PREFIX}/bin/clang              $PREFIX/lib/gcc/${TARGET}/${PKG_VERSION}/clang
+ln -s ${PREFIX}/bin/${TARGET}-nm       $PREFIX/lib/gcc/${TARGET}/${PKG_VERSION}/nm
+ln -s ${PREFIX}/bin/${TARGET}-ranlib   $PREFIX/lib/gcc/${TARGET}/${PKG_VERSION}/ranlib
+ln -s ${PREFIX}/bin/${TARGET}-strip    $PREFIX/lib/gcc/${TARGET}/${PKG_VERSION}/strip
+ln -s ${PREFIX}/bin/${TARGET}-ld       $PREFIX/lib/gcc/${TARGET}/${PKG_VERSION}/ld
 
 # remove this symlink so that conda-build doesn't follow symlinks
 rm -f ${PREFIX}/bin/clang
